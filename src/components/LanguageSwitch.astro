@@ -1,0 +1,45 @@
+---
+import { localeMeta, locales, type Alternates, type Locale } from '../i18n/routes';
+import { useTranslations } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+  alternates: Alternates;
+}
+
+const { locale, alternates } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<div
+  role="group"
+  aria-label={t.language.label}
+  class="flex items-center rounded border border-line font-mono text-sm"
+  data-language-switch
+>
+  {
+    locales.map((l) =>
+      l === locale ? (
+        <span
+          class="inline-flex min-h-11 min-w-11 items-center justify-center bg-ink px-2 font-semibold text-paper"
+          aria-current="true"
+          lang={localeMeta[l].htmlLang}
+        >
+          {localeMeta[l].short}
+          <span class="sr-only"> ({localeMeta[l].label})</span>
+        </span>
+      ) : (
+        <a
+          href={alternates[l]}
+          hreflang={localeMeta[l].hreflang}
+          lang={localeMeta[l].htmlLang}
+          class="inline-flex min-h-11 min-w-11 items-center justify-center px-2 text-muted no-underline hover:bg-surface-2 hover:text-ink"
+          data-lang-link={l}
+        >
+          {localeMeta[l].short}
+          <span class="sr-only"> ({localeMeta[l].label})</span>
+        </a>
+      ),
+    )
+  }
+</div>

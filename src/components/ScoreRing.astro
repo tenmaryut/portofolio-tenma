@@ -1,0 +1,29 @@
+---
+// Skor Lighthouse 0–100 dalam bentuk cincin. Angkanya teks biasa, jadi terbaca pembaca layar.
+interface Props {
+  score: number;
+  label: string;
+}
+
+const { score, label } = Astro.props;
+const tone = score >= 90 ? 'stroke-good' : score >= 50 ? 'stroke-warn' : 'stroke-bad';
+---
+
+<div class="flex flex-col items-center gap-1.5 text-center">
+  <div class="relative size-16">
+    <svg viewBox="0 0 36 36" class="size-16 -rotate-90" aria-hidden="true">
+      <circle cx="18" cy="18" r="15.9155" fill="none" stroke-width="3" class="stroke-line"></circle>
+      <circle
+        cx="18"
+        cy="18"
+        r="15.9155"
+        fill="none"
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-dasharray={`${score} 100`}
+        class={tone}></circle>
+    </svg>
+    <span class="absolute inset-0 grid place-items-center font-mono text-lg font-semibold">{score}</span>
+  </div>
+  <span class="text-xs leading-tight text-muted">{label}</span>
+</div>

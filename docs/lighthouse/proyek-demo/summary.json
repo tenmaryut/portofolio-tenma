@@ -1,0 +1,74 @@
+[
+  {
+    "name": "hukum-beranda",
+    "url": "https://hukum.example/",
+    "fetchTime": "2026-10-02T17:47:51.770Z",
+    "lighthouseVersion": "13.5.0",
+    "formFactor": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "cls": 0,
+      "lcpMs": 1206,
+      "tbtMs": 0
+    }
+  },
+  {
+    "name": "hukum-artikel",
+    "url": "https://hukum.example/artikel/kuhp-nasional-pokok-perubahan",
+    "fetchTime": "2026-10-02T17:48:05.019Z",
+    "lighthouseVersion": "13.5.0",
+    "formFactor": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "cls": 0,
+      "lcpMs": 1057,
+      "tbtMs": 0
+    }
+  },
+  {
+    "name": "toko-beranda",
+    "url": "https://toko.example/",
+    "fetchTime": "2026-10-02T17:48:18.171Z",
+    "lighthouseVersion": "13.5.0",
+    "formFactor": "mobile",
+    "scores": {
+      "performance": 93,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "cls": 0,
+      "lcpMs": 1663,
+      "tbtMs": 311
+    }
+  },
+  {
+    "name": "toko-produk",
+    "url": "https://toko.example/produk/kopi-arabika-lereng-pagi",
+    "fetchTime": "2026-10-02T17:48:33.126Z",
+    "lighthouseVersion": "13.5.0",
+    "formFactor": "mobile",
+    "scores": {
+      "performance": 95,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "cls": 0,
+      "lcpMs": 2182,
+      "tbtMs": 230
+    }
+  }
+]

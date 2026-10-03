@@ -1,0 +1,337 @@
+---
+import { ogImagePath } from '../../data/pages';
+import { projectShots } from '../../data/project-shots';
+import { getProject, nextProject } from '../../data/projects';
+import { caseStudyPaths, routes, type Locale, type ProjectSlug } from '../../i18n/routes';
+import { useTranslations } from '../../i18n/ui';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate, formatNumber } from '../../lib/format';
+import Icon from '../Icon.astro';
+import ProjectShot from '../ProjectShot.astro';
+import ProjectVideo from '../ProjectVideo.astro';
+import { videos } from '../../data/videos';
+import ScoreRing from '../ScoreRing.astro';
+import SectionLabel from '../SectionLabel.astro';
+
+interface Props {
+  locale: Locale;
+  slug: ProjectSlug;
+}
+
+const { locale, slug } = Astro.props;
+const t = useTranslations(locale);
+const project = getProject(slug);
+const next = nextProject(slug);
+const shots = projectShots(slug);
+const results = project.results;
+const totalTests = results?.tests.reduce((sum, suite) => sum + suite.count, 0) ?? 0;
+
+const copy = {
+  id: {
+    breadcrumb: 'Remah roti',
+    label: 'Studi kasus',
+    fictional: 'Bisnis pada demo ini fiktif. Data di dalamnya bukan data asli.',
+    brand: 'Nama demo',
+    shotsCaption: (date: string | null) =>
+      date ? `Tangkapan layar dari situs live, diambil ${date}.` : 'Tangkapan layar menyusul setelah situs live.',
+    problem: 'Masalah',
+    solution: 'Solusi',
+    features: 'Fitur utama',
+    clip: 'Cuplikan animasi',
+    challenges: 'Tantangan teknis',
+    results: 'Hasil uji',
+    lighthouseTitle: 'Lighthouse (mobile)',
+    lighthouseNote: (date: string, version: string) =>
+      `Diukur pada ${date} dengan Lighthouse ${version} dalam mode mobile, langsung terhadap situs live. Skor bisa sedikit berubah antar-pengukuran.`,
+    categories: ['Performa', 'Aksesibilitas', 'Praktik terbaik', 'SEO'],
+    testsTitle: 'Test otomatis',
+    testsTotal: (n: string, date: string) => `Total ${n} test, semuanya lulus menurut laporan pengujian proyek pada ${date}.`,
+    pending: 'Hasil uji dicantumkan setelah pengukuran pada situs live selesai.',
+    liveDemo: 'Lihat demo langsung',
+    measuredPath: 'Halaman yang diukur',
+    next: 'Studi kasus berikutnya',
+    back: 'Kembali ke semua proyek',
+    ctaTitle: 'Butuh situs seperti ini?',
+    ctaBody: 'Ceritakan kebutuhan Anda, lalu kita susun lingkup kerja dan perjanjian tertulisnya bersama.',
+  },
+  en: {
+    breadcrumb: 'Breadcrumb',
+    label: 'Case study',
+    fictional: 'The business in this demo is fictional. The data in it is not real.',
+    brand: 'Demo name',
+    shotsCaption: (date: string | null) =>
+      date ? `Screenshots of the live site, taken on ${date}.` : 'Screenshots will follow once the site is live.',
+    problem: 'The problem',
+    solution: 'The solution',
+    features: 'Key features',
+    clip: 'Animation clip',
+    challenges: 'Technical challenges',
+    results: 'Test results',
+    lighthouseTitle: 'Lighthouse (mobile)',
+    lighthouseNote: (date: string, version: string) =>
+      `Measured on ${date} with Lighthouse ${version} in mobile mode, directly against the live site. Scores can vary slightly between runs.`,
+    categories: ['Performance', 'Accessibility', 'Best practices', 'SEO'],
+    testsTitle: 'Automated tests',
+    testsTotal: (n: string, date: string) => `${n} tests in total, all passing according to the project’s test report from ${date}.`,
+    pending: 'Test results will be listed once measurements on the live site are complete.',
+    liveDemo: 'View the live demo',
+    measuredPath: 'Measured page',
+    next: 'Next case study',
+    back: 'Back to all projects',
+    ctaTitle: 'Need a site like this?',
+    ctaBody: 'Tell me what you need, and we will write up the scope and a written agreement together.',
+  },
+}[locale];
+
+const title = locale === 'id' ? `${project.name[locale]} · Studi kasus · Tenma` : `${project.name[locale]} · Case study · Tenma`;
+const capturedOn = shots.capturedOn ? formatDate(shots.capturedOn, locale) : null;
+const hasClip = Boolean(videos[slug] && project.videoCaption);
+const sections = [
+  ['masalah', copy.problem],
+  ['solusi', copy.solution],
+  ['fitur', copy.features],
+  ...(hasClip ? [['cuplikan', copy.clip]] : []),
+  ['tantangan', copy.challenges],
+  ['hasil-uji', copy.results],
+];
+---
+
+<BaseLayout
+  locale={locale}
+  title={title}
+  description={project.summary[locale]}
+  alternates={caseStudyPaths(slug)}
+  ogImage={ogImagePath(locale, slug)}
+  current="projects"
+>
+  <article>
+    <header class="border-b border-line">
+      <div class="container-page py-10 md:py-16">
+        <nav aria-label={copy.breadcrumb} class="font-mono text-sm text-muted">
+          <ol class="flex flex-wrap items-center gap-2">
+            <li><a href={routes.projects[locale]} class="hover:text-accent hover:underline">{t.nav.projects}</a></li>
+            <li aria-hidden="true">/</li>
+            <li><span aria-current="page">{project.name[locale]}</span></li>
+          </ol>
+        </nav>
+        <div class="mt-6 flex flex-wrap items-center gap-4">
+          <SectionLabel>{copy.label}</SectionLabel>
+          <span class="stamp">{t.project.demoBadge}</span>
+        </div>
+        <h1 class="mt-4 max-w-3xl text-4xl sm:text-5xl">{project.name[locale]}</h1>
+        <p class="mt-5 max-w-[62ch] text-lg text-muted">{project.summary[locale]}</p>
+
+        <dl class="mt-8 grid gap-x-8 gap-y-5 rounded-xl border border-line bg-surface p-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div>
+            <dt class="label-pasal">{t.project.role}</dt>
+            <dd class="mt-1">{project.role[locale]}</dd>
+          </div>
+          <div>
+            <dt class="label-pasal">{copy.brand}</dt>
+            <dd class="mt-1">{project.demoBrand}</dd>
+          </div>
+          <div class="sm:col-span-2">
+            <dt class="label-pasal">{t.project.stack}</dt>
+            <dd class="mt-2">
+              <ul class="flex flex-wrap gap-1.5">{project.stack.map((item) => <li class="chip">{item}</li>)}</ul>
+            </dd>
+          </div>
+          <div class="sm:col-span-2">
+            <dt class="label-pasal">{t.project.status}</dt>
+            <dd class="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1">
+              <span>{t.project.live}:</span>
+              <a href={project.demoUrl} class="link-arrow min-h-11 break-all" rel="noopener">
+                {copy.liveDemo}<span class="sr-only">: {project.demoBrand} {t.external}</span>
+                <Icon name="external" size={18} />
+              </a>
+            </dd>
+          </div>
+          {
+            project.sourceUrl && (
+              <div class="sm:col-span-2">
+                <dt class="label-pasal">{t.project.source}</dt>
+                <dd class="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1">
+                  <a href={project.sourceUrl} class="link-arrow min-h-11" rel="noopener" data-source-link>
+                    <Icon name="github" size={18} />
+                    {t.project.sourceLink}
+                    <span class="sr-only">: {project.name[locale]} {t.external}</span>
+                  </a>
+                  <span class="font-mono text-xs text-muted">{new URL(project.sourceUrl).pathname.slice(1)}</span>
+                </dd>
+              </div>
+            )
+          }
+        </dl>
+        <p class="mt-4 font-mono text-xs text-muted">{copy.fictional}</p>
+      </div>
+    </header>
+
+    <figure class="container-page py-10 md:py-14">
+      <div class="grid items-end gap-6 md:grid-cols-[1fr_auto]">
+        <ProjectShot
+          project={project}
+          locale={locale}
+          variant="desktop"
+          loading="eager"
+          sizes="(min-width: 1152px) 860px, (min-width: 768px) calc(100vw - 15rem), calc(100vw - 2rem)"
+        />
+        <div class="mx-auto w-44 md:w-48">
+          <ProjectShot project={project} locale={locale} variant="mobile" sizes="192px" />
+        </div>
+      </div>
+      <figcaption class="mt-4 font-mono text-xs text-muted">{copy.shotsCaption(capturedOn)}</figcaption>
+    </figure>
+
+    <div class="container-page grid gap-14 pb-8 lg:grid-cols-[14rem_1fr]">
+      <nav aria-label={locale === 'id' ? 'Isi studi kasus' : 'Case study contents'} class="hidden lg:block">
+        <ol class="sticky top-24 grid gap-2 font-mono text-sm">
+          {
+            sections.map(([id, label], index) => (
+              <li>
+                <a href={`#${id}`} class="text-muted hover:text-accent hover:underline">
+                  <span aria-hidden="true">§ {index + 1} </span>
+                  {label}
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </nav>
+
+      <div class="grid gap-14">
+        <section aria-labelledby="masalah" class="reveal">
+          <h2 id="masalah" class="text-3xl">{copy.problem}</h2>
+          <div class="prose-page mt-4 text-muted">{project.problem[locale].map((p) => <p>{p}</p>)}</div>
+        </section>
+
+        <section aria-labelledby="solusi" class="reveal">
+          <h2 id="solusi" class="text-3xl">{copy.solution}</h2>
+          <div class="prose-page mt-4 text-muted">{project.solution[locale].map((p) => <p>{p}</p>)}</div>
+        </section>
+
+        <section aria-labelledby="fitur">
+          <h2 id="fitur" class="reveal text-3xl">{copy.features}</h2>
+          <ul class="mt-5 grid gap-3 sm:grid-cols-2">
+            {
+              project.features[locale].map((feature) => (
+                <li class="reveal flex gap-3 rounded-lg border border-line bg-surface p-4">
+                  <Icon name="check" size={20} class="mt-0.5 text-accent" />
+                  <span>{feature}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+
+        {
+          hasClip && (
+            <section aria-labelledby="cuplikan">
+              <h2 id="cuplikan" class="reveal text-3xl">
+                {copy.clip}
+              </h2>
+              <ProjectVideo project={project} locale={locale} headingId="cuplikan" />
+            </section>
+          )
+        }
+
+        <section aria-labelledby="tantangan">
+          <h2 id="tantangan" class="reveal text-3xl">{copy.challenges}</h2>
+          <ol class="mt-5 grid gap-4">
+            {
+              project.challenges[locale].map((challenge, index) => (
+                <li class="legal-margin reveal relative rounded-lg border border-line py-5 pr-5 pl-14 md:pl-[4.75rem]">
+                  <span class="absolute top-6 left-3 font-mono text-xs text-accent md:left-5" aria-hidden="true">
+                    {`(${index + 1})`}
+                  </span>
+                  <h3 class="text-xl">{challenge.title}</h3>
+                  <p class="mt-2 text-muted">{challenge.body}</p>
+                </li>
+              ))
+            }
+          </ol>
+        </section>
+
+        <section aria-labelledby="hasil-uji">
+          <h2 id="hasil-uji" class="reveal text-3xl">{copy.results}</h2>
+          {
+            results ? (
+              <div class="mt-6 grid gap-8">
+                <div>
+                  <h3 class="flex items-center gap-2 font-sans text-lg font-semibold tracking-normal">
+                    <Icon name="gauge" size={20} class="text-accent" />
+                    {copy.lighthouseTitle}
+                  </h3>
+                  <div class="mt-4 grid gap-4 md:grid-cols-2">
+                    {results.lighthouse.map((run) => (
+                      <div class="reveal rounded-lg border border-line bg-surface p-4">
+                        <p class="font-semibold">{run.page[locale]}</p>
+                        <p class="font-mono text-xs break-all text-muted">
+                          <span class="sr-only">{copy.measuredPath}: </span>
+                          {new URL(run.url).pathname}
+                        </p>
+                        <div class="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                          <ScoreRing score={run.performance} label={copy.categories[0]!} />
+                          <ScoreRing score={run.accessibility} label={copy.categories[1]!} />
+                          <ScoreRing score={run.bestPractices} label={copy.categories[2]!} />
+                          <ScoreRing score={run.seo} label={copy.categories[3]!} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <p class="mt-3 text-sm text-muted">
+                    {copy.lighthouseNote(formatDate(results.measuredOn, locale), results.lighthouseVersion)}
+                  </p>
+                </div>
+                <div>
+                  <h3 class="flex items-center gap-2 font-sans text-lg font-semibold tracking-normal">
+                    <Icon name="flask" size={20} class="text-accent" />
+                    {copy.testsTitle}
+                  </h3>
+                  <ul class="reveal mt-4 divide-y divide-line rounded-lg border border-line bg-surface">
+                    {results.tests.map((suite) => (
+                      <li class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-4 py-3">
+                        <span>
+                          {suite.name[locale]} <span class="chip ml-1">{suite.tool}</span>
+                        </span>
+                        <span class="font-mono font-semibold">{formatNumber(suite.count, locale)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <p class="mt-3 text-sm text-muted">{copy.testsTotal(formatNumber(totalTests, locale), formatDate(results.testsReportedOn, locale))}</p>
+                </div>
+              </div>
+            ) : (
+              <p class="mt-4 rounded-lg border border-dashed border-line p-4 text-muted">{copy.pending}</p>
+            )
+          }
+        </section>
+      </div>
+    </div>
+  </article>
+
+  <div class="container-page mt-10 grid gap-4 md:grid-cols-2">
+    <a
+      href={caseStudyPaths(next.slug)[locale]}
+      class="reveal group flex flex-col gap-1 rounded-xl border border-line bg-surface p-5 no-underline hover:border-accent"
+    >
+      <span class="label-pasal">{copy.next}</span>
+      <span class="flex items-center gap-2 font-display text-xl font-semibold group-hover:underline">
+        {next.name[locale]}
+        <Icon name="arrow-right" size={18} />
+      </span>
+    </a>
+    <div class="reveal flex flex-col justify-between gap-4 rounded-xl border border-line bg-surface p-5">
+      <div>
+        <p class="font-display text-xl font-semibold">{copy.ctaTitle}</p>
+        <p class="mt-1 text-muted">{copy.ctaBody}</p>
+      </div>
+      <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
+        <a href={routes.contact[locale]} class="btn btn-primary">{t.cta.contact}</a>
+        <a href={routes.projects[locale]} class="link-arrow min-h-11">
+          <Icon name="arrow-left" size={18} class="icon-back" />
+          {copy.back}
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

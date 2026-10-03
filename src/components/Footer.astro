@@ -1,0 +1,86 @@
+---
+import { githubUrl, profile } from '../config/profile';
+import { localeMeta, locales, routes, type Alternates, type Locale, type RouteKey } from '../i18n/routes';
+import { useTranslations } from '../i18n/ui';
+import Icon from './Icon.astro';
+
+interface Props {
+  locale: Locale;
+  alternates?: Alternates;
+}
+
+const { locale, alternates } = Astro.props;
+const t = useTranslations(locale);
+const year = new Date().getFullYear();
+const links: { key: RouteKey; label: string }[] = [
+  { key: 'home', label: t.nav.home },
+  { key: 'projects', label: t.nav.projects },
+  { key: 'services', label: t.nav.services },
+  { key: 'about', label: t.nav.about },
+  { key: 'contact', label: t.nav.contact },
+];
+const footerNavLabel = locale === 'id' ? 'Navigasi bawah' : 'Footer navigation';
+---
+
+<footer class="mt-24 border-t border-line bg-surface">
+  <div class="container-page grid gap-10 py-12 md:grid-cols-[1.6fr_1fr_1fr]">
+    <div class="max-w-sm">
+      <p class="flex items-center gap-2 font-display text-2xl font-semibold">
+        <span aria-hidden="true" class="font-mono text-lg text-accent">§</span>
+        {profile.displayName}
+      </p>
+      <p class="mt-2 text-muted">{t.site.tagline}.</p>
+      <p class="mt-4 text-sm text-muted">{t.footer.note}</p>
+    </div>
+
+    <nav aria-label={footerNavLabel}>
+      <ul class="grid gap-1">
+        {
+          links.map((link) => (
+            <li>
+              <a href={routes[link.key][locale]} class="inline-flex min-h-8 items-center hover:text-accent hover:underline">
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div>
+      <p class="label-pasal">{t.footer.elsewhere}</p>
+      <ul class="mt-3 grid gap-1">
+        <li>
+          <a
+            href={githubUrl}
+            rel="me noopener"
+            class="inline-flex min-h-8 items-center gap-2 hover:text-accent hover:underline"
+          >
+            <Icon name="github" size={18} />
+            GitHub <span class="sr-only">{t.external}</span>
+          </a>
+        </li>
+        {
+          alternates &&
+            locales
+              .filter((l) => l !== locale)
+              .map((l) => (
+                <li>
+                  <a
+                    href={alternates[l]}
+                    hreflang={localeMeta[l].hreflang}
+                    lang={localeMeta[l].htmlLang}
+                    class="inline-flex min-h-8 items-center hover:text-accent hover:underline"
+                  >
+                    {l === 'en' ? 'Read in English' : 'Baca dalam bahasa Indonesia'}
+                  </a>
+                </li>
+              ))
+        }
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-line">
+    <p class="container-page py-5 font-mono text-xs text-muted">© {year} {t.footer.rights}</p>
+  </div>
+</footer>

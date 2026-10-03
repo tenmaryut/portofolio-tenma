@@ -1,0 +1,64 @@
+---
+import { Picture } from 'astro:assets';
+import { projectShots } from '../data/project-shots';
+import type { Project } from '../data/projects';
+import type { Locale } from '../i18n/routes';
+import { useTranslations } from '../i18n/ui';
+
+interface Props {
+  project: Project;
+  locale: Locale;
+  variant?: 'desktop' | 'mobile';
+  /** Atribut `sizes` untuk gambar responsif. */
+  sizes: string;
+  /** `eager` untuk gambar yang terlihat saat halaman pertama kali dibuka. */
+  loading?: 'eager' | 'lazy';
+}
+
+const { project, locale, variant = 'desktop', sizes, loading = 'lazy' } = Astro.props;
+const t = useTranslations(locale);
+const shot = projectShots(project.slug)[variant];
+const alt = variant === 'desktop' ? t.project.screenshotAlt(project.name[locale]) : t.project.screenshotMobileAlt(project.name[locale]);
+const widths = variant === 'desktop' ? [480, 720, 960, 1280] : [240, 360, 480];
+---
+
+<div
+  class:list={[
+    'shot-frame border border-line bg-surface shadow-[0_1px_0_var(--line),0_12px_32px_-18px_rgb(27_34_48/0.45)]',
+    variant === 'desktop' ? `rounded-lg vt-shot-${project.slug}` : 'rounded-[1.75rem] border-4 border-ink/80',
+  ]}
+>
+  {
+    variant === 'desktop' && (
+      <div class="flex items-center gap-2 border-b border-line bg-surface-2 px-3 py-2" aria-hidden="true">
+        <span class="size-2.5 rounded-full bg-accent/70" />
+        <span class="size-2.5 rounded-full bg-muted/50" />
+        <span class="size-2.5 rounded-full bg-muted/30" />
+        <span class="ml-2 truncate rounded bg-surface px-2 font-mono text-[0.6875rem] text-muted">{project.demoBrand}</span>
+      </div>
+    )
+  }
+  {
+    shot ? (
+      <Picture
+        src={shot}
+        alt={alt}
+        widths={widths}
+        sizes={sizes}
+        formats={['avif', 'webp']}
+        loading={loading}
+        fetchpriority={loading === 'eager' ? 'high' : undefined}
+        class="shot-media block h-auto w-full"
+      />
+    ) : (
+      <div
+        class:list={[
+          'shot-media legal-pad grid place-items-center p-6 text-center',
+          variant === 'desktop' ? 'aspect-[16/10]' : 'aspect-[9/19]',
+        ]}
+      >
+        <p class="max-w-56 font-mono text-sm text-muted">{t.project.screenshotPending}</p>
+      </div>
+    )
+  }
+</div>

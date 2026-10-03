@@ -1,0 +1,11 @@
+---
+import type { GetStaticPaths } from 'astro';
+import CaseStudyPage from '../../../components/pages/CaseStudyPage.astro';
+import { projectSlugs, type ProjectSlug } from '../../../i18n/routes';
+
+export const getStaticPaths = (() => projectSlugs.map((slug) => ({ params: { slug } }))) satisfies GetStaticPaths;
+
+const slug = Astro.params.slug as ProjectSlug;
+---
+
+<CaseStudyPage locale="en" slug={slug} />

@@ -1,0 +1,130 @@
+---
+import { pageMeta, ogImagePath } from '../../data/pages';
+import { getProject } from '../../data/projects';
+import { services } from '../../data/services';
+import { caseStudyPaths, routes, type Locale } from '../../i18n/routes';
+import { useTranslations } from '../../i18n/ui';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../Icon.astro';
+import SectionLabel from '../SectionLabel.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const meta = pageMeta.services[locale];
+
+const copy = {
+  id: {
+    label: 'Layanan',
+    title: 'Layanan',
+    intro:
+      'Lima jenis pekerjaan yang saya tawarkan. Biaya bergantung pada lingkup dan tenggat, jadi setiap proyek dimulai dengan konsultasi, lalu penawaran tertulis.',
+    suitableFor: 'Cocok untuk',
+    includes: 'Biasanya mencakup',
+    demo: 'Contoh demo',
+    priceTitle: 'Soal harga',
+    priceBody:
+      'Saya tidak mencantumkan harga tetap. Setelah konsultasi, Anda menerima penawaran tertulis berisi lingkup kerja, jadwal, dan biaya. Pekerjaan dimulai setelah perjanjian disepakati.',
+    privacyTitle: 'Data pribadi pengguna Anda',
+    privacyBody:
+      'Kalau website Anda mengumpulkan data pribadi, misalnya lewat form pendaftaran atau pemesanan, saya bantu menerapkan prinsip Undang-Undang Nomor 27 Tahun 2022 tentang Pelindungan Data Pribadi: kumpulkan seperlunya, jelaskan tujuannya, amankan penyimpanannya, dan hapus saat tidak diperlukan lagi.',
+  },
+  en: {
+    label: 'Services',
+    title: 'Services',
+    intro:
+      'Five kinds of work I offer. Costs depend on scope and deadline, so every project starts with a consultation, followed by a written proposal.',
+    suitableFor: 'Good for',
+    includes: 'Usually includes',
+    demo: 'Demo example',
+    priceTitle: 'About pricing',
+    priceBody:
+      'I do not list fixed prices. After a consultation, you receive a written proposal covering scope, schedule, and cost. Work begins once the agreement is signed off.',
+    privacyTitle: 'Your users’ personal data',
+    privacyBody:
+      'If your website collects personal data, for example through sign-up or order forms, I help you apply the principles of Indonesia’s Personal Data Protection Law (Law No. 27 of 2022): collect only what you need, explain why, store it securely, and delete it once it is no longer needed.',
+  },
+}[locale];
+---
+
+<BaseLayout
+  locale={locale}
+  title={meta.title}
+  description={meta.description}
+  alternates={routes.services}
+  ogImage={ogImagePath(locale, 'services')}
+  current="services"
+>
+  <div class="container-page py-12 md:py-20">
+    <SectionLabel number="03">{copy.label}</SectionLabel>
+    <h1 class="mt-3 text-4xl sm:text-5xl">{copy.title}</h1>
+    <p class="mt-6 max-w-[62ch] text-lg text-muted">{copy.intro}</p>
+
+    <ol class="mt-12 grid gap-6">
+      {
+        services.map((service, index) => {
+          const demo = service.demo ? getProject(service.demo) : null;
+          return (
+            <li id={service.id} class="reveal grid gap-6 rounded-xl border border-line bg-surface p-5 sm:p-7 md:grid-cols-[1fr_1.1fr]">
+              <div>
+                <p class="font-mono text-xs text-accent" aria-hidden="true">
+                  § 3.{index + 1}
+                </p>
+                <h2 class="mt-2 flex items-center gap-3 text-3xl">
+                  <Icon name={service.icon} size={28} class="text-accent" />
+                  {service.name[locale]}
+                </h2>
+                <p class="mt-4 text-muted">{service.summary[locale]}</p>
+                <p class="mt-4 text-sm">
+                  <span class="font-semibold">{copy.suitableFor}:</span>{' '}
+                  <span class="text-muted">{service.suitableFor[locale]}</span>
+                </p>
+              </div>
+              <div class="flex flex-col gap-5">
+                <div>
+                  <h3 class="label-pasal">{copy.includes}</h3>
+                  <ul class="list-dash mt-3">
+                    {service.includes[locale].map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div class="mt-auto flex flex-wrap items-center gap-x-6 gap-y-2">
+                  <a href={routes.contact[locale]} class="btn btn-secondary">
+                    {t.cta.quote}
+                    <span class="sr-only">: {service.name[locale]}</span>
+                  </a>
+                  {demo && (
+                    <a href={caseStudyPaths(demo.slug)[locale]} class="link-arrow min-h-11">
+                      {copy.demo}: {demo.name[locale]}
+                      <Icon name="arrow-right" size={18} />
+                    </a>
+                  )}
+                </div>
+              </div>
+            </li>
+          );
+        })
+      }
+    </ol>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-2">
+      <section class="legal-margin reveal rounded-xl border border-line py-6 pr-6 pl-14 md:pl-[4.75rem]" aria-labelledby="harga">
+        <h2 id="harga" class="text-2xl">{copy.priceTitle}</h2>
+        <p class="mt-3 text-muted">{copy.priceBody}</p>
+        <a href={routes.contact[locale]} class="btn btn-primary mt-6">
+          {t.cta.quote}
+          <Icon name="arrow-right" size={18} />
+        </a>
+      </section>
+      <section class="reveal rounded-xl border border-line bg-surface p-6" aria-labelledby="data-pribadi">
+        <Icon name="shield" size={28} class="text-accent" />
+        <h2 id="data-pribadi" class="mt-3 text-2xl">{copy.privacyTitle}</h2>
+        <p class="mt-3 text-muted">{copy.privacyBody}</p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

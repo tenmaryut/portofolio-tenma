@@ -1,0 +1,169 @@
+---
+import { emailUrl, githubUrl, profile, whatsappUrl } from '../../config/profile';
+import { pageMeta, ogImagePath } from '../../data/pages';
+import { routes, type Locale } from '../../i18n/routes';
+import { useTranslations } from '../../i18n/ui';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import type { IconName } from '../../lib/icons';
+import Icon from '../Icon.astro';
+import SectionLabel from '../SectionLabel.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const meta = pageMeta.contact[locale];
+
+const copy = {
+  id: {
+    label: 'Kontak',
+    title: 'Mari bicarakan rencana website Anda',
+    intro:
+      'Ceritakan jenis website yang Anda butuhkan, contoh situs yang Anda suka, tenggat, dan kisaran anggaran. Saya akan membalas dengan pertanyaan lanjutan atau penawaran tertulis.',
+    whatsappMessage: 'Halo Tenma, saya ingin berdiskusi tentang pembuatan website.',
+    emailSubject: 'Rencana website',
+    channels: {
+      whatsapp: { name: 'WhatsApp', action: 'Kirim pesan', pending: 'Nomor WhatsApp segera tersedia.' },
+      email: { name: 'Email', action: 'Kirim email', pending: 'Alamat email segera tersedia.' },
+      github: { name: 'GitHub', action: `github.com/${profile.githubUsername}`, pending: '' },
+    },
+    githubNote: 'Lihat kode dan aktivitas saya.',
+    city: 'Domisili',
+    checklistTitle: 'Agar diskusi lebih cepat, sertakan:',
+    checklist: [
+      'Jenis website (company profile, landing page, toko online, atau lainnya)',
+      'Tujuan utama website dan siapa pengunjungnya',
+      'Contoh situs yang Anda suka',
+      'Tenggat dan kisaran anggaran',
+    ],
+    privacyTitle: 'Privasi',
+    privacy:
+      'Situs ini tidak memakai form, cookie, atau pelacak, jadi tidak menyimpan data Anda. Pilihan mode gelap atau terang hanya disimpan di peramban Anda. Informasi yang Anda kirim lewat WhatsApp atau email hanya dipakai untuk menanggapi permintaan Anda.',
+  },
+  en: {
+    label: 'Contact',
+    title: 'Let’s talk about your website plans',
+    intro:
+      'Tell me what kind of website you need, sites you like, your deadline, and your budget range. I will reply with follow-up questions or a written proposal.',
+    whatsappMessage: 'Hi Tenma, I would like to talk about building a website.',
+    emailSubject: 'Website plans',
+    channels: {
+      whatsapp: { name: 'WhatsApp', action: 'Send a message', pending: 'WhatsApp number coming soon.' },
+      email: { name: 'Email', action: 'Send an email', pending: 'Email address coming soon.' },
+      github: { name: 'GitHub', action: `github.com/${profile.githubUsername}`, pending: '' },
+    },
+    githubNote: 'See my code and activity.',
+    city: 'Based in',
+    checklistTitle: 'To speed things up, include:',
+    checklist: [
+      'The type of website (company profile, landing page, online store, or something else)',
+      'The main goal of the website and who will visit it',
+      'Examples of sites you like',
+      'Your deadline and budget range',
+    ],
+    privacyTitle: 'Privacy',
+    privacy:
+      'This site has no forms, cookies, or trackers, so it does not store your data. Your dark or light mode choice is only saved in your browser. Anything you send via WhatsApp or email is used only to respond to your request.',
+  },
+}[locale];
+
+const channels: { key: string; icon: IconName; name: string; href: string | null; action: string; note: string }[] = [
+  {
+    key: 'whatsapp',
+    icon: 'chat',
+    name: copy.channels.whatsapp.name,
+    href: whatsappUrl(copy.whatsappMessage),
+    action: copy.channels.whatsapp.action,
+    note: copy.channels.whatsapp.pending,
+  },
+  {
+    key: 'email',
+    icon: 'mail',
+    name: copy.channels.email.name,
+    href: emailUrl(copy.emailSubject),
+    action: profile.email ?? copy.channels.email.action,
+    note: copy.channels.email.pending,
+  },
+  {
+    key: 'github',
+    icon: 'github',
+    name: copy.channels.github.name,
+    href: githubUrl,
+    action: copy.channels.github.action,
+    note: copy.githubNote,
+  },
+];
+---
+
+<BaseLayout
+  locale={locale}
+  title={meta.title}
+  description={meta.description}
+  alternates={routes.contact}
+  ogImage={ogImagePath(locale, 'contact')}
+  current="contact"
+  pageType="ContactPage"
+>
+  <div class="container-page py-12 md:py-20">
+    <SectionLabel number="05">{copy.label}</SectionLabel>
+    <h1 class="mt-3 max-w-3xl text-4xl sm:text-5xl">{copy.title}</h1>
+    <p class="mt-6 max-w-[62ch] text-lg text-muted">{copy.intro}</p>
+    {
+      profile.city && (
+        <p class="mt-4 flex items-center gap-2 text-muted">
+          <Icon name="map-pin" size={18} class="text-accent" />
+          {copy.city}: {profile.city}
+        </p>
+      )
+    }
+
+    <ul class="mt-10 grid gap-5 md:grid-cols-3">
+      {
+        channels.map((channel) => (
+          <li class="reveal flex flex-col gap-3 rounded-xl border border-line bg-surface p-5" data-channel={channel.key}>
+            <div class="flex items-center gap-3">
+              <span class="grid size-11 place-items-center rounded-full border border-line text-accent">
+                <Icon name={channel.icon} size={22} />
+              </span>
+              <h2 class="font-sans text-xl font-semibold tracking-normal">{channel.name}</h2>
+            </div>
+            {channel.href ? (
+              <>
+                <a
+                  href={channel.href}
+                  class="link-arrow min-h-11 break-all"
+                  rel={channel.key === 'github' ? 'me noopener' : 'noopener'}
+                >
+                  {channel.action}
+                  {channel.key !== 'email' && <span class="sr-only"> {t.external}</span>}
+                  <Icon name="external" size={18} />
+                </a>
+                {channel.key === 'github' && <p class="text-sm text-muted">{channel.note}</p>}
+              </>
+            ) : (
+              <p class="rounded-md border border-dashed border-line px-3 py-2 text-sm text-muted" data-placeholder>
+                {channel.note}
+              </p>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-2">
+      <section class="legal-margin reveal rounded-xl border border-line py-6 pr-6 pl-14 md:pl-[4.75rem]" aria-labelledby="sertakan">
+        <h2 id="sertakan" class="text-2xl">{copy.checklistTitle}</h2>
+        <ul class="list-dash mt-4">
+          {copy.checklist.map((item) => <li>{item}</li>)}
+        </ul>
+      </section>
+      <section class="reveal rounded-xl border border-line bg-surface p-6" aria-labelledby="privasi">
+        <Icon name="shield" size={28} class="text-accent" />
+        <h2 id="privasi" class="mt-3 text-2xl">{copy.privacyTitle}</h2>
+        <p class="mt-3 text-muted">{copy.privacy}</p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

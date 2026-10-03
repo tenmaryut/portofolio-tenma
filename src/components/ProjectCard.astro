@@ -1,0 +1,64 @@
+---
+import type { Project } from '../data/projects';
+import { caseStudyPaths, type Locale } from '../i18n/routes';
+import { useTranslations } from '../i18n/ui';
+import Icon from './Icon.astro';
+import ProjectShot from './ProjectShot.astro';
+
+interface Props {
+  project: Project;
+  locale: Locale;
+  headingLevel?: 'h2' | 'h3';
+  loading?: 'eager' | 'lazy';
+}
+
+const { project, locale, headingLevel = 'h3', loading = 'lazy' } = Astro.props;
+const t = useTranslations(locale);
+const Heading = headingLevel;
+const caseStudy = caseStudyPaths(project.slug)[locale];
+---
+
+<article class="project-card group relative flex h-full flex-col gap-5 rounded-xl border border-line bg-surface p-4 sm:p-5">
+  <div class="relative">
+    <ProjectShot
+      project={project}
+      locale={locale}
+      loading={loading}
+      sizes="(min-width: 1152px) 520px, (min-width: 768px) calc(50vw - 4rem), calc(100vw - 4rem)"
+    />
+    <span class="stamp absolute -top-2 right-3 bg-surface">{t.project.demoBadge}</span>
+  </div>
+
+  <div class="flex flex-1 flex-col gap-3">
+    <Heading class="text-2xl">
+      <a href={caseStudy} class="no-underline hover:underline">{project.name[locale]}</a>
+    </Heading>
+    <p class="text-muted">{project.summary[locale]}</p>
+    <ul class="flex flex-wrap gap-1.5" aria-label={t.project.stack}>
+      {project.stack.map((item) => <li class="chip">{item}</li>)}
+    </ul>
+    <p class="text-sm">
+      <span class="font-semibold">{t.project.role}:</span>{' '}
+      <span class="text-muted">{project.role[locale]}</span>
+    </p>
+    <div class="mt-auto flex flex-wrap items-center gap-x-6 gap-y-2 pt-2">
+      <a href={caseStudy} class="link-arrow min-h-11">
+        {t.cta.caseStudy}<span class="sr-only">: {project.name[locale]}</span>
+        <Icon name="arrow-right" size={18} />
+      </a>
+      <a href={project.demoUrl} class="link-arrow min-h-11" rel="noopener">
+        {t.cta.demo}<span class="sr-only">: {project.name[locale]} {t.external}</span>
+        <Icon name="external" size={18} />
+      </a>
+      {
+        project.sourceUrl && (
+          <a href={project.sourceUrl} class="link-arrow min-h-11" rel="noopener" data-source-link>
+            <Icon name="github" size={18} />
+            {t.project.source}
+            <span class="sr-only">: {project.name[locale]} {t.external}</span>
+          </a>
+        )
+      }
+    </div>
+  </div>
+</article>

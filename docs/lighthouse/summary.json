@@ -1,0 +1,38 @@
+[
+  {
+    "name": "beranda",
+    "url": "https://tenma.example/",
+    "fetchTime": "2026-10-03T02:29:46.570Z",
+    "lighthouseVersion": "13.5.0",
+    "formFactor": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "cls": 0,
+      "lcpMs": 1203,
+      "tbtMs": 49
+    }
+  },
+  {
+    "name": "studi-kasus",
+    "url": "https://tenma.example/proyek/company-profile-hukum/",
+    "fetchTime": "2026-10-03T02:29:59.466Z",
+    "lighthouseVersion": "13.5.0",
+    "formFactor": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "cls": 0,
+      "lcpMs": 1427,
+      "tbtMs": 45
+    }
+  }
+]

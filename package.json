@@ -1,0 +1,50 @@
+{
+  "name": "portofolio-tenma",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "check": "astro check",
+    "build": "astro check && astro build",
+    "preview": "astro preview --host 127.0.0.1 --port 4321",
+    "test": "playwright test",
+    "test:all": "npm run build && playwright test",
+    "screenshots": "node scripts/screenshots.mjs",
+    "capture:projects": "node scripts/capture-projects.mjs",
+    "lighthouse": "node scripts/lighthouse.mjs",
+    "deploy": "bash scripts/deploy.sh",
+    "todo": "grep -rn \"TODO(Tenma)\" src || true",
+    "astro": "astro",
+    "test:live": "node scripts/test-live.mjs",
+    "check:domain": "bash scripts/check-domain.sh",
+    "record:animations": "node scripts/record-animations.mjs",
+    "import:videos": "node scripts/import-demo-videos.mjs",
+    "audit:publik": "node scripts/audit-publik.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource-variable/fraunces": "^5.3.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.3.5",
+    "tailwindcss": "^4.3.3"
+  },
+  "allowScripts": {
+    "esbuild": true
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@axe-core/playwright": "^4.13.0",
+    "@fontsource/fraunces": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@playwright/test": "1.63.0",
+    "lighthouse": "^13.5.0",
+    "satori": "^0.35.0",
+    "typescript": "^6.0.3"
+  },
+  "overrides": {
+    "fflate": "^0.8.2"
+  }
+}

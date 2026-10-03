@@ -1,0 +1,55 @@
+# Situs portofolio Tenma: berkas statis hasil build Astro.
+# Template ini dirender oleh scripts/deploy.sh: penanda host di bawah diganti host dari PORTOFOLIO_URL
+# di domain.env, lalu hasilnya dipasang ke /etc/caddy/sites/portofolio-tenma.caddy.
+# Ubah di repo, bukan di /etc.
+
+(portofolio_tenma_headers) {
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+		Cross-Origin-Opener-Policy "same-origin"
+		# Sumber script dan style diatur <meta> CSP berbasis hash yang dibuat Astro di tiap halaman.
+		Content-Security-Policy "frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
+		-Server
+	}
+}
+
+# Baris pertama blok situs wajib "import gerbang_staging": gerbang kata sandi selama alamat masih
+# staging (snippet dikelola agen utama di /etc/caddy/Caddyfile).
+__PORTOFOLIO_HOST__ {
+	import gerbang_staging
+	root * /srv/web/portofolio-tenma
+	encode zstd gzip
+	import portofolio_tenma_headers
+
+	# Aset ber-hash dari Astro (CSS, JS, font) tidak pernah berubah isinya.
+	@hashed path /_astro/*
+	header @hashed Cache-Control "public, max-age=31536000, immutable"
+
+	@images path /og/* /video/* /favicon.svg /favicon.ico /apple-touch-icon.png
+	header @images Cache-Control "public, max-age=604800"
+
+	# Cuplikan animasi: tipe MIME eksplisit (bawaan sistem menebak audio/webm).
+	@webm path *.webm
+	header @webm Content-Type "video/webm"
+
+	# Halaman HTML, sitemap, dan robots selalu divalidasi ulang (ETag/Last-Modified).
+	@documents path / */ *.html *.xml *.txt
+	header @documents Cache-Control "public, max-age=0, must-revalidate"
+
+	file_server
+
+	handle_errors 404 {
+		import portofolio_tenma_headers
+		header Cache-Control "no-store"
+		@english path /en /en/*
+		rewrite @english /en/404/index.html
+		rewrite * /404.html
+		file_server {
+			status 404
+		}
+	}
+}

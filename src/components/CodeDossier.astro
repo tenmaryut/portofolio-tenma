@@ -1,0 +1,59 @@
+---
+// Kartu kode di beranda: ringkasan profil Tenma yang ditulis seperti objek TypeScript.
+// Isinya sama dengan teks perkenalan, jadi disembunyikan dari pembaca layar.
+import type { Locale } from '../i18n/routes';
+
+interface Props {
+  locale: Locale;
+}
+
+type Token = { kind: 'plain' | 'comment' | 'key' | 'string'; text: string };
+
+const content: Record<Locale, { file: string; lines: Token[][] }> = {
+  id: {
+    file: 'profil.ts',
+    lines: [
+      [{ kind: 'comment', text: '// Pasal 1: tentang saya' }],
+      [{ kind: 'plain', text: 'export const tenma = {' }],
+      [{ kind: 'key', text: '  peran' }, { kind: 'plain', text: ': ' }, { kind: 'string', text: '"programmer web (sampingan)"' }, { kind: 'plain', text: ',' }],
+      [{ kind: 'key', text: '  studi' }, { kind: 'plain', text: ': ' }, { kind: 'string', text: '"Ilmu Hukum, Universitas Terbuka"' }, { kind: 'plain', text: ',' }],
+      [{ kind: 'key', text: '  status' }, { kind: 'plain', text: ': ' }, { kind: 'string', text: '"baru memulai"' }, { kind: 'plain', text: ',' }],
+      [{ kind: 'key', text: '  prinsip' }, { kind: 'plain', text: ': [' }],
+      [{ kind: 'string', text: '    "data pribadi dijaga"' }, { kind: 'plain', text: ',' }],
+      [{ kind: 'string', text: '    "perjanjian tertulis"' }, { kind: 'plain', text: ',' }],
+      [{ kind: 'string', text: '    "kode yang diuji"' }, { kind: 'plain', text: ',' }],
+      [{ kind: 'plain', text: '  ],' }],
+      [{ kind: 'plain', text: '};' }],
+    ],
+  },
+  en: {
+    file: 'profile.ts',
+    lines: [
+      [{ kind: 'comment', text: '// Article 1: about me' }],
+      [{ kind: 'plain', text: 'export const tenma = {' }],
+      [{ kind: 'key', text: '  role' }, { kind: 'plain', text: ': ' }, { kind: 'string', text: '"web developer (side work)"' }, { kind: 'plain', text: ',' }],
+      [{ kind: 'key', text: '  studies' }, { kind: 'plain', text: ': ' }, { kind: 'string', text: '"Law, Universitas Terbuka"' }, { kind: 'plain', text: ',' }],
+      [{ kind: 'key', text: '  status' }, { kind: 'plain', text: ': ' }, { kind: 'string', text: '"just getting started"' }, { kind: 'plain', text: ',' }],
+      [{ kind: 'key', text: '  principles' }, { kind: 'plain', text: ': [' }],
+      [{ kind: 'string', text: '    "personal data protected"' }, { kind: 'plain', text: ',' }],
+      [{ kind: 'string', text: '    "written agreements"' }, { kind: 'plain', text: ',' }],
+      [{ kind: 'string', text: '    "tested code"' }, { kind: 'plain', text: ',' }],
+      [{ kind: 'plain', text: '  ],' }],
+      [{ kind: 'plain', text: '};' }],
+    ],
+  },
+};
+
+const { file, lines } = content[Astro.props.locale];
+const tokenClass = { plain: '', comment: 'tok-comment', key: 'tok-key', string: 'tok-string' } as const;
+---
+
+<figure class="code-card overflow-hidden rounded-xl shadow-[0_24px_48px_-24px_rgb(16_21_29/0.6)]" aria-hidden="true">
+  <figcaption class="flex items-center justify-between border-b border-white/10 px-4 py-2.5 font-mono text-xs">
+    <span class="tok-comment">{file}</span>
+    <span class="tok-key">TS</span>
+  </figcaption>
+  <pre class="px-3 py-4 font-mono text-[0.75rem] leading-6 whitespace-pre-wrap break-words sm:px-4 sm:text-[0.8125rem]"><code>{lines.map((line, index) => (
+    <span class="grid grid-cols-[2rem_1fr]"><span class="tok-gutter pr-3 text-right">{index + 1}</span><span>{line.map((token) => <span class={tokenClass[token.kind] || undefined}>{token.text}</span>)}</span></span>
+  ))}</code></pre>
+</figure>

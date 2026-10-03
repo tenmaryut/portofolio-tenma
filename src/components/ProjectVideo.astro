@@ -1,0 +1,91 @@
+---
+// Cuplikan animasi situs demo (WebM tanpa suara). Dimuat lazy: hanya poster sampai video diputar.
+// Dengan JavaScript, video diputar otomatis saat terlihat, kecuali pengguna memilih reduced motion
+// atau sudah menjedanya sendiri. Tanpa JavaScript, poster dan kontrol pemutar tetap tersedia.
+import type { Project } from '../data/projects';
+import { videos } from '../data/videos';
+import type { Locale } from '../i18n/routes';
+
+interface Props {
+  project: Project;
+  locale: Locale;
+  headingId: string;
+}
+
+const { project, locale, headingId } = Astro.props;
+const video = videos[project.slug];
+const caption = project.videoCaption?.[locale];
+const captionId = `cuplikan-${project.slug}`;
+const fallback =
+  locale === 'id' ? 'Browser Anda belum bisa memutar video WebM.' : 'Your browser cannot play WebM video yet.';
+---
+
+{
+  video && caption && (
+    <figure class="mt-5" aria-labelledby={headingId}>
+      <div class="shot-frame rounded-lg border border-line bg-surface shadow-[0_1px_0_var(--line),0_12px_32px_-18px_rgb(27_34_48/0.45)]">
+        <div class="flex items-center gap-2 border-b border-line bg-surface-2 px-3 py-2" aria-hidden="true">
+          <span class="size-2.5 rounded-full bg-accent/70" />
+          <span class="size-2.5 rounded-full bg-muted/50" />
+          <span class="size-2.5 rounded-full bg-muted/30" />
+          <span class="ml-2 truncate rounded bg-surface px-2 font-mono text-[0.6875rem] text-muted">{project.demoBrand}</span>
+        </div>
+        <video
+          class="block h-auto w-full bg-surface-2"
+          width={video.width}
+          height={video.height}
+          poster={video.poster}
+          preload="none"
+          muted
+          loop
+          playsinline
+          controls
+          aria-describedby={captionId}
+          data-autoplay-in-view
+        >
+          <source src={video.src} type="video/webm" />
+          {fallback}
+        </video>
+      </div>
+      <figcaption id={captionId} class="mt-3 text-sm text-muted">
+        {caption}
+      </figcaption>
+    </figure>
+  )
+}
+
+<script>
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const players = document.querySelectorAll<HTMLVideoElement>('video[data-autoplay-in-view]');
+
+  players.forEach((video) => {
+    // Jeda dari pengguna dihormati: video tidak diputar ulang otomatis setelahnya.
+    video.addEventListener('pause', () => {
+      if (video.dataset.autoPause === '1') delete video.dataset.autoPause;
+      else video.dataset.userPaused = '1';
+    });
+    video.addEventListener('play', () => delete video.dataset.userPaused);
+  });
+
+  if ('IntersectionObserver' in window && players.length > 0) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const video = entry.target as HTMLVideoElement;
+          if (entry.isIntersecting) {
+            if (!reduceMotion.matches && video.dataset.userPaused !== '1' && video.paused) {
+              video.play().catch(() => {
+                // Autoplay ditolak browser: poster dan tombol putar tetap tersedia.
+              });
+            }
+          } else if (!video.paused) {
+            video.dataset.autoPause = '1';
+            video.pause();
+          }
+        }
+      },
+      { threshold: 0.5 },
+    );
+    players.forEach((video) => observer.observe(video));
+  }
+</script>

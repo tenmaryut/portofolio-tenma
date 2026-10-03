@@ -1,0 +1,232 @@
+---
+import { pageMeta, ogImagePath } from '../../data/pages';
+import { projects } from '../../data/projects';
+import { services } from '../../data/services';
+import { routes, type Locale } from '../../i18n/routes';
+import { useTranslations } from '../../i18n/ui';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import type { IconName } from '../../lib/icons';
+import CodeDossier from '../CodeDossier.astro';
+import Icon from '../Icon.astro';
+import ProjectCard from '../ProjectCard.astro';
+import SectionLabel from '../SectionLabel.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const meta = pageMeta.home[locale];
+
+const copy = {
+  id: {
+    eyebrow: 'Programmer web · Mahasiswa Ilmu Hukum',
+    title: { before: 'Website yang ', mark: 'rapi dan aman', middle: ', dari programmer yang ', ink: 'paham hukum', after: '.' },
+    lead: 'Saya Tenma, mahasiswa Ilmu Hukum di Universitas Terbuka yang baru memulai kerja sampingan sebagai programmer web. Saya membuat company profile, landing page, toko online, dan sistem informasi sederhana dengan memperhatikan pelindungan data pribadi dan kesepakatan kerja yang jelas sejak awal.',
+    honest: 'Saat ini portofolio saya berisi proyek demo, belum proyek klien.',
+    valueLabel: 'Nilai tambah',
+    valueTitle: 'Kenapa programmer yang paham hukum?',
+    valueIntro:
+      'Website bisnis bukan cuma soal tampilan. Ada data pelanggan yang harus dijaga, kesepakatan yang harus jelas, dan hak cipta yang harus dihormati.',
+    values: [
+      {
+        icon: 'shield',
+        title: 'Pelindungan data pribadi',
+        body: 'Form dan database saya rancang agar hanya mengumpulkan data yang perlu, disertai pemberitahuan privasi, dan menghapus data yang tidak lagi dibutuhkan, sejalan dengan Undang-Undang Nomor 27 Tahun 2022 tentang Pelindungan Data Pribadi.',
+      },
+      {
+        icon: 'agreement',
+        title: 'Perjanjian kerja tertulis',
+        body: 'Lingkup kerja, jadwal, termin pembayaran, batas revisi, dan serah terima disepakati secara tertulis sebelum pekerjaan dimulai, dengan memperhatikan syarat sah perjanjian dalam Pasal 1320 Kitab Undang-Undang Hukum Perdata.',
+      },
+      {
+        icon: 'copyright',
+        title: 'Hak cipta yang jelas',
+        body: 'Saya hanya memakai aset berlisensi jelas dan mencatat sumbernya. Kepemilikan hak cipta kode diatur dalam perjanjian, mengacu pada Undang-Undang Nomor 28 Tahun 2014 tentang Hak Cipta.',
+      },
+    ] satisfies { icon: IconName; title: string; body: string }[],
+    projectsLabel: 'Proyek',
+    projectsTitle: 'Proyek demo',
+    projectsIntro:
+      'Dua proyek demo untuk bisnis fiktif, dibangun sampai online, dilengkapi test otomatis, dan diukur dengan Lighthouse.',
+    servicesLabel: 'Layanan',
+    servicesTitle: 'Yang bisa saya bantu',
+    ctaLabel: 'Kontak',
+    ctaTitle: 'Punya rencana website?',
+    ctaBody:
+      'Ceritakan kebutuhan Anda. Kita petakan dulu pilihan yang masuk akal, lalu semua kesepakatan dituangkan secara tertulis sebelum pekerjaan dimulai.',
+  },
+  en: {
+    eyebrow: 'Web developer · Law student',
+    title: { before: '', mark: 'Clean, secure', middle: ' websites from a developer who understands ', ink: 'the law', after: '.' },
+    lead: 'I’m Tenma, a law student at Universitas Terbuka who has just started doing web development on the side. I build company profiles, landing pages, online stores, and simple information systems, with personal data protection and clear working agreements in mind from day one.',
+    honest: 'For now, my portfolio contains demo projects, not client work.',
+    valueLabel: 'Added value',
+    valueTitle: 'Why a developer who understands the law?',
+    valueIntro:
+      'A business website is more than how it looks. There is customer data to protect, agreements to get right, and copyrights to respect.',
+    values: [
+      {
+        icon: 'shield',
+        title: 'Personal data protection',
+        body: 'I design forms and databases to collect only what is needed, show a privacy notice, and delete data that is no longer required, in line with Indonesia’s Personal Data Protection Law (Law No. 27 of 2022).',
+      },
+      {
+        icon: 'agreement',
+        title: 'Written agreements',
+        body: 'Scope, schedule, payment terms, revision limits, and handover are agreed in writing before work starts, with attention to the requirements for a valid agreement under Article 1320 of the Indonesian Civil Code.',
+      },
+      {
+        icon: 'copyright',
+        title: 'Clear copyright',
+        body: 'I only use assets with clear licenses and record their sources. Copyright ownership of the code is set out in the agreement, with reference to Indonesia’s Copyright Law (Law No. 28 of 2014).',
+      },
+    ] satisfies { icon: IconName; title: string; body: string }[],
+    projectsLabel: 'Projects',
+    projectsTitle: 'Demo projects',
+    projectsIntro:
+      'Two demo projects for fictional businesses, built all the way to production, covered by automated tests, and measured with Lighthouse.',
+    servicesLabel: 'Services',
+    servicesTitle: 'How I can help',
+    ctaLabel: 'Contact',
+    ctaTitle: 'Planning a website?',
+    ctaBody:
+      'Tell me what you need. We will map out sensible options first, and every agreement is put in writing before any work begins.',
+  },
+}[locale];
+---
+
+<BaseLayout
+  locale={locale}
+  title={meta.title}
+  description={meta.description}
+  alternates={routes.home}
+  ogImage={ogImagePath(locale, 'home')}
+  current="home"
+>
+  <section class="border-b border-line">
+    <div class="container-page grid items-center gap-10 py-12 md:py-20 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
+      <div>
+        <p class="label-pasal rise">{copy.eyebrow}</p>
+        <h1 class="rise-move mt-4 text-[2.375rem] sm:text-5xl lg:text-[3.5rem]">
+          {copy.title.before}<span class="stabilo">{copy.title.mark}</span>{copy.title.middle}<span class="ink-mark">{copy.title.ink}<svg class="ink-stroke" viewBox="0 0 200 14" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path pathLength="1" d="M3 9.5C38 4.5 82 12.5 120 7.5S178 5 197 8.5" /></svg></span>{copy.title.after}
+        </h1>
+        <p class="rise-move rise-delay-1 mt-8 max-w-[62ch] text-lg text-muted">{copy.lead}</p>
+        <div class="rise rise-delay-2 mt-8 flex flex-wrap gap-3">
+          <a href={routes.projects[locale]} class="btn btn-primary">
+            {t.cta.projects}
+            <Icon name="arrow-right" size={18} />
+          </a>
+          <a href={routes.contact[locale]} class="btn btn-secondary">{t.cta.contact}</a>
+        </div>
+        <p class="rise rise-delay-3 mt-6 font-mono text-xs text-muted">{copy.honest}</p>
+      </div>
+      <div class="rise-card">
+        <CodeDossier locale={locale} />
+      </div>
+    </div>
+  </section>
+
+  <section class="container-page py-16 md:py-24" aria-labelledby="nilai-tambah">
+    <div class="reveal">
+      <SectionLabel number="01">{copy.valueLabel}</SectionLabel>
+      <h2 id="nilai-tambah" class="mt-3 max-w-2xl text-3xl sm:text-4xl">{copy.valueTitle}</h2>
+      <p class="mt-4 max-w-2xl text-muted">{copy.valueIntro}</p>
+    </div>
+    <ol class="mt-10 grid gap-5 md:grid-cols-3">
+      {
+        copy.values.map((value, index) => (
+          <li class="legal-margin reveal relative rounded-xl border border-line py-6 pr-5 pl-14 md:pl-[4.75rem]">
+            <span
+              class="absolute top-6 left-3 font-mono text-xs text-accent md:left-5"
+              aria-hidden="true"
+            >
+              {`(${index + 1})`}
+            </span>
+            <Icon name={value.icon} size={26} class="text-accent" />
+            <h3 class="mt-3 text-xl">{value.title}</h3>
+            <p class="mt-2 text-[0.9375rem] text-muted">{value.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="border-y border-line bg-surface-2/60 py-16 md:py-24" aria-labelledby="proyek-demo">
+    <div class="container-page">
+      <div class="reveal flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <SectionLabel number="02">{copy.projectsLabel}</SectionLabel>
+          <h2 id="proyek-demo" class="mt-3 text-3xl sm:text-4xl">{copy.projectsTitle}</h2>
+          <p class="mt-4 max-w-2xl text-muted">{copy.projectsIntro}</p>
+        </div>
+        <a href={routes.projects[locale]} class="link-arrow min-h-11">
+          {t.cta.allProjects}
+          <Icon name="arrow-right" size={18} />
+        </a>
+      </div>
+      <div class="mt-10 grid gap-6 md:grid-cols-2">
+        {
+          projects.map((project) => (
+            <div class="reveal">
+              <ProjectCard project={project} locale={locale} />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="container-page py-16 md:py-24" aria-labelledby="layanan-singkat">
+    <div class="reveal flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <SectionLabel number="03">{copy.servicesLabel}</SectionLabel>
+        <h2 id="layanan-singkat" class="mt-3 text-3xl sm:text-4xl">{copy.servicesTitle}</h2>
+      </div>
+      <a href={routes.services[locale]} class="link-arrow min-h-11">
+        {t.cta.allServices}
+        <Icon name="arrow-right" size={18} />
+      </a>
+    </div>
+    <ul class="reveal mt-10 grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+      {
+        services.map((service) => (
+          <li class="flex gap-4 bg-surface p-5">
+            <Icon name={service.icon} size={24} class="mt-1 text-accent" />
+            <div>
+              <h3 class="font-sans text-lg font-semibold tracking-normal">{service.name[locale]}</h3>
+              <p class="mt-1 text-[0.9375rem] text-muted">{service.summary[locale]}</p>
+            </div>
+          </li>
+        ))
+      }
+      <li class="flex items-center bg-surface p-5">
+        <p class="font-mono text-sm text-muted">{t.cta.quote}.</p>
+      </li>
+    </ul>
+  </section>
+
+  <section class="container-page" aria-labelledby="ajakan">
+    <div class="code-card reveal relative overflow-hidden rounded-2xl px-6 py-12 sm:px-12 md:py-16">
+      <p class="label-pasal tok-key"><span aria-hidden="true">§ 05 · </span>{copy.ctaLabel}</p>
+      <h2 id="ajakan" class="mt-3 max-w-xl text-3xl text-[#f6f1e7] sm:text-4xl">{copy.ctaTitle}</h2>
+      <p class="mt-4 max-w-xl text-[#d4cfc4]">{copy.ctaBody}</p>
+      <a href={routes.contact[locale]} class="btn btn-cta mt-8">
+        {t.cta.contact}
+        <Icon name="arrow-right" size={18} />
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .btn-cta {
+    background-color: #f0896a;
+    color: #10151d;
+  }
+
+  .btn-cta:hover {
+    background-color: #f6a88f;
+  }
+</style>

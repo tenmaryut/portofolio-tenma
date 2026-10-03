@@ -1,0 +1,96 @@
+---
+import { Font } from 'astro:assets';
+import '../styles/global.css';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { localeMeta, locales, type Alternates, type Locale, type RouteKey } from '../i18n/routes';
+import { useTranslations } from '../i18n/ui';
+import { buildJsonLd, type WebPageType } from '../lib/structured-data';
+
+interface Props {
+  locale: Locale;
+  /** Judul lengkap untuk <title>. */
+  title: string;
+  description: string;
+  /** Path halaman ini dalam tiap bahasa. Kosong untuk halaman tanpa padanan (404). */
+  alternates?: Alternates;
+  /** Path gambar Open Graph, mis. "/og/id/home.png". */
+  ogImage: string;
+  /** Menu yang ditandai aktif di navigasi. */
+  current?: RouteKey;
+  pageType?: WebPageType;
+  noindex?: boolean;
+}
+
+const { locale, title, description, alternates, ogImage, current, pageType, noindex = false } = Astro.props;
+const t = useTranslations(locale);
+const site = Astro.site!;
+const canonical = new URL(Astro.url.pathname, site);
+const ogImageUrl = new URL(ogImage, site);
+const jsonLd = buildJsonLd({ site, canonical, locale, title, description, type: pageType });
+const otherLocales = locales.filter((l) => l !== locale);
+
+// Dijalankan sebelum halaman tampil supaya tidak ada kedipan tema.
+const themeScript = `(()=>{const r=document.documentElement;r.classList.add('js');let s=null;try{s=localStorage.getItem('theme')}catch(e){}r.dataset.theme=s==='dark'||s==='light'?s:matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'})()`;
+---
+
+<!doctype html>
+<html lang={localeMeta[locale].htmlLang} dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline set:html={themeScript} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex ? <meta name="robots" content="noindex, follow" /> : <link rel="canonical" href={canonical.href} />}
+    {
+      alternates && (
+        <>
+          {locales.map((l) => (
+            <link rel="alternate" hreflang={localeMeta[l].hreflang} href={new URL(alternates[l], site).href} />
+          ))}
+          <link rel="alternate" hreflang="x-default" href={new URL(alternates.id, site).href} />
+        </>
+      )
+    }
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f6f1e7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#10151d" media="(prefers-color-scheme: dark)" />
+    <meta name="author" content="Tenma" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Tenma" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {!noindex && <meta property="og:url" content={canonical.href} />}
+    <meta property="og:locale" content={localeMeta[locale].ogLocale} />
+    {otherLocales.map((l) => <meta property="og:locale:alternate" content={localeMeta[l].ogLocale} />)}
+    <meta property="og:image" content={ogImageUrl.href} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <Font cssVariable="--font-fraunces" preload />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body class="flex min-h-dvh flex-col bg-paper text-ink antialiased">
+    <a
+      href="#konten"
+      class="sr-only z-50 rounded bg-accent px-4 py-2 font-semibold text-on-accent focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+    >
+      {t.skipLink}
+    </a>
+    <Header locale={locale} alternates={alternates} current={current} />
+    <main id="konten" tabindex="-1" class="flex-1 focus:outline-none">
+      <slot />
+    </main>
+    <Footer locale={locale} alternates={alternates} />
+  </body>
+</html>

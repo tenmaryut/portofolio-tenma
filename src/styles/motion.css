@@ -1,0 +1,310 @@
+/*
+ * Animasi situs. Prinsipnya:
+ * - Konten selalu tampil tanpa JavaScript; semua animasi murni CSS, kecuali pemutar video studi kasus.
+ * - Semua animasi hanya aktif saat prefers-reduced-motion: no-preference. Saat "reduce", tidak ada
+ *   satu pun animasi atau transisi gerak yang didaftarkan (dibuktikan di tests/motion.spec.ts).
+ * - Yang dianimasikan hanya transform dan opacity, kecuali goresan tinta SVG (stroke-dashoffset)
+ *   yang memang diminta brief. Tidak ada yang memengaruhi tata letak (CLS tetap 0).
+ */
+
+:root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Stabilo dan coretan tinta di judul beranda. Tampilan akhirnya statis; animasinya hanya tambahan. */
+.stabilo {
+  position: relative;
+  z-index: 0;
+  white-space: nowrap;
+}
+
+.stabilo::before {
+  content: "";
+  position: absolute;
+  inset: 0.5em -0.1em 0.04em;
+  z-index: -1;
+  border-radius: 0.12em 0.3em 0.18em 0.25em;
+  background-color: var(--mark);
+  transform-origin: left center;
+}
+
+.ink-mark {
+  position: relative;
+  white-space: nowrap;
+}
+
+.ink-stroke {
+  position: absolute;
+  left: -3%;
+  bottom: -0.3em;
+  width: 106%;
+  height: 0.38em;
+  overflow: visible;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ink-stroke path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+/* Nama elemen untuk View Transitions native lintas dokumen. Ditulis di stylesheet (bukan lewat
+   directive transition:name Astro) karena <style> buatan directive itu tidak ikut di-hash CSP.
+   Screenshot kartu proyek berubah menjadi screenshot utama studi kasus; header tetap diam. */
+.site-header {
+  view-transition-name: site-header;
+}
+
+.vt-shot-company-profile-hukum {
+  view-transition-name: shot-company-profile-hukum;
+}
+
+.vt-shot-toko-online-umkm {
+  view-transition-name: shot-toko-online-umkm;
+}
+
+/* Kartu proyek: bingkai screenshot memotong gambar yang bergeser saat kartu disorot. */
+.shot-frame {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Transisi antarhalaman native (cross-document View Transitions). Browser tanpa dukungan
+     cukup berpindah halaman seperti biasa. */
+  @view-transition {
+    navigation: auto;
+  }
+
+  ::view-transition-old(root) {
+    animation: 160ms ease-in both vt-fade-out;
+  }
+
+  ::view-transition-new(root) {
+    animation: 320ms var(--ease-out) 60ms both vt-rise-in;
+  }
+
+  ::view-transition-group(shot-company-profile-hukum),
+  ::view-transition-group(shot-toko-online-umkm) {
+    animation-duration: 480ms;
+    animation-timing-function: var(--ease-in-out);
+  }
+
+  /* Hero: teks muncul bertahap. Judul dan paragraf pembuka hanya bergeser (tidak memudar),
+     jadi tetap terbaca sejak frame pertama dan tidak menunda LCP. */
+  .rise {
+    animation: rise 700ms var(--ease-out) both;
+  }
+
+  .rise-move {
+    animation: rise-move 800ms var(--ease-out) both;
+  }
+
+  .rise-delay-1 {
+    animation-delay: 90ms;
+  }
+
+  .rise-delay-2 {
+    animation-delay: 180ms;
+  }
+
+  .rise-delay-3 {
+    animation-delay: 270ms;
+  }
+
+  .rise-delay-4 {
+    animation-delay: 360ms;
+  }
+
+  .rise-card {
+    animation: rise-card 900ms var(--ease-out) 200ms both;
+  }
+
+  .stabilo::before {
+    animation: stabilo-sweep 650ms var(--ease-out) 520ms both;
+  }
+
+  .ink-stroke path {
+    animation: ink-draw 900ms var(--ease-in-out) 760ms both;
+  }
+
+  /* Bagian dan kartu muncul saat di-scroll: scroll-driven animation, tanpa JavaScript.
+     Browser yang belum mendukung langsung menampilkan kontennya. */
+  @supports (animation-timeline: view()) {
+    /* Sengaja longhand: minifier CSS menggabungkan shorthand + animation-timeline menjadi bentuk
+       yang ditolak browser. Durasi bawaan "auto" mengikuti rentang scroll. */
+    .reveal {
+      animation-name: reveal;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 75%;
+    }
+  }
+
+  /* Kartu proyek terangkat saat disorot atau difokus; screenshot bergeser pelan (parallax ringan). */
+  .project-card {
+    transition:
+      transform 320ms var(--ease-out),
+      box-shadow 320ms var(--ease-out);
+  }
+
+  .project-card .shot-media {
+    transform-origin: top center;
+    transition: transform 700ms var(--ease-out);
+  }
+
+  .project-card .stamp {
+    transition: transform 320ms var(--ease-out);
+  }
+
+  .project-card:focus-within {
+    transform: translateY(-6px);
+  }
+
+  .project-card:focus-within .shot-media {
+    transform: translateY(-3%) scale(1.05);
+  }
+
+  .project-card:focus-within .stamp {
+    transform: rotate(-11deg) scale(1.06);
+  }
+
+  @media (hover: hover) {
+    .project-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .project-card:hover .shot-media {
+      transform: translateY(-3%) scale(1.05);
+    }
+
+    .project-card:hover .stamp {
+      transform: rotate(-11deg) scale(1.06);
+    }
+  }
+
+  /* Micro-interaction: panah tautan dan tombol bergeser, tombol sedikit menekan saat diklik. */
+  .link-arrow svg,
+  .btn svg {
+    transition: transform 220ms var(--ease-out);
+  }
+
+  .link-arrow:hover svg,
+  .link-arrow:focus-visible svg,
+  .btn:hover svg,
+  .btn:focus-visible svg {
+    transform: translateX(3px);
+  }
+
+  .link-arrow:hover svg.icon-back,
+  .link-arrow:focus-visible svg.icon-back {
+    transform: translateX(-3px);
+  }
+
+  .btn:active {
+    transform: translateY(1px) scale(0.98);
+  }
+
+  /* Garis bawah tautan panah tumbuh dari kiri, menggantikan garis bawah biasa. */
+  .link-arrow {
+    position: relative;
+    text-decoration-line: none;
+  }
+
+  .link-arrow::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: calc(50% - 0.85em);
+    height: 2px;
+    border-radius: 1px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 260ms var(--ease-out);
+  }
+
+  .link-arrow:hover::after,
+  .link-arrow:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  /* Tombol tema: ikon berputar masuk hanya setelah diklik (atribut data-animate dari skrip),
+     bukan di setiap pemuatan halaman. */
+  .theme-toggle:active {
+    transform: scale(0.92);
+  }
+
+  .theme-toggle {
+    transition: transform 160ms var(--ease-out);
+  }
+
+  .theme-toggle[data-animate] svg {
+    animation: icon-spin-in 520ms var(--ease-out) both;
+  }
+}
+
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes vt-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@keyframes rise-move {
+  from {
+    transform: translateY(12px);
+  }
+}
+
+@keyframes rise-card {
+  from {
+    opacity: 0;
+    transform: translateY(18px) rotate(-1.2deg);
+  }
+}
+
+@keyframes stabilo-sweep {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes ink-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+}
+
+@keyframes icon-spin-in {
+  from {
+    opacity: 0;
+    transform: rotate(-120deg) scale(0.6);
+  }
+}

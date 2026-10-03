@@ -1,0 +1,225 @@
+---
+import { Image } from 'astro:assets';
+import { profile } from '../../config/profile';
+import { pageMeta, ogImagePath } from '../../data/pages';
+import { routes, type Locale } from '../../i18n/routes';
+import { useTranslations } from '../../i18n/ui';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../Icon.astro';
+import SectionLabel from '../SectionLabel.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const meta = pageMeta.about[locale];
+
+const copy = {
+  id: {
+    label: 'Tentang',
+    title: 'Dari ruang kuliah hukum ke editor kode',
+    photoAlt: `Foto ${profile.fullName ?? profile.displayName}`,
+    background: [
+      'Saya Tenma, mahasiswa Ilmu Hukum di Universitas Terbuka. Di sela kuliah, saya mulai mengerjakan website sebagai pekerjaan sampingan.',
+      'Belajar hukum membiasakan saya membaca aturan dengan teliti, menyusun argumen secara runtut, dan memikirkan risiko sebelum terjadi. Kebiasaan itu terbawa saat membuat website: kebutuhan dicatat dengan jelas, data pengguna diperlakukan hati-hati, dan setiap kesepakatan dituangkan secara tertulis.',
+      'Saya masih di awal perjalanan sebagai programmer. Karena itu, saya memilih menunjukkan bukti yang bisa dicek sendiri: situs demo yang benar-benar online, test otomatis, dan skor Lighthouse yang dicantumkan di setiap studi kasus.',
+    ],
+    aiNote:
+      'Proyek di situs ini saya kerjakan dengan bantuan asisten AI untuk coding (Claude Code). Kualitasnya tidak saya klaim begitu saja, tetapi dibuktikan lewat test otomatis dan pengukuran yang hasilnya bisa Anda lihat.',
+    workflowLabel: 'Alur kerja',
+    workflowTitle: 'Dari konsultasi sampai serah terima',
+    workflowIntro: 'Setiap proyek mengikuti alur yang sama, supaya Anda selalu tahu apa yang sedang dikerjakan dan apa yang sudah disepakati.',
+    steps: [
+      {
+        title: 'Konsultasi',
+        body: 'Kita bahas tujuan website, kebutuhan, contoh referensi, tenggat, dan kisaran anggaran.',
+      },
+      {
+        title: 'Penawaran dan perjanjian tertulis',
+        body: 'Saya kirim penawaran berisi lingkup kerja, jadwal, dan biaya. Setelah disetujui, kita tanda tangani perjanjian yang mengatur termin pembayaran, batas revisi, serah terima, kerahasiaan, dan kepemilikan hak cipta kode.',
+      },
+      {
+        title: 'Rancangan',
+        body: 'Struktur halaman dan desain awal disepakati sebelum coding dimulai.',
+      },
+      {
+        title: 'Pengembangan',
+        body: 'Website dibangun bertahap, dan progresnya bisa Anda lihat di alamat uji coba.',
+      },
+      {
+        title: 'Pengujian',
+        body: 'Test otomatis, pemeriksaan tampilan di ponsel dan desktop, serta pengukuran kecepatan dan aksesibilitas dengan Lighthouse.',
+      },
+      {
+        title: 'Serah terima',
+        body: 'Website dipasang di hosting Anda, lalu kode, akses, dan panduan singkat diserahkan sesuai perjanjian.',
+      },
+      {
+        title: 'Perawatan (opsional)',
+        body: 'Pembaruan keamanan, pencadangan, dan perbaikan kecil sesuai kesepakatan.',
+      },
+    ],
+    stackLabel: 'Stack',
+    stackTitle: 'Teknologi yang saya pakai',
+    stackIntro: 'Daftar ini hanya berisi teknologi yang sudah dipakai di proyek demo di situs ini.',
+    stackGroups: [
+      { name: 'Antarmuka', items: ['HTML & CSS', 'TypeScript', 'Astro', 'React', 'Next.js', 'Tailwind CSS'] },
+      { name: 'Backend & data', items: ['PHP', 'Laravel', 'Filament', 'Node.js', 'SQLite', 'Drizzle ORM', 'Zod'] },
+      { name: 'Pengujian & kualitas', items: ['Playwright', 'Vitest', 'PHPUnit', 'axe-core', 'Lighthouse'] },
+      { name: 'Server & alat', items: ['Linux (Ubuntu)', 'Caddy', 'systemd', 'Git'] },
+    ],
+  },
+  en: {
+    label: 'About',
+    title: 'From law school to the code editor',
+    photoAlt: `Photo of ${profile.fullName ?? profile.displayName}`,
+    background: [
+      'I’m Tenma, a law student at Universitas Terbuka. Alongside my studies, I have started building websites as side work.',
+      'Studying law has taught me to read rules carefully, build arguments step by step, and think about risks before they happen. Those habits carry over to web work: requirements are written down clearly, user data is handled with care, and every agreement is put in writing.',
+      'I am still early in my journey as a developer. That is why I prefer to show evidence you can check yourself: demo sites that are actually online, automated tests, and Lighthouse scores listed in every case study.',
+    ],
+    aiNote:
+      'I build the projects on this site with the help of an AI coding assistant (Claude Code). I don’t ask you to take their quality on faith; it is backed by automated tests and measurements whose results you can see.',
+    workflowLabel: 'Workflow',
+    workflowTitle: 'From consultation to handover',
+    workflowIntro: 'Every project follows the same steps, so you always know what is being worked on and what has been agreed.',
+    steps: [
+      {
+        title: 'Consultation',
+        body: 'We talk through the website’s goals, requirements, reference examples, deadline, and budget range.',
+      },
+      {
+        title: 'Proposal and written agreement',
+        body: 'I send a proposal covering scope, schedule, and cost. Once you approve it, we sign an agreement that sets out payment terms, revision limits, handover, confidentiality, and copyright ownership of the code.',
+      },
+      {
+        title: 'Design',
+        body: 'The page structure and initial design are agreed before any coding starts.',
+      },
+      {
+        title: 'Development',
+        body: 'The website is built in stages, and you can follow the progress on a staging address.',
+      },
+      {
+        title: 'Testing',
+        body: 'Automated tests, layout checks on phones and desktops, and speed and accessibility measurements with Lighthouse.',
+      },
+      {
+        title: 'Handover',
+        body: 'The website is deployed to your hosting, and the code, access, and a short guide are handed over as agreed.',
+      },
+      {
+        title: 'Maintenance (optional)',
+        body: 'Security updates, backups, and small fixes as agreed.',
+      },
+    ],
+    stackLabel: 'Stack',
+    stackTitle: 'The tools I use',
+    stackIntro: 'This list only includes technologies already used in the demo projects on this site.',
+    stackGroups: [
+      { name: 'Front end', items: ['HTML & CSS', 'TypeScript', 'Astro', 'React', 'Next.js', 'Tailwind CSS'] },
+      { name: 'Back end & data', items: ['PHP', 'Laravel', 'Filament', 'Node.js', 'SQLite', 'Drizzle ORM', 'Zod'] },
+      { name: 'Testing & quality', items: ['Playwright', 'Vitest', 'PHPUnit', 'axe-core', 'Lighthouse'] },
+      { name: 'Servers & tooling', items: ['Linux (Ubuntu)', 'Caddy', 'systemd', 'Git'] },
+    ],
+  },
+}[locale];
+---
+
+<BaseLayout
+  locale={locale}
+  title={meta.title}
+  description={meta.description}
+  alternates={routes.about}
+  ogImage={ogImagePath(locale, 'about')}
+  current="about"
+  pageType="ProfilePage"
+>
+  <div class="container-page py-12 md:py-20">
+    <div class="grid gap-10 md:grid-cols-[1fr_16rem] md:items-start lg:gap-16">
+      <div>
+        <SectionLabel number="04">{copy.label}</SectionLabel>
+        <h1 class="mt-3 text-4xl sm:text-5xl">{copy.title}</h1>
+        <div class="prose-page mt-6 text-lg text-muted">
+          {copy.background.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+        <p class="mt-6 max-w-[68ch] rounded-lg border border-line bg-surface p-4 text-[0.9375rem] text-muted">
+          <Icon name="code" size={18} class="mr-2 inline-block align-[-0.2em] text-accent" />
+          {copy.aiNote}
+        </p>
+      </div>
+      <div class="order-first md:order-none">
+        {
+          profile.photo ? (
+            <Image
+              src={profile.photo}
+              alt={copy.photoAlt}
+              widths={[256, 512]}
+              sizes="256px"
+              class="aspect-square w-40 rounded-2xl object-cover md:w-64"
+              loading="eager"
+            />
+          ) : (
+            <div
+              class="legal-pad grid aspect-square w-40 place-items-center rounded-2xl border border-line md:w-64"
+              aria-hidden="true"
+            >
+              <span class="font-display text-7xl font-semibold text-accent md:text-8xl">T</span>
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </div>
+
+  <section class="border-y border-line bg-surface-2/60 py-16 md:py-20" aria-labelledby="alur-kerja">
+    <div class="container-page">
+      <div class="reveal">
+        <SectionLabel number="4.1">{copy.workflowLabel}</SectionLabel>
+        <h2 id="alur-kerja" class="mt-3 text-3xl sm:text-4xl">{copy.workflowTitle}</h2>
+        <p class="mt-4 max-w-2xl text-muted">{copy.workflowIntro}</p>
+      </div>
+      <ol class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {
+          copy.steps.map((step, index) => (
+            <li class="reveal relative rounded-xl border border-line bg-surface p-5">
+              <span class="font-mono text-sm text-accent" aria-hidden="true">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <h3 class="mt-2 text-xl">{step.title}</h3>
+              <p class="mt-2 text-[0.9375rem] text-muted">{step.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="container-page py-16 md:py-20" aria-labelledby="stack">
+    <div class="reveal">
+      <SectionLabel number="4.2">{copy.stackLabel}</SectionLabel>
+      <h2 id="stack" class="mt-3 text-3xl sm:text-4xl">{copy.stackTitle}</h2>
+      <p class="mt-4 max-w-2xl text-muted">{copy.stackIntro}</p>
+    </div>
+    <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        copy.stackGroups.map((group) => (
+          <div class="reveal rounded-xl border border-line bg-surface p-5">
+            <h3 class="label-pasal">{group.name}</h3>
+            <ul class="mt-3 flex flex-wrap gap-1.5">
+              {group.items.map((item) => (
+                <li class="chip">{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+    <a href={routes.contact[locale]} class="btn btn-primary mt-10">
+      {t.cta.contact}
+      <Icon name="arrow-right" size={18} />
+    </a>
+  </section>
+</BaseLayout>

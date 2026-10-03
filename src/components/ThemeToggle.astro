@@ -1,0 +1,77 @@
+---
+import type { Locale } from '../i18n/routes';
+import { useTranslations } from '../i18n/ui';
+import Icon from './Icon.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const t = useTranslations(Astro.props.locale);
+---
+
+<button
+  type="button"
+  class="theme-toggle inline-flex size-11 items-center justify-center rounded border border-line text-ink hover:bg-surface-2"
+  aria-label={t.theme.toggle}
+  aria-pressed="false"
+  data-theme-toggle
+>
+  <Icon name="moon" class="icon-moon" />
+  <Icon name="sun" class="icon-sun" />
+</button>
+
+<style>
+  .theme-toggle :global(.icon-sun) {
+    display: none;
+  }
+
+  :global([data-theme='dark']) .theme-toggle :global(.icon-sun) {
+    display: block;
+  }
+
+  :global([data-theme='dark']) .theme-toggle :global(.icon-moon) {
+    display: none;
+  }
+</style>
+
+<script>
+  type Theme = 'light' | 'dark';
+  const root = document.documentElement;
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]');
+
+  const readStored = (): Theme | null => {
+    try {
+      const value = localStorage.getItem('theme');
+      return value === 'dark' || value === 'light' ? value : null;
+    } catch {
+      return null;
+    }
+  };
+
+  const apply = (theme: Theme) => {
+    root.dataset.theme = theme;
+    buttons.forEach((button) => button.setAttribute('aria-pressed', String(theme === 'dark')));
+  };
+
+  apply(root.dataset.theme === 'dark' ? 'dark' : 'light');
+
+  buttons.forEach((button) =>
+    button.addEventListener('click', () => {
+      const next: Theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      apply(next);
+      // Ikon baru berputar masuk (motion.css); atributnya dilepas setelah animasi selesai.
+      button.setAttribute('data-animate', '');
+      window.setTimeout(() => button.removeAttribute('data-animate'), 600);
+      try {
+        localStorage.setItem('theme', next);
+      } catch {
+        // Penyimpanan diblokir (mis. mode privat): tema tetap berganti untuk halaman ini.
+      }
+    }),
+  );
+
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
+    if (!readStored()) apply(event.matches ? 'dark' : 'light');
+  });
+</script>

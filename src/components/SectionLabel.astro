@@ -1,0 +1,13 @@
+---
+// Label bagian bergaya pasal undang-undang: "§ 01 · Proyek".
+interface Props {
+  number?: string;
+  class?: string;
+}
+
+const { number, class: className } = Astro.props;
+---
+
+<p class:list={['label-pasal', className]}>
+  <span aria-hidden="true">§ {number ? `${number} · ` : ''}</span><slot />
+</p>

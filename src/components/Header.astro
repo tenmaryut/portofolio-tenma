@@ -1,0 +1,148 @@
+---
+import { routes, type Alternates, type Locale, type RouteKey } from '../i18n/routes';
+import { useTranslations } from '../i18n/ui';
+import Icon from './Icon.astro';
+import LanguageSwitch from './LanguageSwitch.astro';
+import ThemeToggle from './ThemeToggle.astro';
+
+interface Props {
+  locale: Locale;
+  alternates?: Alternates;
+  current?: RouteKey;
+}
+
+const { locale, alternates, current } = Astro.props;
+const t = useTranslations(locale);
+const items: { key: RouteKey; label: string }[] = [
+  { key: 'projects', label: t.nav.projects },
+  { key: 'services', label: t.nav.services },
+  { key: 'about', label: t.nav.about },
+  { key: 'contact', label: t.nav.contact },
+];
+---
+
+<header class="site-header sticky top-0 z-40 border-b border-line bg-paper">
+  <div class="container-page flex min-h-16 flex-wrap items-center gap-x-2 gap-y-1 py-2 md:flex-nowrap">
+    <a
+      href={routes.home[locale]}
+      class="mr-auto inline-flex min-h-11 items-center gap-2 rounded font-display text-2xl font-semibold tracking-tight no-underline md:mr-0"
+      aria-current={current === 'home' ? 'page' : undefined}
+    >
+      <span aria-hidden="true" class="font-mono text-lg text-accent">§</span>
+      <span>Tenma<span class="sr-only">, {t.nav.home}</span></span>
+    </a>
+
+    <nav id="site-nav" aria-label={t.nav.label} class="site-nav order-last w-full md:order-none md:ml-auto md:w-auto">
+      <ul class="flex flex-wrap gap-x-1 gap-y-0 pb-2 md:flex-nowrap md:pb-0">
+        {
+          items.map((item) => (
+            <li>
+              <a
+                href={routes[item.key][locale]}
+                aria-current={current === item.key ? 'page' : undefined}
+                class="nav-link inline-flex min-h-11 items-center rounded px-3 font-medium no-underline"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-1 md:ml-2">
+      {alternates && <LanguageSwitch locale={locale} alternates={alternates} />}
+      <ThemeToggle locale={locale} />
+      <button
+        type="button"
+        class="menu-toggle hidden size-11 items-center justify-center rounded border border-line"
+        aria-controls="site-nav"
+        aria-expanded="false"
+        data-label-open={t.nav.openMenu}
+        data-label-close={t.nav.closeMenu}
+        aria-label={t.nav.openMenu}
+      >
+        <Icon name="menu" class="icon-open" />
+        <Icon name="close" class="icon-close hidden" />
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .nav-link {
+    color: var(--muted);
+  }
+
+  .nav-link:hover {
+    color: var(--ink);
+    background-color: var(--surface-2);
+  }
+
+  .nav-link[aria-current='page'] {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.45em;
+  }
+
+  /* Dengan JavaScript, menu di layar kecil dilipat di balik tombol. Tanpa JavaScript, tautan tetap tampil. */
+  @media (max-width: 767.98px) {
+    :global(.js) .site-nav {
+      display: none;
+    }
+
+    :global(.js) .site-nav[data-open] {
+      display: block;
+    }
+
+    :global(.js) .site-nav[data-open] ul {
+      flex-direction: column;
+      padding-block: 0.25rem 0.75rem;
+    }
+
+    :global(.js) .site-nav[data-open] .nav-link {
+      width: 100%;
+      font-size: 1.0625rem;
+    }
+
+    :global(.js) .menu-toggle {
+      display: inline-flex;
+    }
+  }
+
+  .menu-toggle[aria-expanded='true'] :global(.icon-open) {
+    display: none;
+  }
+
+  .menu-toggle[aria-expanded='true'] :global(.icon-close) {
+    display: block;
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const nav = document.getElementById('site-nav');
+
+  if (toggle && nav) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', (open ? toggle.dataset.labelClose : toggle.dataset.labelOpen) ?? '');
+      nav.toggleAttribute('data-open', open);
+    };
+
+    toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+
+    matchMedia('(min-width: 768px)').addEventListener('change', (event) => {
+      if (event.matches) setOpen(false);
+    });
+  }
+</script>
