@@ -1,8 +1,8 @@
 [
   {
     "name": "hukum-beranda",
-    "url": "https://hukum.example/",
-    "fetchTime": "2026-10-02T17:47:51.770Z",
+    "url": "https://hukum.tail482cb9.ts.net/",
+    "fetchTime": "2026-10-03T03:32:23.740Z",
     "lighthouseVersion": "13.5.0",
     "formFactor": "mobile",
     "scores": {
@@ -13,14 +13,14 @@
     },
     "metrics": {
       "cls": 0,
-      "lcpMs": 1206,
-      "tbtMs": 0
+      "lcpMs": 1167,
+      "tbtMs": 80
     }
   },
   {
     "name": "hukum-artikel",
-    "url": "https://hukum.example/artikel/kuhp-nasional-pokok-perubahan",
-    "fetchTime": "2026-10-02T17:48:05.019Z",
+    "url": "https://hukum.tail482cb9.ts.net/artikel/kuhp-nasional-pokok-perubahan",
+    "fetchTime": "2026-10-03T03:32:37.715Z",
     "lighthouseVersion": "13.5.0",
     "formFactor": "mobile",
     "scores": {
@@ -31,14 +31,14 @@
     },
     "metrics": {
       "cls": 0,
-      "lcpMs": 1057,
-      "tbtMs": 0
+      "lcpMs": 1292,
+      "tbtMs": 8
     }
   },
   {
     "name": "toko-beranda",
-    "url": "https://toko.example/",
-    "fetchTime": "2026-10-02T17:48:18.171Z",
+    "url": "https://toko.tail482cb9.ts.net/",
+    "fetchTime": "2026-10-03T03:32:51.324Z",
     "lighthouseVersion": "13.5.0",
     "formFactor": "mobile",
     "scores": {
@@ -49,26 +49,26 @@
     },
     "metrics": {
       "cls": 0,
-      "lcpMs": 1663,
-      "tbtMs": 311
+      "lcpMs": 1829,
+      "tbtMs": 306
     }
   },
   {
     "name": "toko-produk",
-    "url": "https://toko.example/produk/kopi-arabika-lereng-pagi",
-    "fetchTime": "2026-10-02T17:48:33.126Z",
+    "url": "https://toko.tail482cb9.ts.net/produk/kopi-arabika-lereng-pagi",
+    "fetchTime": "2026-10-03T03:33:07.605Z",
     "lighthouseVersion": "13.5.0",
     "formFactor": "mobile",
     "scores": {
-      "performance": 95,
+      "performance": 94,
       "accessibility": 100,
       "best-practices": 100,
       "seo": 100
     },
     "metrics": {
       "cls": 0,
-      "lcpMs": 2182,
-      "tbtMs": 230
+      "lcpMs": 2195,
+      "tbtMs": 245
     }
   }
 ]

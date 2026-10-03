@@ -17,9 +17,10 @@
 	}
 }
 
-# Baris pertama blok situs wajib "import gerbang_staging": gerbang kata sandi selama alamat masih
-# staging (snippet dikelola agen utama di /etc/caddy/Caddyfile).
-# Mode tunnel (Tailscale Funnel): TLS ditangani Funnel; Caddy melayani HTTP polos di localhost.
+# Baris pertama blok situs wajib "import gerbang_staging" (snippet dikelola agen utama di
+# /etc/caddy/Caddyfile; kini membuang header identitas akun Tailscale sebelum sampai ke situs).
+# Mode tunnel (Tailscale Funnel): TLS ditangani Funnel; Caddy melayani HTTP polos di localhost dan
+# hanya mempercayai X-Forwarded-For dari 127.0.0.1. Situs statis ini tidak memakai cookie atau rate limit.
 http://__PORTOFOLIO_HOST__ {
 	import gerbang_staging
 	root * /srv/web/portofolio-tenma

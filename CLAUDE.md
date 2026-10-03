@@ -5,7 +5,8 @@ Situs portofolio pribadi Tenma (programmer web sampingan, mahasiswa Ilmu Hukum U
 ## Stack dan perintah
 - Astro 7 (output statis) + Tailwind CSS 4 + TypeScript 6 (sengaja v6: `@astrojs/check` belum mendukung TS 7).
 - `npm run dev` (port 4321), `npm run build` (astro check + build), `npm test` (Playwright, otomatis `astro preview`), `npm run test:live`, `npm run lighthouse` (skor ≥ 95, CLS ≤ 0.1), `npm run screenshots`, `npm run record:animations`, `npm run capture:projects`, `npm run check:domain`, `npm run deploy` (root; build → `/srv/web/portofolio-tenma` → Caddy).
-- Caddy: sumbernya `deploy/portofolio-tenma.caddy.template` (host dari `PORTOFOLIO_URL`, baris pertama blok situs `import gerbang_staging`), dirender ke `/etc/caddy/sites/` oleh skrip deploy. Jangan sentuh file Caddy atau folder proyek lain.
+- Caddy: sumbernya `deploy/portofolio-tenma.caddy.template` (alamat `http://<host dari PORTOFOLIO_URL>` karena mode tunnel, baris pertama blok situs `import gerbang_staging`), dirender ke `/etc/caddy/sites/` oleh skrip deploy. Jangan sentuh file Caddy atau folder proyek lain.
+- Mode tunnel: publik lewat Tailscale Funnel (TLS di Funnel), Caddy hanya di localhost dan mempercayai `X-Forwarded-For` dari 127.0.0.1. Situs statis tanpa cookie/rate limit; kalau menambah form atau cookie, pakai IP dari proxy 127.0.0.1 saja, cookie `Secure`, dan jangan bergantung pada header `Tailscale-User-*`. Bukti: `npm run cek:proxy` dan `tests/proxy.spec.ts`.
 - Alamat situs hanya dari `/root/tenma-ws/portofolio/domain.env` lewat `src/config/domain.ts`. Jangan menulis alamat staging atau IP server di kode, konten, konfigurasi, maupun file deploy (folder `docs/` dikecualikan); cek dengan `npm run check:domain`.
 
 ## Konvensi

@@ -15,7 +15,6 @@ import { homedir, tmpdir } from 'node:os';
 import { basename, join } from 'node:path';
 import { promisify } from 'node:util';
 import sharp from 'sharp';
-import { PORTOFOLIO_URL } from '../src/config/domain.ts';
 
 const run = promisify(execFile);
 const denylistPath = process.env.DENYLIST ?? join(homedir(), '.config', 'git', 'denylist-publik');
@@ -46,21 +45,32 @@ log('# Audit repo publik');
 log(`Tanggal: ${new Date().toISOString()}`);
 log(`Denylist: ${patterns.length} pola dari ${denylistPath.replace(homedir(), '~')}`);
 
-// 0. Kontrol positif: gambar uji berisi alamat dari domain.env harus terdeteksi, membuktikan OCR dan
-// pola longgarnya bekerja. Alamatnya sendiri tidak dicetak ke laporan.
+// 0. Kontrol positif: gambar uji berisi contoh teks yang dibentuk dari pola denylist (mis. pemisah
+// [.-] menjadi "-") harus terdeteksi OCR, membuktikan OCR dan pola longgarnya bekerja. Contohnya hanya
+// ada di memori dan gambar sementara, tidak dicetak ke laporan.
 log('');
 log('## 0. Kontrol positif OCR');
-const stagingHost = new URL(PORTOFOLIO_URL).host;
-if (patterns.some((pattern) => new RegExp(pattern, 'i').test(stagingHost))) {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="220"><rect width="100%" height="100%" fill="#fff"/><text x="40" y="130" font-family="DejaVu Sans, sans-serif" font-size="54" fill="#1b2230">${stagingHost}</text></svg>`;
+const samples = patterns
+  .map((pattern) => pattern.replaceAll('[.-]', '-').replaceAll('\\.', '.'))
+  .filter((sample, index) => /^[\w.:-]+$/.test(sample) && new RegExp(patterns[index], 'i').test(sample));
+if (samples.length === 0) {
+  failures++;
+  log('GAGAL: tidak ada pola denylist yang bisa dijadikan contoh teks.');
+} else {
+  const lines = samples.map(
+    (sample, i) => `<text x="40" y="${110 + i * 90}" font-family="DejaVu Sans, sans-serif" font-size="54" fill="#1b2230">contoh ${sample}</text>`,
+  );
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="${80 + samples.length * 90}"><rect width="100%" height="100%" fill="#fff"/>${lines.join('')}</svg>`;
   const controlFile = join(tmp, 'kontrol.png');
   await sharp(Buffer.from(svg)).png().toFile(controlFile);
   const controlText = await ocr(controlFile);
-  const detected = ocrPatterns.some((pattern) => pattern.test(controlText));
-  if (!detected) failures++;
-  log(detected ? 'Terdeteksi: gambar uji berisi alamat staging dari domain.env ditangkap OCR.' : 'GAGAL: OCR tidak menangkap alamat staging pada gambar uji.');
-} else {
-  log('Dilewati: alamat di domain.env bukan alamat staging (tidak cocok dengan denylist).');
+  const missed = samples.filter((sample) => !ocrPatterns.some((pattern, i) => new RegExp(patterns[i], 'i').test(sample) && pattern.test(controlText)));
+  if (missed.length > 0) failures++;
+  log(
+    missed.length === 0
+      ? `Terdeteksi: ${samples.length} contoh teks dari pola denylist pada gambar uji ditangkap OCR.`
+      : `GAGAL: ${missed.length} dari ${samples.length} contoh teks tidak tertangkap OCR.`,
+  );
 }
 
 // 1. Teks di semua file terlacak.

@@ -22,7 +22,8 @@
     "check:domain": "bash scripts/check-domain.sh",
     "record:animations": "node scripts/record-animations.mjs",
     "import:videos": "node scripts/import-demo-videos.mjs",
-    "audit:publik": "node scripts/audit-publik.mjs"
+    "audit:publik": "node scripts/audit-publik.mjs",
+    "cek:proxy": "bash scripts/cek-proxy.sh"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

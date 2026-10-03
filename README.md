@@ -64,6 +64,7 @@ npm run record:animations                               # rekaman WebM animasi u
 npm run import:videos                                   # salin cuplikan WebM situs demo (docs/animasi/ mereka) ke public/video/
 npm run check:domain                                    # pastikan tidak ada alamat staging/IP di luar docs/
 npm run audit:publik                                    # audit rilis publik: git grep + OCR gambar, video, laporan, gambar OG
+npm run cek:proxy                                       # bukti aman di balik proxy: cookie, URL https, redirect, X-Forwarded-For
 ```
 
 ## Rilis publik
@@ -89,17 +90,24 @@ npm run deploy
 
 Skrip `scripts/deploy.sh` menjalankan `npm run build`, menyalin `dist/` ke `/srv/web/portofolio-tenma` dengan rsync, merender `deploy/portofolio-tenma.caddy.template` (host diambil dari `PORTOFOLIO_URL`) ke `/etc/caddy/sites/portofolio-tenma.caddy` kalau berubah (divalidasi dulu dengan `caddy validate`, lalu `systemctl reload caddy`), dan terakhir mengecek `curl -I` ke `PORTOFOLIO_URL`.
 
-Baris pertama blok situs di file Caddy adalah `import gerbang_staging`: selama alamat masih staging, pengunjung dari luar server diminta kata sandi (snippet dikelola agen utama di `/etc/caddy/Caddyfile`), sedangkan test dan Lighthouse yang berjalan di server ini lolos tanpa sandi.
+Baris pertama blok situs di file Caddy adalah `import gerbang_staging` (snippet dikelola agen utama di `/etc/caddy/Caddyfile`, kini membuang header identitas akun Tailscale).
 
-Caddy memberi HTTPS otomatis, kompresi zstd/gzip, header keamanan (HSTS, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, `X-Frame-Options`, CSP `frame-ancestors`), cache satu tahun untuk aset ber-hash di `/_astro/`, dan halaman 404 sesuai bahasa. Sumber script dan style dibatasi `<meta>` CSP berbasis hash yang dibuat Astro di tiap halaman.
+## Di balik proxy (Tailscale Funnel)
+
+Situs dibuka publik lewat Tailscale Funnel di alamat `PORTOFOLIO_URL`. Funnel menangani TLS dan meneruskan ke Caddy di `http://127.0.0.1:80`; Caddy hanya mendengarkan localhost dan hanya mempercayai `X-Forwarded-For` dari 127.0.0.1. Karena itu template Caddy memakai alamat `http://<host>`.
+
+Situs ini statis, jadi tidak ada yang bergantung pada proxy: tidak ada cookie (pilihan tema disimpan di `localStorage`), tidak ada form atau rate limit yang memakai IP pengunjung, semua URL absolut (canonical, hreflang, Open Graph, sitemap) memakai https dari `domain.env`, dan redirect garis miring akhir dari Caddy bersifat relatif. Buktinya: `tests/proxy.spec.ts` (ikut `npm run test:live`) dan `npm run cek:proxy` (memeriksa Set-Cookie di semua halaman, URL `http://` di hasil build, redirect, serta permintaan dengan `X-Forwarded-For` sama dan berbeda ke `http://127.0.0.1:80`). Kalau nanti ada form atau cookie, ambil IP pengunjung hanya dari proxy 127.0.0.1, beri cookie atribut `Secure`, dan jangan bergantung pada header `Tailscale-User-*`.
+
+Dari server ini, nama host situs diarahkan ke relay Funnel yang berfungsi lewat `/etc/hosts` (dikelola agen utama), jadi test dan Lighthouse dari server tetap melewati jalur publik.
+
+Caddy memberi kompresi zstd/gzip, header keamanan (HSTS, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, `X-Frame-Options`, CSP `frame-ancestors`), cache satu tahun untuk aset ber-hash di `/_astro/`, dan halaman 404 sesuai bahasa; HTTPS ditangani Tailscale Funnel. Sumber script dan style dibatasi `<meta>` CSP berbasis hash yang dibuat Astro di tiap halaman.
 
 ## Pindah domain
 
 Alamat situs ini dan dua situs demo hanya diambil dari `/root/tenma-ws/portofolio/domain.env` (`PORTOFOLIO_URL`, `HUKUM_URL`, `TOKO_URL`), dibaca oleh `src/config/domain.ts` saat build, test, dan deploy. Tidak ada alamat yang ditulis langsung di kode.
 
-1. Arahkan DNS domain baru ke server, lalu ubah nilai di `domain.env`.
-2. Deploy ulang: `npm run deploy` (build ulang canonical, sitemap, gambar OG, dan tautan demo, lalu merender ulang file Caddy dengan host baru).
-3. Reload Caddy kalau perlu: `systemctl reload caddy` (skrip deploy sudah melakukannya saat file Caddy berubah). Caddy otomatis mengambil sertifikat HTTPS untuk host baru.
-4. Opsional: `npm run capture:projects` kalau tampilan situs demo ikut berubah, lalu `npm run test:live` dan `npm run lighthouse`.
+1. Siapkan jalur masuk untuk host baru (saat ini Tailscale Funnel yang diatur agen utama; kalau nanti memakai domain sendiri tanpa tunnel, kembalikan alamat di template Caddy ke host tanpa `http://` supaya Caddy mengurus sertifikat HTTPS sendiri), lalu ubah nilai di `domain.env`.
+2. Deploy ulang: `npm run deploy` (build ulang canonical, sitemap, gambar OG, dan tautan demo, lalu merender ulang file Caddy dengan host baru dan memuat ulang Caddy).
+3. Periksa: `npm run test:live`, `npm run lighthouse`, dan `npm run cek:proxy`. Opsional: `npm run capture:projects` kalau tampilan situs demo ikut berubah.
 
 Untuk sementara atau di komputer lain, lokasi file bisa diganti dengan `DOMAIN_ENV=/path/ke/domain.env`, atau tiap alamat ditimpa lewat variabel lingkungan bernama sama.

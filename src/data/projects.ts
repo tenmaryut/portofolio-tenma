@@ -307,7 +307,7 @@ export const projects: Project[] = [
         {
           page: { id: 'Halaman produk', en: 'Product page' },
           url: `${TOKO_URL}/produk/kopi-arabika-lereng-pagi`,
-          performance: 95,
+          performance: 94,
           accessibility: 100,
           bestPractices: 100,
           seo: 100,

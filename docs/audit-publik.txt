@@ -1,12 +1,12 @@
 # Audit repo publik
-Tanggal: 2026-10-03T02:32:09.271Z
+Tanggal: 2026-10-03T03:42:08.197Z
 Denylist: 3 pola dari ~/.config/git/denylist-publik
 
 ## 0. Kontrol positif OCR
-Terdeteksi: gambar uji berisi alamat staging dari domain.env ditangkap OCR.
+Terdeteksi: 3 contoh teks dari pola denylist pada gambar uji ditangkap OCR.
 
 ## 1. git grep pola denylist (semua file terlacak)
-Bersih: 0 kecocokan di 174 file terlacak.
+Bersih: 0 kecocokan di 176 file terlacak.
 
 ## 2. OCR gambar terlacak
 bersih  docs/animasi/hero-beranda.png  (514 karakter OCR)
@@ -25,7 +25,7 @@ bersih  docs/screenshots/en/contact-1440.jpg  (1113 karakter OCR)
 bersih  docs/screenshots/en/contact-360.jpg  (1087 karakter OCR)
 bersih  docs/screenshots/en/contact-768.jpg  (1107 karakter OCR)
 bersih  docs/screenshots/en/home-1440-gelap.jpg  (3793 karakter OCR)
-bersih  docs/screenshots/en/home-1440.jpg  (3305 karakter OCR)
+bersih  docs/screenshots/en/home-1440.jpg  (3345 karakter OCR)
 bersih  docs/screenshots/en/home-360-gelap.jpg  (3804 karakter OCR)
 bersih  docs/screenshots/en/home-360.jpg  (3729 karakter OCR)
 bersih  docs/screenshots/en/home-768.jpg  (3667 karakter OCR)
@@ -37,8 +37,8 @@ bersih  docs/screenshots/en/projects-company-profile-hukum-1440.jpg  (6450 karak
 bersih  docs/screenshots/en/projects-company-profile-hukum-360-gelap.jpg  (5526 karakter OCR)
 bersih  docs/screenshots/en/projects-company-profile-hukum-360.jpg  (6114 karakter OCR)
 bersih  docs/screenshots/en/projects-company-profile-hukum-768.jpg  (6388 karakter OCR)
-bersih  docs/screenshots/en/projects-toko-online-umkm-1440.jpg  (5723 karakter OCR)
-bersih  docs/screenshots/en/projects-toko-online-umkm-360.jpg  (5094 karakter OCR)
+bersih  docs/screenshots/en/projects-toko-online-umkm-1440.jpg  (5722 karakter OCR)
+bersih  docs/screenshots/en/projects-toko-online-umkm-360.jpg  (5098 karakter OCR)
 bersih  docs/screenshots/en/projects-toko-online-umkm-768.jpg  (5785 karakter OCR)
 bersih  docs/screenshots/en/services-1440.jpg  (3109 karakter OCR)
 bersih  docs/screenshots/en/services-360.jpg  (3204 karakter OCR)
@@ -67,7 +67,7 @@ bersih  docs/screenshots/id/proyek-company-profile-hukum-360.jpg  (5952 karakter
 bersih  docs/screenshots/id/proyek-company-profile-hukum-768.jpg  (6226 karakter OCR)
 bersih  docs/screenshots/id/proyek-toko-online-umkm-1440.jpg  (5602 karakter OCR)
 bersih  docs/screenshots/id/proyek-toko-online-umkm-360.jpg  (4874 karakter OCR)
-bersih  docs/screenshots/id/proyek-toko-online-umkm-768.jpg  (5706 karakter OCR)
+bersih  docs/screenshots/id/proyek-toko-online-umkm-768.jpg  (5704 karakter OCR)
 bersih  docs/screenshots/id/tentang-1440.jpg  (2681 karakter OCR)
 bersih  docs/screenshots/id/tentang-360.jpg  (2870 karakter OCR)
 bersih  docs/screenshots/id/tentang-768.jpg  (2678 karakter OCR)
@@ -148,7 +148,7 @@ bersih  public/video/toko-online-umkm.webm @ 11 dtk  (860 karakter OCR)
 Ringkas: 64 diperiksa, 0 temuan.
 
 ## 4. OCR screenshot di laporan Lighthouse terlacak
-bersih  docs/lighthouse/beranda.report.html #0  (405 karakter OCR)
+bersih  docs/lighthouse/beranda.report.html #0  (369 karakter OCR)
 bersih  docs/lighthouse/beranda.report.html #1  (433 karakter OCR)
 bersih  docs/lighthouse/beranda.report.html #2  (417 karakter OCR)
 bersih  docs/lighthouse/beranda.report.html #3  (408 karakter OCR)
@@ -158,7 +158,7 @@ bersih  docs/lighthouse/beranda.report.html #6  (408 karakter OCR)
 bersih  docs/lighthouse/beranda.report.html #7  (408 karakter OCR)
 bersih  docs/lighthouse/beranda.report.html #8  (408 karakter OCR)
 bersih  docs/lighthouse/beranda.report.html #9  (3796 karakter OCR)
-bersih  docs/lighthouse/proyek-demo/hukum-artikel.report.html #0  (407 karakter OCR)
+bersih  docs/lighthouse/proyek-demo/hukum-artikel.report.html #0  (0 karakter OCR)
 bersih  docs/lighthouse/proyek-demo/hukum-artikel.report.html #1  (407 karakter OCR)
 bersih  docs/lighthouse/proyek-demo/hukum-artikel.report.html #2  (407 karakter OCR)
 bersih  docs/lighthouse/proyek-demo/hukum-artikel.report.html #3  (407 karakter OCR)
@@ -168,10 +168,10 @@ bersih  docs/lighthouse/proyek-demo/hukum-artikel.report.html #6  (407 karakter 
 bersih  docs/lighthouse/proyek-demo/hukum-artikel.report.html #7  (407 karakter OCR)
 bersih  docs/lighthouse/proyek-demo/hukum-artikel.report.html #8  (407 karakter OCR)
 bersih  docs/lighthouse/proyek-demo/hukum-artikel.report.html #9  (9767 karakter OCR)
-bersih  docs/lighthouse/proyek-demo/hukum-beranda.report.html #0  (63 karakter OCR)
-bersih  docs/lighthouse/proyek-demo/hukum-beranda.report.html #1  (333 karakter OCR)
-bersih  docs/lighthouse/proyek-demo/hukum-beranda.report.html #2  (436 karakter OCR)
-bersih  docs/lighthouse/proyek-demo/hukum-beranda.report.html #3  (430 karakter OCR)
+bersih  docs/lighthouse/proyek-demo/hukum-beranda.report.html #0  (0 karakter OCR)
+bersih  docs/lighthouse/proyek-demo/hukum-beranda.report.html #1  (119 karakter OCR)
+bersih  docs/lighthouse/proyek-demo/hukum-beranda.report.html #2  (335 karakter OCR)
+bersih  docs/lighthouse/proyek-demo/hukum-beranda.report.html #3  (436 karakter OCR)
 bersih  docs/lighthouse/proyek-demo/hukum-beranda.report.html #4  (430 karakter OCR)
 bersih  docs/lighthouse/proyek-demo/hukum-beranda.report.html #5  (430 karakter OCR)
 bersih  docs/lighthouse/proyek-demo/hukum-beranda.report.html #6  (430 karakter OCR)
@@ -188,7 +188,7 @@ bersih  docs/lighthouse/proyek-demo/toko-beranda.report.html #6  (409 karakter O
 bersih  docs/lighthouse/proyek-demo/toko-beranda.report.html #7  (409 karakter OCR)
 bersih  docs/lighthouse/proyek-demo/toko-beranda.report.html #8  (409 karakter OCR)
 bersih  docs/lighthouse/proyek-demo/toko-beranda.report.html #9  (2933 karakter OCR)
-bersih  docs/lighthouse/proyek-demo/toko-produk.report.html #0  (160 karakter OCR)
+bersih  docs/lighthouse/proyek-demo/toko-produk.report.html #0  (0 karakter OCR)
 bersih  docs/lighthouse/proyek-demo/toko-produk.report.html #1  (160 karakter OCR)
 bersih  docs/lighthouse/proyek-demo/toko-produk.report.html #2  (160 karakter OCR)
 bersih  docs/lighthouse/proyek-demo/toko-produk.report.html #3  (160 karakter OCR)
@@ -207,7 +207,7 @@ bersih  docs/lighthouse/studi-kasus.report.html #5  (444 karakter OCR)
 bersih  docs/lighthouse/studi-kasus.report.html #6  (444 karakter OCR)
 bersih  docs/lighthouse/studi-kasus.report.html #7  (444 karakter OCR)
 bersih  docs/lighthouse/studi-kasus.report.html #8  (444 karakter OCR)
-bersih  docs/lighthouse/studi-kasus.report.html #9  (5812 karakter OCR)
+bersih  docs/lighthouse/studi-kasus.report.html #9  (6021 karakter OCR)
 Ringkas: 60 diperiksa, 0 temuan.
 
 ## 5. OCR gambar Open Graph hasil build (dist/og)
