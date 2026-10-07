@@ -22,6 +22,16 @@ async function trackViewTransitions(page: Page) {
   });
 }
 
+/**
+ * Nilai yang dicatat trackViewTransitions. pagereveal terjadi pada kesempatan render pertama, yang saat CPU
+ * sibuk bisa datang setelah load, jadi nilainya ditunggu dengan expect.poll, bukan dibaca sekali.
+ */
+function viewTransitionUsed(page: Page) {
+  return page
+    .evaluate(() => (window as unknown as { viewTransitionUsed?: boolean }).viewTransitionUsed)
+    .catch(() => undefined);
+}
+
 async function openFirstCaseStudyFromProjects(page: Page) {
   await page.goto(routes.projects.id);
   await page.getByRole('heading', { level: 2, name: firstProject.name.id }).getByRole('link').click();
@@ -88,7 +98,7 @@ test.describe('animasi aktif (tanpa preferensi reduced motion)', () => {
   test('pindah halaman memakai View Transition dan screenshot kartu berubah menjadi gambar studi kasus', async ({ page }) => {
     await trackViewTransitions(page);
     await openFirstCaseStudyFromProjects(page);
-    expect(await page.evaluate(() => (window as unknown as { viewTransitionUsed?: boolean }).viewTransitionUsed)).toBe(true);
+    await expect.poll(() => viewTransitionUsed(page)).toBe(true);
 
     const name = `shot-${firstProject.slug}`;
     await expect(page.locator(`.vt-shot-${firstProject.slug}`)).toHaveCSS('view-transition-name', name);
@@ -120,13 +130,21 @@ test.describe('animasi aktif (tanpa preferensi reduced motion)', () => {
 
   test('tombol tema memutar ikonnya saat diklik', async ({ page }) => {
     await page.goto('/');
-    const toggle = page.locator('[data-theme-toggle]');
-    await toggle.click();
-    await expect(toggle).toHaveAttribute('data-animate', '');
-    const names = await page.evaluate(() =>
-      document.getAnimations().map((animation) => (animation as CSSAnimation).animationName),
-    );
-    expect(names).toContain('icon-spin-in');
+    // Skrip melepas data-animate 600 ms setelah klik. Di CPU yang sibuk, animasi yang sedang jalan bisa
+    // sudah selesai saat diperiksa, jadi atribut dan animationstart dicatat di halaman sejak sebelum klik.
+    await page.evaluate(() => {
+      const log: string[] = [];
+      (window as unknown as { tombolTema: string[] }).tombolTema = log;
+      const toggle = document.querySelector('[data-theme-toggle]')!;
+      new MutationObserver(() => {
+        if (toggle.hasAttribute('data-animate')) log.push('data-animate');
+      }).observe(toggle, { attributeFilter: ['data-animate'] });
+      toggle.addEventListener('animationstart', (event) => log.push((event as AnimationEvent).animationName));
+    });
+    await page.locator('[data-theme-toggle]').click();
+    await expect
+      .poll(() => page.evaluate(() => (window as unknown as { tombolTema: string[] }).tombolTema))
+      .toEqual(expect.arrayContaining(['data-animate', 'icon-spin-in']));
   });
 });
 
@@ -166,7 +184,7 @@ test.describe('prefers-reduced-motion: reduce mematikan animasi', () => {
   test('pindah halaman tanpa View Transition', async ({ page }) => {
     await trackViewTransitions(page);
     await openFirstCaseStudyFromProjects(page);
-    expect(await page.evaluate(() => (window as unknown as { viewTransitionUsed?: boolean }).viewTransitionUsed)).toBe(false);
+    await expect.poll(() => viewTransitionUsed(page)).toBe(false);
   });
 
   test('cuplikan video tidak diputar otomatis', async ({ page }) => {
