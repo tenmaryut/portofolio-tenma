@@ -26,7 +26,7 @@ async function trackViewTransitions(page: Page) {
  * Nilai yang dicatat trackViewTransitions. pagereveal terjadi pada kesempatan render pertama, yang saat CPU
  * sibuk bisa datang setelah load, jadi nilainya ditunggu dengan expect.poll, bukan dibaca sekali.
  */
-function viewTransitionUsed(page: Page) {
+async function viewTransitionUsed(page: Page) {
   return page
     .evaluate(() => (window as unknown as { viewTransitionUsed?: boolean }).viewTransitionUsed)
     .catch(() => undefined);
