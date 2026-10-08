@@ -69,6 +69,8 @@ npm run audit:publik                                    # audit rilis publik: gi
 npm run cek:proxy                                       # bukti aman di balik proxy: cookie, URL https, redirect, X-Forwarded-For
 ```
 
+Server ini dipakai bersama banyak agen, jadi test memakai paling banyak 2 Chrome di preview lokal dan 1 Chrome untuk situs live (`workers` di `playwright.config.ts`). Di server, jalankan test dan Lighthouse hanya kalau `free -h` menunjukkan *available* minimal 3 GB, hindari pukul 08.30–10.00 WIB (jadwal render video harian), dan bungkus perintahnya, misalnya `systemd-run --scope -p MemoryMax=3G -p CPUWeight=50 --quiet nice -n 10 npm run test:live`.
+
 ## Rilis publik
 
 Repo ini disiapkan untuk dipublikasikan. Alamat staging memuat IP server, jadi:

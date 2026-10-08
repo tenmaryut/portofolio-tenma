@@ -7,6 +7,9 @@ const baseURL = process.env.BASE_URL ?? 'http://127.0.0.1:4321';
 export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
+  // RAM server dipakai bersama banyak agen (sempat habis pada 8 Okt 2026): situs live diuji dengan 1 Chrome,
+  // preview lokal paling banyak 2. Bisa ditimpa dengan --workers kalau benar-benar perlu.
+  workers: process.env.BASE_URL ? 1 : 2,
   forbidOnly: !!process.env.CI,
   retries: process.env.BASE_URL ? 1 : 0,
   reporter: [['list'], ['html', { open: 'never' }]],
