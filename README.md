@@ -50,7 +50,9 @@ npm run build      # astro check (tipe) + astro build
 npm test           # Playwright terhadap hasil build (menjalankan `astro preview` otomatis)
 ```
 
-Test mencakup navigasi, ganti bahasa, mode gelap, semua tautan internal dan anchor, meta SEO dan Open Graph, data terstruktur, tidak ada scroll horizontal di 360–1440 px, serta aksesibilitas WCAG 2.2 AA dengan axe (mode terang dan gelap), di layar desktop 1440 px dan ponsel 360 px.
+Test mencakup navigasi, ganti bahasa, mode gelap, semua tautan internal dan anchor, meta SEO dan Open Graph, data terstruktur, tidak ada scroll horizontal di 360–1440 px, serta aksesibilitas WCAG 2.2 AA dengan axe (mode terang dan gelap), di layar desktop 1440 px dan ponsel 360 px. Teks setiap gambar Open Graph dibaca ulang dengan OCR (`tests/og.spec.ts`), jadi `tesseract` (paket `tesseract-ocr`) harus terpasang.
+
+Override `fflate` di `package.json` sengaja ditahan di `~0.7.5` (versi yang sudah ditambal). satori memanggil `inflateSync(data, out)` dengan gaya API 0.7. Di fflate 0.8, argumen kedua berubah menjadi objek opsi, sehingga font WOFF terbaca kosong dan semua huruf gambar OG menjadi kotak.
 
 Variasi:
 

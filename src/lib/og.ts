@@ -93,7 +93,8 @@ export async function renderOgImage({ eyebrow, title, locale, stamp }: OgOptions
     h(
       'div',
       { display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', fontFamily: 'JetBrains Mono', fontSize: 22, color: colors.muted },
-      h('div', { display: 'flex' }, tagline[locale]),
+      // Judul beranda sudah berupa tagline, jadi tagline tidak diulang di bawahnya.
+      title === tagline[locale] ? h('div', { display: 'flex' }) : h('div', { display: 'flex' }, tagline[locale]),
       h('div', { display: 'flex' }, `github.com/${profile.githubUsername}`),
     ),
   );
@@ -123,7 +124,16 @@ export async function renderOgImage({ eyebrow, title, locale, stamp }: OgOptions
   }
 
   const root = h('div', { position: 'relative', display: 'flex', width: 1200, height: 630, backgroundColor: colors.paper }, ...children);
-  const svg = await satori(root as Parameters<typeof satori>[0], { width: 1200, height: 630, fonts: await loadFonts() });
+  const svg = await satori(root as Parameters<typeof satori>[0], {
+    width: 1200,
+    height: 630,
+    fonts: await loadFonts(),
+    // Dipanggil satori untuk huruf yang tidak ada di font (keduanya subset latin, misalnya "→" atau emoji).
+    // Lebih baik build gagal daripada gambar pratinjau diam-diam berisi kotak kosong.
+    loadAdditionalAsset: async (_code, segment) => {
+      throw new Error(`Gambar OG "${title}": huruf "${segment}" tidak ada di font Fraunces/JetBrains Mono (subset latin).`);
+    },
+  });
   const png = await sharp(Buffer.from(svg)).png({ compressionLevel: 9, palette: true, quality: 90 }).toBuffer();
   // Salin ke ArrayBuffer biasa supaya cocok dengan tipe body Response.
   const body = new Uint8Array(png.length);

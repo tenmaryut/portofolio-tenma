@@ -141,6 +141,13 @@ export function ogEntries(): OgEntry[] {
   return entries;
 }
 
+/**
+ * Naikkan setiap kali tampilan gambar OG berubah. Facebook dan aplikasi chat menyimpan gambar pratinjau
+ * berdasarkan URL-nya, dan Caddy mengizinkan cache 7 hari, jadi gambar baru di URL lama bisa tidak terambil.
+ * Versi 2: huruf yang sebelumnya tampil sebagai kotak kosong (9 Okt 2026).
+ */
+const ogVersion = 2;
+
 export function ogImagePath(locale: Locale, key: string): string {
-  return `/og/${locale}/${key}.png`;
+  return `/og/${locale}/${key}.png?v=${ogVersion}`;
 }
