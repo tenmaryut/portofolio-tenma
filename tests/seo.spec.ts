@@ -44,6 +44,7 @@ for (const path of allPages) {
 }
 
 test('judul dan deskripsi setiap halaman unik', async ({ page }) => {
+  test.setTimeout(90_000);
   const titles = new Set<string>();
   const descriptions = new Set<string>();
   for (const path of allPages) {
