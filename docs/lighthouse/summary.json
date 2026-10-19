@@ -2,37 +2,37 @@
   {
     "name": "beranda",
     "url": "https://tenma.tail482cb9.ts.net/",
-    "fetchTime": "2026-10-03T03:31:50.604Z",
+    "fetchTime": "2026-10-19T04:33:34.599Z",
     "lighthouseVersion": "13.5.0",
     "formFactor": "mobile",
     "scores": {
-      "performance": 100,
+      "performance": 93,
       "accessibility": 100,
       "best-practices": 100,
       "seo": 100
     },
     "metrics": {
       "cls": 0,
-      "lcpMs": 1218,
-      "tbtMs": 38
+      "lcpMs": 1275,
+      "tbtMs": 303
     }
   },
   {
     "name": "studi-kasus",
     "url": "https://tenma.tail482cb9.ts.net/proyek/company-profile-hukum/",
-    "fetchTime": "2026-10-03T03:32:04.039Z",
+    "fetchTime": "2026-10-19T04:33:50.938Z",
     "lighthouseVersion": "13.5.0",
     "formFactor": "mobile",
     "scores": {
-      "performance": 100,
+      "performance": 97,
       "accessibility": 100,
       "best-practices": 100,
       "seo": 100
     },
     "metrics": {
       "cls": 0,
-      "lcpMs": 1447,
-      "tbtMs": 47
+      "lcpMs": 1442,
+      "tbtMs": 192
     }
   }
 ]

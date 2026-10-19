@@ -1,6 +1,6 @@
 # Rekaman animasi
 
-Direkam otomatis dengan Playwright (Chromium, reduced motion tidak aktif) dari situs live (`PORTOFOLIO_URL` di domain.env) pada 2026-10-03.
+Direkam otomatis dengan Playwright (Chromium, reduced motion tidak aktif) dari situs live (`PORTOFOLIO_URL` di domain.env) pada 2026-10-19.
 Buat ulang dengan `npm run record:animations`. Screenshot PNG diambil di akhir tiap rekaman.
 
 | Rekaman | Isi | Ukuran | Screenshot akhir |

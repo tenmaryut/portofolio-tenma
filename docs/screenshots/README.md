@@ -1,6 +1,6 @@
 # Screenshot halaman
 
-Diambil otomatis dengan Playwright (Chromium, reduced motion agar animasi langsung di keadaan akhir) dari situs live (`PORTOFOLIO_URL` di domain.env) pada 2026-10-03, halaman penuh, JPEG kualitas 70.
+Diambil otomatis dengan Playwright (Chromium, reduced motion agar animasi langsung di keadaan akhir) dari situs live (`PORTOFOLIO_URL` di domain.env) pada 2026-10-19, halaman penuh, JPEG kualitas 70.
 Buat ulang dengan `npm run screenshots`. Skrip gagal kalau ada halaman yang memunculkan scroll horizontal.
 
 | Halaman | Lebar | Mode | File |
