@@ -1,5 +1,5 @@
 # Audit repo publik
-Tanggal: 2026-10-19T04:38:00.791Z
+Tanggal: 2026-10-19T05:43:31.265Z
 Denylist: 3 pola dari ~/.config/git/denylist-publik
 
 ## 0. Kontrol positif OCR
@@ -165,7 +165,7 @@ bersih  docs/lighthouse/beranda.report.html #5  (472 karakter OCR)
 bersih  docs/lighthouse/beranda.report.html #6  (472 karakter OCR)
 bersih  docs/lighthouse/beranda.report.html #7  (472 karakter OCR)
 bersih  docs/lighthouse/beranda.report.html #8  (472 karakter OCR)
-bersih  docs/lighthouse/beranda.report.html #9  (4146 karakter OCR)
+bersih  docs/lighthouse/beranda.report.html #9  (4087 karakter OCR)
 bersih  docs/lighthouse/proyek-demo/hukum-artikel.report.html #0  (0 karakter OCR)
 bersih  docs/lighthouse/proyek-demo/hukum-artikel.report.html #1  (407 karakter OCR)
 bersih  docs/lighthouse/proyek-demo/hukum-artikel.report.html #2  (407 karakter OCR)
@@ -206,7 +206,7 @@ bersih  docs/lighthouse/proyek-demo/toko-produk.report.html #6  (160 karakter OC
 bersih  docs/lighthouse/proyek-demo/toko-produk.report.html #7  (160 karakter OCR)
 bersih  docs/lighthouse/proyek-demo/toko-produk.report.html #8  (160 karakter OCR)
 bersih  docs/lighthouse/proyek-demo/toko-produk.report.html #9  (1815 karakter OCR)
-bersih  docs/lighthouse/studi-kasus.report.html #0  (444 karakter OCR)
+bersih  docs/lighthouse/studi-kasus.report.html #0  (0 karakter OCR)
 bersih  docs/lighthouse/studi-kasus.report.html #1  (444 karakter OCR)
 bersih  docs/lighthouse/studi-kasus.report.html #2  (444 karakter OCR)
 bersih  docs/lighthouse/studi-kasus.report.html #3  (444 karakter OCR)
@@ -215,7 +215,7 @@ bersih  docs/lighthouse/studi-kasus.report.html #5  (444 karakter OCR)
 bersih  docs/lighthouse/studi-kasus.report.html #6  (444 karakter OCR)
 bersih  docs/lighthouse/studi-kasus.report.html #7  (444 karakter OCR)
 bersih  docs/lighthouse/studi-kasus.report.html #8  (444 karakter OCR)
-bersih  docs/lighthouse/studi-kasus.report.html #9  (6192 karakter OCR)
+bersih  docs/lighthouse/studi-kasus.report.html #9  (5332 karakter OCR)
 Ringkas: 60 diperiksa, 0 temuan.
 
 ## 5. OCR gambar Open Graph hasil build (dist/og)
