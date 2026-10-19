@@ -11,7 +11,10 @@ export default defineConfig({
   // preview lokal paling banyak 2. Bisa ditimpa dengan --workers kalau benar-benar perlu.
   workers: process.env.BASE_URL ? 1 : 2,
   forbidOnly: !!process.env.CI,
-  retries: process.env.BASE_URL ? 1 : 0,
+  // Situs live lewat Tailscale Funnel: koneksi node ke relay DERP putus berkala (19 Okt 2026: tiap
+  // 8–16 menit, macet hingga lebih dari 60 detik), jadi navigasi bisa ERR_TIMED_OUT dua kali berturut-turut.
+  // Retry tidak melonggarkan assertion; test yang lulus lewat retry tetap dilaporkan sebagai flaky.
+  retries: process.env.BASE_URL ? 2 : 0,
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
     baseURL,
