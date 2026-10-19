@@ -30,7 +30,10 @@ export default defineConfig({
           {
             weight: '100 900',
             style: 'normal',
-            display: 'swap',
+            // optional, bukan swap: kalau font terlambat, halaman tetap memakai font cadangan sampai
+            // selesai dibuka. Di Linux dan Android tidak ada Georgia, jadi font cadangan bisa memecah
+            // judul ke baris yang berbeda dan menggeser isi saat Fraunces masuk (CLS 0,19 pada 19 Okt).
+            display: 'optional',
             src: ['./node_modules/@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2'],
           },
         ],
