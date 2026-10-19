@@ -16,18 +16,18 @@ type PageKey = RouteKey | 'notFound';
 export const pageMeta: Record<PageKey, Record<Locale, PageMeta>> = {
   home: {
     id: {
-      title: 'Tenma · Programmer web yang paham hukum',
+      title: 'Tenma · Website dan spreadsheet untuk usaha kecil',
       description:
-        'Tenma, mahasiswa Ilmu Hukum di Universitas Terbuka yang baru memulai kerja sampingan sebagai programmer web: company profile, toko online, dan sistem informasi.',
+        'Tenma, programmer web yang baru memulai kerja sampingan: company profile, landing page, toko online, serta templat dan dashboard Excel/Google Sheets untuk usaha kecil.',
       ogEyebrow: '§ Portofolio',
-      ogTitle: 'Programmer web yang paham hukum',
+      ogTitle: 'Website cepat dan spreadsheet rapi untuk usaha kecil',
     },
     en: {
-      title: 'Tenma · A web developer who understands the law',
+      title: 'Tenma · Websites and spreadsheets for small businesses',
       description:
-        'Tenma is a law student at Universitas Terbuka who has just started web development on the side: company profiles, online stores, and information systems.',
+        'Tenma is a web developer who has just started side work: company profiles, landing pages, online stores, and Excel and Google Sheets templates for small businesses.',
       ogEyebrow: '§ Portfolio',
-      ogTitle: 'A web developer who understands the law',
+      ogTitle: 'Fast websites and tidy spreadsheets for small businesses',
     },
   },
   projects: {
@@ -50,14 +50,14 @@ export const pageMeta: Record<PageKey, Record<Locale, PageMeta>> = {
     id: {
       title: 'Layanan · Tenma',
       description:
-        'Pembuatan company profile, landing page, toko online, sistem informasi sederhana, dan perawatan website. Hubungi untuk penawaran.',
+        'Pembuatan company profile, landing page, toko online, sistem informasi sederhana, spreadsheet Excel dan Google Sheets, serta perawatan website. Hubungi untuk penawaran.',
       ogEyebrow: '§ 03 · Layanan',
       ogTitle: 'Company profile, landing page, toko online, dan lainnya',
     },
     en: {
       title: 'Services · Tenma',
       description:
-        'Company profiles, landing pages, online stores, simple information systems, and website maintenance. Get in touch for a quote.',
+        'Company profiles, landing pages, online stores, simple information systems, Excel and Google Sheets spreadsheets, and website maintenance. Get in touch for a quote.',
       ogEyebrow: '§ 03 · Services',
       ogTitle: 'Company profiles, landing pages, online stores, and more',
     },
@@ -66,16 +66,16 @@ export const pageMeta: Record<PageKey, Record<Locale, PageMeta>> = {
     id: {
       title: 'Tentang · Tenma',
       description:
-        'Latar belakang hukum dan programming Tenma, alur kerja dari konsultasi sampai serah terima dengan perjanjian tertulis, dan stack yang dipakai.',
+        'Siapa Tenma, alur kerja dari konsultasi sampai serah terima dengan perjanjian tertulis, dan stack yang dipakai.',
       ogEyebrow: '§ 04 · Tentang',
-      ogTitle: 'Dari ruang kuliah hukum ke editor kode',
+      ogTitle: 'Kerja rapi untuk usaha kecil',
     },
     en: {
       title: 'About · Tenma',
       description:
-        'Tenma’s background in law and programming, the workflow from consultation to handover with a written agreement, and the tech stack in use.',
+        'Who Tenma is, the workflow from consultation to handover with a written agreement, and the tech stack in use.',
       ogEyebrow: '§ 04 · About',
-      ogTitle: 'From law school to the code editor',
+      ogTitle: 'Careful work for small businesses',
     },
   },
   contact: {

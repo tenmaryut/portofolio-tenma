@@ -3,9 +3,9 @@ import type { Locale } from './routes';
 // Teks antarmuka yang dipakai bersama. Teks khusus halaman ada di komponen halamannya.
 const id = {
   site: {
-    tagline: 'Programmer web yang paham hukum',
+    tagline: 'Website dan spreadsheet untuk usaha kecil',
     description:
-      'Portofolio Tenma, mahasiswa Ilmu Hukum di Universitas Terbuka yang baru memulai kerja sampingan sebagai programmer web.',
+      'Portofolio Tenma, programmer web yang membuat website serta templat dan dashboard Excel/Google Sheets untuk usaha kecil.',
   },
   skipLink: 'Langsung ke konten utama',
   nav: {
@@ -57,9 +57,9 @@ export type UiStrings = typeof id;
 
 const en: UiStrings = {
   site: {
-    tagline: 'A web developer who understands the law',
+    tagline: 'Websites and spreadsheets for small businesses',
     description:
-      'Portfolio of Tenma, a law student at Universitas Terbuka who has just started doing web development on the side.',
+      'Portfolio of Tenma, a web developer who builds websites and Excel and Google Sheets templates and dashboards for small businesses.',
   },
   skipLink: 'Skip to main content',
   nav: {

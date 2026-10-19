@@ -1,6 +1,6 @@
 # portofolio-tenma
 
-Situs portofolio pribadi Tenma, mahasiswa Ilmu Hukum yang baru memulai kerja sampingan sebagai programmer web. Situs ini juga menautkan dua proyek demo: company profile kantor hukum dan toko online UMKM.
+Situs portofolio pribadi Tenma, programmer web yang baru memulai kerja sampingan membuat website serta templat dan dashboard Excel/Google Sheets untuk usaha kecil. Situs ini juga menautkan dua proyek demo: company profile kantor hukum dan toko online UMKM.
 
 - Live: alamat `PORTOFOLIO_URL` di `/root/tenma-ws/portofolio/domain.env` (Indonesia di `/`, English di `/en/`)
 - Stack: Astro 7 (statis) + Tailwind CSS 4 + TypeScript, dilayani Caddy

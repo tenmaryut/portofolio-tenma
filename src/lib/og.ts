@@ -32,8 +32,8 @@ const colors = {
 };
 
 const tagline: Record<Locale, string> = {
-  id: 'Programmer web yang paham hukum',
-  en: 'A web developer who understands the law',
+  id: 'Website dan spreadsheet untuk usaha kecil',
+  en: 'Websites and spreadsheets for small businesses',
 };
 
 let fonts: Promise<{ name: string; data: Buffer; weight: 500 | 600; style: 'normal' }[]> | undefined;

@@ -13,13 +13,13 @@ interface PageInfo {
 }
 
 const jobTitle: Record<Locale, string> = {
-  id: 'Programmer web (sampingan)',
-  en: 'Web developer (side work)',
+  id: 'Programmer web dan spreadsheet (sampingan)',
+  en: 'Web and spreadsheet developer (side work)',
 };
 
 const personDescription: Record<Locale, string> = {
-  id: 'Mahasiswa Ilmu Hukum di Universitas Terbuka yang baru memulai kerja sampingan sebagai programmer web.',
-  en: 'A law student at Universitas Terbuka who has just started doing web development on the side.',
+  id: 'Programmer web yang baru memulai kerja sampingan membuat website serta templat dan dashboard Excel/Google Sheets untuk usaha kecil.',
+  en: 'A web developer who has just started side work building websites and Excel and Google Sheets templates and dashboards for small businesses.',
 };
 
 /** Data terstruktur schema.org: Person, WebSite, dan halaman yang sedang dibuka. */
@@ -34,12 +34,7 @@ export function buildJsonLd({ site, canonical, locale, title, description, type 
     url: site.href,
     jobTitle: jobTitle[locale],
     description: personDescription[locale],
-    affiliation: {
-      '@type': 'CollegeOrUniversity',
-      name: 'Universitas Terbuka',
-      url: 'https://www.ut.ac.id/',
-    },
-    knowsAbout: ['Web development', 'Astro', 'Laravel', 'Next.js', 'TypeScript', 'Personal data protection'],
+    knowsAbout: ['Web development', 'Astro', 'Laravel', 'Next.js', 'TypeScript', 'Microsoft Excel', 'Google Sheets', 'Personal data protection'],
     sameAs: [githubUrl],
   };
   if (profile.fullName) person.alternateName = profile.displayName;

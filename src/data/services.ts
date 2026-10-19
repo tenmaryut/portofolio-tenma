@@ -99,6 +99,33 @@ export const services: Service[] = [
     demo: 'toko-online-umkm',
   },
   {
+    id: 'spreadsheet',
+    icon: 'table',
+    name: { id: 'Spreadsheet Excel & Google Sheets', en: 'Excel & Google Sheets spreadsheets' },
+    summary: {
+      id: 'Templat dan dashboard yang menghitung sendiri: buku kas, stok, HPP dan harga jual, atau rekap penjualan. Bisa juga merapikan berkas lama atau mengubah tabel PDF dan foto menjadi Excel.',
+      en: 'Templates and dashboards that do the math for you: cash books, stock, cost and pricing, or sales summaries. I can also tidy up old files or turn PDF and photo tables into Excel.',
+    },
+    suitableFor: {
+      id: 'UMKM yang masih mencatat di buku atau di berkas Excel yang berantakan.',
+      en: 'Small businesses still keeping records on paper or in messy Excel files.',
+    },
+    includes: {
+      id: [
+        'Rumus otomatis, daftar pilihan, dan sel isian yang diberi warna',
+        'Dashboard dengan grafik yang ikut berubah saat data ditambah',
+        'Pemeriksaan setiap rumus dengan data kosong dan data ekstrem',
+        'Berkas .xlsx yang bisa dibuka di Excel dan Google Sheets',
+      ],
+      en: [
+        'Automatic formulas, dropdown lists, and color-coded input cells',
+        'Dashboards with charts that update as you add data',
+        'Every formula checked against blank and extreme data',
+        'An .xlsx file that opens in Excel and Google Sheets',
+      ],
+    },
+  },
+  {
     id: 'information-system',
     icon: 'database',
     name: { id: 'Sistem informasi sederhana', en: 'Simple information system' },
