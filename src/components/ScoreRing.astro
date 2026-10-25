@@ -23,7 +23,7 @@ const tone = score >= 90 ? 'stroke-good' : score >= 50 ? 'stroke-warn' : 'stroke
         stroke-dasharray={`${score} 100`}
         class={tone}></circle>
     </svg>
-    <span class="absolute inset-0 grid place-items-center font-mono text-lg font-semibold">{score}</span>
+    <span class="absolute inset-0 grid place-items-center font-mono text-lg font-bold">{score}</span>
   </div>
   <span class="text-xs leading-tight text-muted">{label}</span>
 </div>

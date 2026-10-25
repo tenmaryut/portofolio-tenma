@@ -24,7 +24,10 @@ export default defineConfig({
       provider: fontProviders.local(),
       name: 'Fraunces',
       cssVariable: '--font-fraunces',
-      fallbacks: ['Georgia', 'serif'],
+      // Tanpa Georgia: font cadangan yang ukurannya disesuaikan (Times New Roman lokal) sudah lebih dulu dipakai
+      // di Windows, Mac, dan iOS, sedangkan di Linux dan Android Georgia tidak ada dan hanya menambah satu
+      // pencarian font lewat IPC (lihat catatan tumpukan font di global.css).
+      fallbacks: ['serif'],
       options: {
         variants: [
           {

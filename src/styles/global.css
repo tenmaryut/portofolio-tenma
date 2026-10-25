@@ -97,9 +97,15 @@
   --font-display: var(--font-fraunces);
 }
 
+/* Tumpukan font sengaja pendek. Di Linux, Chrome mencari setiap nama font yang tidak terpasang lewat IPC
+   sinkron ke proses browser, sekali per bobot, di dalam layout pertama. Trace 25 Okt 2026: 22 pencarian
+   menghabiskan 115–460 ms di task terpanjang, dan simulasi Lighthouse mengalikannya 2–4x menjadi TBT.
+   Hasil di browser modern tetap sama: system-ui = Segoe UI, San Francisco, Roboto, atau font sistem Linux;
+   font mono tetap SF Mono (Safari), Menlo (Chrome di Mac), Consolas (Windows), dan Liberation Mono (Linux).
+   Teks mono hanya memakai bobot 400 dan 700 (bukan 600) supaya pencariannya tidak bertambah satu putaran. */
 @theme {
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --font-sans: system-ui, sans-serif;
+  --font-mono: ui-monospace, Menlo, Consolas, "Liberation Mono", monospace;
 }
 
 @layer base {
