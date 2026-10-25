@@ -28,13 +28,16 @@ export default defineConfig({
       options: {
         variants: [
           {
-            weight: '100 900',
+            // Semua judul memakai bobot 600, jadi dipakai instance statis (18 KB) alih-alih font variabel
+            // (37 KB). A/B Lighthouse di live 25 Okt 2026: beranda 99/100 dengan font statis, 83/97 dengan
+            // font variabel, karena shaping font variabel menambah waktu layout pertama.
+            weight: '600',
             style: 'normal',
             // optional, bukan swap: kalau font terlambat, halaman tetap memakai font cadangan sampai
             // selesai dibuka. Di Linux dan Android tidak ada Georgia, jadi font cadangan bisa memecah
             // judul ke baris yang berbeda dan menggeser isi saat Fraunces masuk (CLS 0,19 pada 19 Okt).
             display: 'optional',
-            src: ['./node_modules/@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2'],
+            src: ['./node_modules/@fontsource/fraunces/files/fraunces-latin-600-normal.woff2'],
           },
         ],
       },

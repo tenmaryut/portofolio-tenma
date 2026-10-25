@@ -1,7 +1,7 @@
 # Kredit dan lisensi
 
 ## Font
-- **Fraunces** (judul di situs dan gambar Open Graph) oleh The Fraunces Project Authors (Undercase Type), SIL Open Font License 1.1. Dipakai lewat paket npm `@fontsource-variable/fraunces` dan `@fontsource/fraunces`. https://github.com/undercasetype/Fraunces
+- **Fraunces** (judul di situs dan gambar Open Graph) oleh The Fraunces Project Authors (Undercase Type), SIL Open Font License 1.1. Dipakai lewat paket npm `@fontsource/fraunces` (bobot statis 600 untuk situs dan gambar Open Graph). https://github.com/undercasetype/Fraunces
 - **JetBrains Mono** (teks monospace di gambar Open Graph) oleh JetBrains, SIL Open Font License 1.1, lewat paket npm `@fontsource/jetbrains-mono`. https://github.com/JetBrains/JetBrainsMono
 - Teks isi memakai font bawaan sistem pengunjung (tidak diunduh).
 
