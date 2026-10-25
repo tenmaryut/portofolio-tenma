@@ -2,9 +2,13 @@
   {
     "name": "beranda",
     "url": "https://tenma.tail482cb9.ts.net/",
-    "fetchTime": "2026-10-25T06:11:12.096Z",
+    "fetchTime": "2026-10-25T15:37:09.359Z",
     "lighthouseVersion": "13.5.0",
     "formFactor": "mobile",
+    "benchmarkIndex": 1313,
+    "cpuSlowdownMultiplier": 2,
+    "counted": true,
+    "skippedBenchmarks": [],
     "scores": {
       "performance": 100,
       "accessibility": 100,
@@ -13,16 +17,20 @@
     },
     "metrics": {
       "cls": 0,
-      "lcpMs": 1222,
+      "lcpMs": 1058,
       "tbtMs": 56
     }
   },
   {
     "name": "studi-kasus",
     "url": "https://tenma.tail482cb9.ts.net/proyek/takarlaba/",
-    "fetchTime": "2026-10-25T06:11:30.573Z",
+    "fetchTime": "2026-10-25T15:37:32.223Z",
     "lighthouseVersion": "13.5.0",
     "formFactor": "mobile",
+    "benchmarkIndex": 1095,
+    "cpuSlowdownMultiplier": 2,
+    "counted": true,
+    "skippedBenchmarks": [],
     "scores": {
       "performance": 98,
       "accessibility": 100,
@@ -31,8 +39,8 @@
     },
     "metrics": {
       "cls": 0,
-      "lcpMs": 1377,
-      "tbtMs": 158
+      "lcpMs": 1159,
+      "tbtMs": 164
     }
   }
 ]

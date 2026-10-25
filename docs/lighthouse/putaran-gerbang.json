@@ -1,87 +1,29 @@
 {
-  "catatan": "Gerbang npm run lighthouse (mobile, pengali CPU 4x) terhadap situs live, 25 Okt 2026 13.03-13.13, saat render agen lain ditahan. Putaran 1 gagal karena galat Lighthouse (NO_NAVSTART) dan tidak dihitung. Laporan HTML/JSON di folder ini berasal dari putaran 4.",
-  "medianPerforma": {
-    "beranda": 99.5,
-    "studi-kasus": 96.5
+  "catatan": "Gerbang npm run lighthouse dengan pengali CPU terkalibrasi (keputusan agen utama 25 Okt 2026, https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#calibrating-the-cpu-slowdown): benchmarkIndex >= 1500 memakai 4x, 1000-1499 memakai 2x, di bawah 1000 tidak dihitung dan diulang. Batch 1 (putaran 1-5, 22.27-22.32) dijalankan beruntun; putaran 4 gagal (beranda 91, benchmark 1022, load 3,1). Batch 2 (putaran 6-10, 22.32-22.38) menunggu load di bawah 2,5 sebelum tiap putaran dan lolos 5/5. Laporan HTML/JSON di folder ini berasal dari putaran 10. Sebelum kalibrasi, gerbang 4x per putaran hanya lolos penuh di 3 dari 8 putaran (21.30) dan 0 dari 7 (21.43) walau render agen lain ditahan.",
+  "putaranLulus": {
+    "1": true,
+    "2": true,
+    "3": true,
+    "4": false,
+    "5": true,
+    "6": true,
+    "7": true,
+    "8": true,
+    "9": true,
+    "10": true
   },
   "putaran": [
     {
-      "putaran": 2,
+      "putaran": 1,
+      "batch": 1,
       "name": "beranda",
       "url": "https://tenma.tail482cb9.ts.net/",
-      "fetchTime": "2026-10-25T06:04:07.869Z",
-      "scores": {
-        "performance": 99,
-        "accessibility": 100,
-        "best-practices": 100,
-        "seo": 100
-      },
-      "metrics": {
-        "cls": 0,
-        "lcpMs": 1444,
-        "tbtMs": 67
-      },
-      "benchmarkIndex": 1182
-    },
-    {
-      "putaran": 2,
-      "name": "studi-kasus",
-      "url": "https://tenma.tail482cb9.ts.net/proyek/takarlaba/",
-      "fetchTime": "2026-10-25T06:04:26.649Z",
-      "scores": {
-        "performance": 89,
-        "accessibility": 100,
-        "best-practices": 100,
-        "seo": 100
-      },
-      "metrics": {
-        "cls": 0,
-        "lcpMs": 1381,
-        "tbtMs": 428
-      },
-      "benchmarkIndex": 1370
-    },
-    {
-      "putaran": 3,
-      "name": "beranda",
-      "url": "https://tenma.tail482cb9.ts.net/",
-      "fetchTime": "2026-10-25T06:04:44.522Z",
-      "scores": {
-        "performance": 98,
-        "accessibility": 100,
-        "best-practices": 100,
-        "seo": 100
-      },
-      "metrics": {
-        "cls": 0,
-        "lcpMs": 1233,
-        "tbtMs": 170
-      },
-      "benchmarkIndex": 1129
-    },
-    {
-      "putaran": 3,
-      "name": "studi-kasus",
-      "url": "https://tenma.tail482cb9.ts.net/proyek/takarlaba/",
-      "fetchTime": "2026-10-25T06:05:04.927Z",
-      "scores": {
-        "performance": 94,
-        "accessibility": 100,
-        "best-practices": 100,
-        "seo": 100
-      },
-      "metrics": {
-        "cls": 0,
-        "lcpMs": 1364,
-        "tbtMs": 278
-      },
-      "benchmarkIndex": 1097
-    },
-    {
-      "putaran": 4,
-      "name": "beranda",
-      "url": "https://tenma.tail482cb9.ts.net/",
-      "fetchTime": "2026-10-25T06:11:12.096Z",
+      "fetchTime": "2026-10-25T15:28:16.059Z",
+      "benchmarkIndex": 1592,
+      "cpuSlowdownMultiplier": 4,
+      "benchmarkTidakDihitung": [
+        977
+      ],
       "scores": {
         "performance": 100,
         "accessibility": 100,
@@ -90,16 +32,108 @@
       },
       "metrics": {
         "cls": 0,
-        "lcpMs": 1222,
-        "tbtMs": 56
+        "lcpMs": 1076,
+        "tbtMs": 35
       },
-      "benchmarkIndex": 1320
+      "lulus": true
     },
     {
-      "putaran": 4,
+      "putaran": 1,
+      "batch": 1,
       "name": "studi-kasus",
       "url": "https://tenma.tail482cb9.ts.net/proyek/takarlaba/",
-      "fetchTime": "2026-10-25T06:11:30.573Z",
+      "fetchTime": "2026-10-25T15:28:39.318Z",
+      "benchmarkIndex": 1217,
+      "cpuSlowdownMultiplier": 2,
+      "benchmarkTidakDihitung": [],
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1144,
+        "tbtMs": 12
+      },
+      "lulus": true
+    },
+    {
+      "putaran": 2,
+      "batch": 1,
+      "name": "beranda",
+      "url": "https://tenma.tail482cb9.ts.net/",
+      "fetchTime": "2026-10-25T15:29:04.101Z",
+      "benchmarkIndex": 1209,
+      "cpuSlowdownMultiplier": 2,
+      "benchmarkTidakDihitung": [],
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1014,
+        "tbtMs": 13
+      },
+      "lulus": true
+    },
+    {
+      "putaran": 2,
+      "batch": 1,
+      "name": "studi-kasus",
+      "url": "https://tenma.tail482cb9.ts.net/proyek/takarlaba/",
+      "fetchTime": "2026-10-25T15:29:28.272Z",
+      "benchmarkIndex": 1160,
+      "cpuSlowdownMultiplier": 2,
+      "benchmarkTidakDihitung": [],
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1121,
+        "tbtMs": 90
+      },
+      "lulus": true
+    },
+    {
+      "putaran": 3,
+      "batch": 1,
+      "name": "beranda",
+      "url": "https://tenma.tail482cb9.ts.net/",
+      "fetchTime": "2026-10-25T15:29:54.492Z",
+      "benchmarkIndex": 1117,
+      "cpuSlowdownMultiplier": 2,
+      "benchmarkTidakDihitung": [],
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1058,
+        "tbtMs": 72
+      },
+      "lulus": true
+    },
+    {
+      "putaran": 3,
+      "batch": 1,
+      "name": "studi-kasus",
+      "url": "https://tenma.tail482cb9.ts.net/proyek/takarlaba/",
+      "fetchTime": "2026-10-25T15:30:24.144Z",
+      "benchmarkIndex": 1289,
+      "cpuSlowdownMultiplier": 2,
+      "benchmarkTidakDihitung": [],
       "scores": {
         "performance": 98,
         "accessibility": 100,
@@ -108,16 +142,86 @@
       },
       "metrics": {
         "cls": 0,
-        "lcpMs": 1377,
-        "tbtMs": 158
+        "lcpMs": 1167,
+        "tbtMs": 170
       },
-      "benchmarkIndex": 1126
+      "lulus": true
+    },
+    {
+      "putaran": 4,
+      "batch": 1,
+      "name": "beranda",
+      "url": "https://tenma.tail482cb9.ts.net/",
+      "fetchTime": "2026-10-25T15:30:50.275Z",
+      "benchmarkIndex": 1022,
+      "cpuSlowdownMultiplier": 2,
+      "benchmarkTidakDihitung": [],
+      "scores": {
+        "performance": 91,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1196,
+        "tbtMs": 379
+      },
+      "lulus": false
+    },
+    {
+      "putaran": 4,
+      "batch": 1,
+      "name": "studi-kasus",
+      "url": "https://tenma.tail482cb9.ts.net/proyek/takarlaba/",
+      "fetchTime": "2026-10-25T15:31:15.755Z",
+      "benchmarkIndex": 1309,
+      "cpuSlowdownMultiplier": 2,
+      "benchmarkTidakDihitung": [],
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1150,
+        "tbtMs": 23
+      },
+      "lulus": true
     },
     {
       "putaran": 5,
+      "batch": 1,
       "name": "beranda",
       "url": "https://tenma.tail482cb9.ts.net/",
-      "fetchTime": "2026-10-25T06:11:50.315Z",
+      "fetchTime": "2026-10-25T15:31:41.030Z",
+      "benchmarkIndex": 1139,
+      "cpuSlowdownMultiplier": 2,
+      "benchmarkTidakDihitung": [],
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1060,
+        "tbtMs": 28
+      },
+      "lulus": true
+    },
+    {
+      "putaran": 5,
+      "batch": 1,
+      "name": "studi-kasus",
+      "url": "https://tenma.tail482cb9.ts.net/proyek/takarlaba/",
+      "fetchTime": "2026-10-25T15:32:08.798Z",
+      "benchmarkIndex": 1102,
+      "cpuSlowdownMultiplier": 2,
+      "benchmarkTidakDihitung": [],
       "scores": {
         "performance": 100,
         "accessibility": 100,
@@ -127,33 +231,41 @@
       "metrics": {
         "cls": 0,
         "lcpMs": 1219,
-        "tbtMs": 58
+        "tbtMs": 91
       },
-      "benchmarkIndex": 1209
+      "lulus": true
     },
     {
-      "putaran": 5,
-      "name": "studi-kasus",
-      "url": "https://tenma.tail482cb9.ts.net/proyek/takarlaba/",
-      "fetchTime": "2026-10-25T06:12:09.133Z",
+      "putaran": 6,
+      "batch": 2,
+      "name": "beranda",
+      "url": "https://tenma.tail482cb9.ts.net/",
+      "fetchTime": "2026-10-25T15:32:59.764Z",
+      "benchmarkIndex": 1329,
+      "cpuSlowdownMultiplier": 2,
+      "benchmarkTidakDihitung": [],
       "scores": {
-        "performance": 97,
+        "performance": 99,
         "accessibility": 100,
         "best-practices": 100,
         "seo": 100
       },
       "metrics": {
         "cls": 0,
-        "lcpMs": 1373,
-        "tbtMs": 204
+        "lcpMs": 1106,
+        "tbtMs": 132
       },
-      "benchmarkIndex": 1495
+      "lulus": true
     },
     {
       "putaran": 6,
-      "name": "beranda",
-      "url": "https://tenma.tail482cb9.ts.net/",
-      "fetchTime": "2026-10-25T06:12:27.429Z",
+      "batch": 2,
+      "name": "studi-kasus",
+      "url": "https://tenma.tail482cb9.ts.net/proyek/takarlaba/",
+      "fetchTime": "2026-10-25T15:33:26.929Z",
+      "benchmarkIndex": 1085,
+      "cpuSlowdownMultiplier": 2,
+      "benchmarkTidakDihitung": [],
       "scores": {
         "performance": 100,
         "accessibility": 100,
@@ -162,64 +274,188 @@
       },
       "metrics": {
         "cls": 0,
-        "lcpMs": 1215,
-        "tbtMs": 91
+        "lcpMs": 1081,
+        "tbtMs": 33
       },
-      "benchmarkIndex": 1548
-    },
-    {
-      "putaran": 6,
-      "name": "studi-kasus",
-      "url": "https://tenma.tail482cb9.ts.net/proyek/takarlaba/",
-      "fetchTime": "2026-10-25T06:12:44.670Z",
-      "scores": {
-        "performance": 96,
-        "accessibility": 100,
-        "best-practices": 100,
-        "seo": 100
-      },
-      "metrics": {
-        "cls": 0,
-        "lcpMs": 1391,
-        "tbtMs": 214
-      },
-      "benchmarkIndex": 1092
+      "lulus": true
     },
     {
       "putaran": 7,
+      "batch": 2,
       "name": "beranda",
       "url": "https://tenma.tail482cb9.ts.net/",
-      "fetchTime": "2026-10-25T06:13:02.806Z",
+      "fetchTime": "2026-10-25T15:33:50.725Z",
+      "benchmarkIndex": 1225,
+      "cpuSlowdownMultiplier": 2,
+      "benchmarkTidakDihitung": [],
       "scores": {
-        "performance": 94,
+        "performance": 100,
         "accessibility": 100,
         "best-practices": 100,
         "seo": 100
       },
       "metrics": {
         "cls": 0,
-        "lcpMs": 1247,
-        "tbtMs": 277
+        "lcpMs": 1050,
+        "tbtMs": 22
       },
-      "benchmarkIndex": 1348
+      "lulus": true
     },
     {
       "putaran": 7,
+      "batch": 2,
       "name": "studi-kasus",
       "url": "https://tenma.tail482cb9.ts.net/proyek/takarlaba/",
-      "fetchTime": "2026-10-25T06:13:20.562Z",
+      "fetchTime": "2026-10-25T15:34:15.137Z",
+      "benchmarkIndex": 1094,
+      "cpuSlowdownMultiplier": 2,
+      "benchmarkTidakDihitung": [],
       "scores": {
-        "performance": 97,
+        "performance": 100,
         "accessibility": 100,
         "best-practices": 100,
         "seo": 100
       },
       "metrics": {
         "cls": 0,
-        "lcpMs": 1365,
-        "tbtMs": 190
+        "lcpMs": 1133,
+        "tbtMs": 35
       },
-      "benchmarkIndex": 1145
+      "lulus": true
+    },
+    {
+      "putaran": 8,
+      "batch": 2,
+      "name": "beranda",
+      "url": "https://tenma.tail482cb9.ts.net/",
+      "fetchTime": "2026-10-25T15:34:38.715Z",
+      "benchmarkIndex": 1237,
+      "cpuSlowdownMultiplier": 2,
+      "benchmarkTidakDihitung": [],
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1022,
+        "tbtMs": 63
+      },
+      "lulus": true
+    },
+    {
+      "putaran": 8,
+      "batch": 2,
+      "name": "studi-kasus",
+      "url": "https://tenma.tail482cb9.ts.net/proyek/takarlaba/",
+      "fetchTime": "2026-10-25T15:35:22.022Z",
+      "benchmarkIndex": 1010,
+      "cpuSlowdownMultiplier": 2,
+      "benchmarkTidakDihitung": [
+        904
+      ],
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1089,
+        "tbtMs": 75
+      },
+      "lulus": true
+    },
+    {
+      "putaran": 9,
+      "batch": 2,
+      "name": "beranda",
+      "url": "https://tenma.tail482cb9.ts.net/",
+      "fetchTime": "2026-10-25T15:35:52.574Z",
+      "benchmarkIndex": 1384,
+      "cpuSlowdownMultiplier": 2,
+      "benchmarkTidakDihitung": [],
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1017,
+        "tbtMs": 53
+      },
+      "lulus": true
+    },
+    {
+      "putaran": 9,
+      "batch": 2,
+      "name": "studi-kasus",
+      "url": "https://tenma.tail482cb9.ts.net/proyek/takarlaba/",
+      "fetchTime": "2026-10-25T15:36:16.484Z",
+      "benchmarkIndex": 1255,
+      "cpuSlowdownMultiplier": 2,
+      "benchmarkTidakDihitung": [],
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1180,
+        "tbtMs": 29
+      },
+      "lulus": true
+    },
+    {
+      "putaran": 10,
+      "batch": 2,
+      "name": "beranda",
+      "url": "https://tenma.tail482cb9.ts.net/",
+      "fetchTime": "2026-10-25T15:37:09.359Z",
+      "benchmarkIndex": 1313,
+      "cpuSlowdownMultiplier": 2,
+      "benchmarkTidakDihitung": [],
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1058,
+        "tbtMs": 56
+      },
+      "lulus": true
+    },
+    {
+      "putaran": 10,
+      "batch": 2,
+      "name": "studi-kasus",
+      "url": "https://tenma.tail482cb9.ts.net/proyek/takarlaba/",
+      "fetchTime": "2026-10-25T15:37:32.223Z",
+      "benchmarkIndex": 1095,
+      "cpuSlowdownMultiplier": 2,
+      "benchmarkTidakDihitung": [],
+      "scores": {
+        "performance": 98,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1159,
+        "tbtMs": 164
+      },
+      "lulus": true
     }
   ]
 }
