@@ -50,10 +50,19 @@ const liveLabel = isProduct ? t.cta.visit(new URL(project.liveUrl).host) : t.cta
         {t.cta.caseStudy}<span class="sr-only">: {project.name[locale]}</span>
         <Icon name="arrow-right" size={18} />
       </a>
-      <a href={project.liveUrl} class="link-arrow min-h-11" rel="noopener" data-live-link>
-        {liveLabel}<span class="sr-only">: {project.name[locale]} {t.external}</span>
-        <Icon name="external" size={18} />
-      </a>
+      {
+        project.paused ? (
+          <span class="inline-flex min-h-11 items-center font-mono text-xs text-muted" data-paused>
+            {t.project.paused}
+          </span>
+        ) : (
+          <a href={project.liveUrl} class="link-arrow min-h-11" rel="noopener" data-live-link>
+            {liveLabel}
+            <span class="sr-only">: {project.name[locale]} {t.external}</span>
+            <Icon name="external" size={18} />
+          </a>
+        )
+      }
       {
         project.sourceUrl && (
           <a href={project.sourceUrl} class="link-arrow min-h-11" rel="noopener" data-source-link>

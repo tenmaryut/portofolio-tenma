@@ -47,6 +47,11 @@ export interface Project {
   liveUrl: string;
   /** Repo kode sumber publik di GitHub; `null` kalau belum atau tidak dipublikasikan (repo produk privat). */
   sourceUrl: string | null;
+  /**
+   * Alasan situsnya sedang dimatikan sementara. Selama terisi, kartu dan studi kasus tidak menautkan `liveUrl`.
+   * Hapus lagi begitu situsnya menyala, lalu deploy ulang.
+   */
+  paused?: Localized<string>;
   /** Nama proyek, mis. "Company profile kantor hukum + CMS" atau "TakarLaba: …". */
   name: Localized<string>;
   /** Nama produk, atau nama bisnis fiktif yang dipakai di demo. */
@@ -358,6 +363,11 @@ export const projects: Project[] = [
     kind: 'demo',
     liveUrl: `${HUKUM_URL}/`,
     sourceUrl: 'https://github.com/tenmaryut/company-profile-hukum',
+    // Dimatikan sejak 22 Okt 2026 sampai PHP di server di-patch (permintaan Tenma).
+    paused: {
+      id: 'Demo ini sedang dimatikan sementara untuk pembaruan keamanan PHP di server. Kode sumbernya tetap bisa dilihat di GitHub.',
+      en: 'This demo is temporarily offline for a PHP security update on the server. Its source code is still available on GitHub.',
+    },
     brand: 'Kantor Hukum Nalar Saksama',
     name: {
       id: 'Company profile kantor hukum + CMS',

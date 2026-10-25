@@ -118,6 +118,12 @@ test('tautan situs live menuju alamat yang benar dengan label deskriptif', async
   } satisfies Record<(typeof projects)[number]['slug'], string>;
   for (const project of projects) {
     await page.goto(caseStudyPaths(project.slug).id);
+    if (project.paused) {
+      // Situs yang sedang dimatikan tidak boleh ditautkan, dan alasannya harus tampil.
+      await expect(page.locator(`a[href="${liveOrigin[project.slug]}/"]`)).toHaveCount(0);
+      await expect(page.locator('dd[data-paused]')).toContainText(project.paused.id);
+      continue;
+    }
     // Teks tambahan untuk pembaca layar ada di span sr-only, jadi Chromium bisa menyisipkan spasi sebelum titik dua.
     const label = project.kind === 'product' ? `Buka ${new URL(project.liveUrl).host}` : 'Lihat demo langsung';
     const link = page.getByRole('link', { name: new RegExp(`^${label.replace(/\./g, '\\.')}\\s*:\\s*${project.brand}`) });
