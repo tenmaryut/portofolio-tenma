@@ -363,11 +363,6 @@ export const projects: Project[] = [
     kind: 'demo',
     liveUrl: `${HUKUM_URL}/`,
     sourceUrl: 'https://github.com/tenmaryut/company-profile-hukum',
-    // Dimatikan sejak 22 Okt 2026 sampai PHP di server di-patch (permintaan Tenma).
-    paused: {
-      id: 'Demo ini sedang dimatikan sementara untuk pembaruan keamanan PHP di server. Kode sumbernya tetap bisa dilihat di GitHub.',
-      en: 'This demo is temporarily offline for a PHP security update on the server. Its source code is still available on GitHub.',
-    },
     brand: 'Kantor Hukum Nalar Saksama',
     name: {
       id: 'Company profile kantor hukum + CMS',

@@ -32,7 +32,7 @@ Setelah mengisi, build dan deploy ulang (lihat di bawah).
 | `src/config/profile.ts` | Data profil (nama, foto, email, WhatsApp, kota, GitHub) |
 | `src/i18n/routes.ts` | Peta rute ID/EN; dipakai pengalih bahasa, hreflang, sitemap, dan test |
 | `src/i18n/ui.ts` | Teks antarmuka bersama (navigasi, tombol, footer) |
-| `src/data/projects.ts` | Isi studi kasus dan hasil uji, untuk produk live (`kind: 'product'`) dan proyek demo (`kind: 'demo'`) |
+| `src/data/projects.ts` | Isi studi kasus dan hasil uji, untuk produk live (`kind: 'product'`) dan proyek demo (`kind: 'demo'`). Situs yang sedang dimatikan diberi `paused` (alasannya tampil, tautannya disembunyikan); hapus lagi begitu situsnya menyala, lalu deploy ulang |
 | `src/data/services.ts` | Daftar layanan |
 | `src/data/pages.ts` | Judul, deskripsi, dan teks gambar Open Graph tiap halaman |
 | `src/components/pages/` | Isi halaman (dipakai rute ID dan EN) |
