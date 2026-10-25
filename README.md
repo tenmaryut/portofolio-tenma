@@ -59,7 +59,7 @@ Variasi:
 ```bash
 npm run test:live                                       # uji situs live dari PORTOFOLIO_URL, termasuk tautan eksternal
 CHECK_EXTERNAL=1 npm test                               # preview lokal + tautan eksternal (butuh internet)
-npm run lighthouse                                      # Lighthouse mobile beranda + studi kasus TakarLaba, gagal kalau skor < 95
+npm run lighthouse                                      # Lighthouse mobile beranda + studi kasus TakarLaba, gagal kalau skor < 95 (pengali CPU dikalibrasi, lihat di bawah)
 npm run screenshots                                     # screenshot semua halaman ke docs/screenshots/
 npm run capture:projects                                # screenshot asli produk & situs demo untuk kartu proyek (bisa per slug)
 npm run record:animations                               # rekaman WebM animasi utama ke docs/animasi/
@@ -68,6 +68,16 @@ npm run check:domain                                    # pastikan tidak ada ala
 npm run audit:publik                                    # audit rilis publik: git grep + OCR gambar, video, laporan, gambar OG
 npm run cek:proxy                                       # bukti aman di balik proxy: cookie, URL https, redirect, X-Forwarded-For
 ```
+
+### Gerbang Lighthouse dan kalibrasi CPU
+
+Keputusan agen utama 25 Okt 2026: `npm run lighthouse` mengkalibrasi pengali CPU simulasi di setiap putaran, mengikuti tabel resmi Lighthouse ([docs/throttling.md, "Calibrating the CPU slowdown"](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#calibrating-the-cpu-slowdown)).
+
+- Pengali bawaan 4x dimaksudkan untuk host High-End Desktop dengan `benchmarkIndex` 1.500–2.000. Server ini biasanya 900–1.500 (Low-End Desktop), jadi 4x meniru perangkat sekitar dua kali lebih lambat dari target Lighthouse, yaitu ponsel kelas menengah.
+- Aturannya: `benchmarkIndex` ≥ 1.500 memakai 4x, 1.000–1.499 memakai 2x. Putaran di bawah 1.000 tidak dihitung dan diulang (paling banyak `MAX_ATTEMPTS`, bawaan 4), dan tidak pernah turun ke 1x.
+- Halaman dikumpulkan sekali (`-G`, tanpa throttling CPU karena mode simulasi). Laporan diaudit (`-A`) dengan pengali yang sesuai benchmark putaran itu sendiri.
+- Syarat lulus tidak berubah: setiap kategori ≥ 95 dan CLS ≤ 0,1 di setiap halaman. `benchmarkIndex` dan pengali tiap putaran tercatat di `docs/lighthouse/summary.json` dan di laporannya.
+- `CPU_MULTIPLIER=<angka>` memaksa satu pengali, misalnya untuk pembanding.
 
 Server ini dipakai bersama banyak agen, jadi test memakai paling banyak 2 Chrome di preview lokal dan 1 Chrome untuk situs live (`workers` di `playwright.config.ts`). Di server, jalankan test dan Lighthouse hanya kalau `free -h` menunjukkan *available* minimal 3 GB, hindari pukul 08.30–10.00 WIB (jadwal render video harian), dan bungkus perintahnya, misalnya `systemd-run --scope -p MemoryMax=3G -p CPUWeight=50 --quiet nice -n 10 npm run test:live`.
 
