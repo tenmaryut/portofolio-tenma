@@ -1,5 +1,5 @@
 {
-  "catatan": "Gerbang npm run lighthouse dengan pengali CPU terkalibrasi (keputusan agen utama 25 Okt 2026, https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#calibrating-the-cpu-slowdown): benchmarkIndex >= 1500 memakai 4x, 1000-1499 memakai 2x, di bawah 1000 tidak dihitung dan diulang. Batch 1 (putaran 1-5, 22.27-22.32) dijalankan beruntun; putaran 4 gagal (beranda 91, benchmark 1022, load 3,1). Batch 2 (putaran 6-10, 22.32-22.38) menunggu load di bawah 2,5 sebelum tiap putaran dan lolos 5/5. Laporan HTML/JSON di folder ini berasal dari putaran 10. Sebelum kalibrasi, gerbang 4x per putaran hanya lolos penuh di 3 dari 8 putaran (21.30) dan 0 dari 7 (21.43) walau render agen lain ditahan.",
+  "catatan": "Gerbang npm run lighthouse dengan pengali CPU terkalibrasi (keputusan agen utama 25 Okt 2026, https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#calibrating-the-cpu-slowdown): benchmarkIndex >= 1500 memakai 4x, 1000-1499 memakai 2x, di bawah 1000 tidak dihitung dan diulang. Batch 1 (putaran 1-5, 22.27-22.32) dijalankan beruntun; putaran 4 gagal (beranda 91, benchmark 1022, load 3,1). Batch 2 (putaran 6-10, 22.32-22.38) menunggu load di bawah 2,5 sebelum tiap putaran dan lolos 5/5. Batch 3 (putaran 11-15, 22.52-23.08) memakai syarat load rendah di dalam skrip; putaran 13 gagal (beranda 90, TBT 398 ms, benchmark 1442, load 1,99). Sebelum kalibrasi, gerbang 4x per putaran hanya lolos penuh di 3 dari 8 putaran (21.30) dan 0 dari 7 (21.43) walau render agen lain ditahan. Karena beranda gagal 2 dari 15 putaran terkalibrasi, agen utama mengganti syarat per putaran dengan run median dari 5 putaran (25 Okt 2026 ±23.35, https://github.com/GoogleChrome/lighthouse/blob/main/docs/variability.md#run-lighthouse-multiple-times). Gerbang dengan aturan median dicatat di gerbangMedian. Laporan HTML/JSON di folder ini adalah run median percobaan 3 (26 Okt 00.08-00.13), dan semua putarannya ada di summary.json.",
   "putaranLulus": {
     "1": true,
     "2": true,
@@ -10,7 +10,12 @@
     "7": true,
     "8": true,
     "9": true,
-    "10": true
+    "10": true,
+    "11": true,
+    "12": true,
+    "13": false,
+    "14": true,
+    "15": true
   },
   "putaran": [
     {
@@ -456,6 +461,798 @@
         "tbtMs": 164
       },
       "lulus": true
+    },
+    {
+      "putaran": 11,
+      "batch": 3,
+      "name": "beranda",
+      "url": "https://tenma.tail482cb9.ts.net/",
+      "fetchTime": "2026-10-25T16:03:40.936Z",
+      "benchmarkIndex": 1174,
+      "cpuSlowdownMultiplier": 2,
+      "loadAtStart": 2.41,
+      "tidakDihitung": [
+        "load 8.04",
+        "load 6.62"
+      ],
+      "scores": {
+        "performance": 95,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1134,
+        "tbtMs": 70
+      },
+      "lulus": true
+    },
+    {
+      "putaran": 11,
+      "batch": 3,
+      "name": "studi-kasus",
+      "url": "https://tenma.tail482cb9.ts.net/proyek/takarlaba/",
+      "fetchTime": "2026-10-25T16:04:19.993Z",
+      "benchmarkIndex": 1333,
+      "cpuSlowdownMultiplier": 2,
+      "loadAtStart": 2.32,
+      "tidakDihitung": [],
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1174,
+        "tbtMs": 12
+      },
+      "lulus": true
+    },
+    {
+      "putaran": 12,
+      "batch": 3,
+      "name": "beranda",
+      "url": "https://tenma.tail482cb9.ts.net/",
+      "fetchTime": "2026-10-25T16:04:43.484Z",
+      "benchmarkIndex": 1158,
+      "cpuSlowdownMultiplier": 2,
+      "loadAtStart": 1.8,
+      "tidakDihitung": [],
+      "scores": {
+        "performance": 96,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1284,
+        "tbtMs": 219
+      },
+      "lulus": true
+    },
+    {
+      "putaran": 12,
+      "batch": 3,
+      "name": "studi-kasus",
+      "url": "https://tenma.tail482cb9.ts.net/proyek/takarlaba/",
+      "fetchTime": "2026-10-25T16:05:11.500Z",
+      "benchmarkIndex": 1363,
+      "cpuSlowdownMultiplier": 2,
+      "loadAtStart": 1.99,
+      "tidakDihitung": [],
+      "scores": {
+        "performance": 98,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1169,
+        "tbtMs": 161
+      },
+      "lulus": true
+    },
+    {
+      "putaran": 13,
+      "batch": 3,
+      "name": "beranda",
+      "url": "https://tenma.tail482cb9.ts.net/",
+      "fetchTime": "2026-10-25T16:05:36.678Z",
+      "benchmarkIndex": 1442,
+      "cpuSlowdownMultiplier": 2,
+      "loadAtStart": 1.99,
+      "tidakDihitung": [],
+      "scores": {
+        "performance": 90,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1180,
+        "tbtMs": 398
+      },
+      "lulus": false
+    },
+    {
+      "putaran": 13,
+      "batch": 3,
+      "name": "studi-kasus",
+      "url": "https://tenma.tail482cb9.ts.net/proyek/takarlaba/",
+      "fetchTime": "2026-10-25T16:06:02.947Z",
+      "benchmarkIndex": 1329,
+      "cpuSlowdownMultiplier": 2,
+      "loadAtStart": 1.79,
+      "tidakDihitung": [],
+      "scores": {
+        "performance": 96,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1156,
+        "tbtMs": 226
+      },
+      "lulus": true
+    },
+    {
+      "putaran": 14,
+      "batch": 3,
+      "name": "beranda",
+      "url": "https://tenma.tail482cb9.ts.net/",
+      "fetchTime": "2026-10-25T16:06:28.940Z",
+      "benchmarkIndex": 1399,
+      "cpuSlowdownMultiplier": 2,
+      "loadAtStart": 2.18,
+      "tidakDihitung": [],
+      "scores": {
+        "performance": 97,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1082,
+        "tbtMs": 200
+      },
+      "lulus": true
+    },
+    {
+      "putaran": 14,
+      "batch": 3,
+      "name": "studi-kasus",
+      "url": "https://tenma.tail482cb9.ts.net/proyek/takarlaba/",
+      "fetchTime": "2026-10-25T16:07:33.812Z",
+      "benchmarkIndex": 1412,
+      "cpuSlowdownMultiplier": 2,
+      "loadAtStart": 2.46,
+      "tidakDihitung": [],
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1078,
+        "tbtMs": 19
+      },
+      "lulus": true
+    },
+    {
+      "putaran": 15,
+      "batch": 3,
+      "name": "beranda",
+      "url": "https://tenma.tail482cb9.ts.net/",
+      "fetchTime": "2026-10-25T16:07:57.318Z",
+      "benchmarkIndex": 1349,
+      "cpuSlowdownMultiplier": 2,
+      "loadAtStart": 2.08,
+      "tidakDihitung": [],
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1029,
+        "tbtMs": 19
+      },
+      "lulus": true
+    },
+    {
+      "putaran": 15,
+      "batch": 3,
+      "name": "studi-kasus",
+      "url": "https://tenma.tail482cb9.ts.net/proyek/takarlaba/",
+      "fetchTime": "2026-10-25T16:08:23.125Z",
+      "benchmarkIndex": 1314,
+      "cpuSlowdownMultiplier": 2,
+      "loadAtStart": 1.99,
+      "tidakDihitung": [],
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1106,
+        "tbtMs": 35
+      },
+      "lulus": true
+    }
+  ],
+  "gerbangMedian": [
+    {
+      "percobaan": 1,
+      "waktu": "2026-10-25 23.21-23.27 WIB",
+      "hasil": "GAGAL",
+      "keterangan": "Sebelum perbaikan tumpukan font. Studi kasus: run median pilihan computeMedianRun bernilai 91 (TBT 368 ms); semua putaran 88-100. Beranda lulus (median 97, semua putaran 92-100). Uji skrip dengan Lighthouse tiruan sempat berjalan 23.23.37-23.23.40, tepat sebelum putaran beranda #4 (97); putaran studi kasus tidak tumpang tindih dengannya.",
+      "halaman": [
+        {
+          "name": "beranda",
+          "medianRun": 5,
+          "scoresMedian": {
+            "performance": 97,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "metricsMedian": {
+            "cls": 0,
+            "lcpMs": 1076,
+            "tbtMs": 189
+          },
+          "range": {
+            "performance": {
+              "min": 92,
+              "max": 100
+            },
+            "accessibility": {
+              "min": 100,
+              "max": 100
+            },
+            "best-practices": {
+              "min": 100,
+              "max": 100
+            },
+            "seo": {
+              "min": 100,
+              "max": 100
+            },
+            "cls": {
+              "min": 0,
+              "max": 0
+            },
+            "lcpMs": {
+              "min": 1076,
+              "max": 1624
+            },
+            "tbtMs": {
+              "min": 50,
+              "max": 323
+            }
+          },
+          "tidakDihitung": [],
+          "runs": [
+            {
+              "fetchTime": "2026-10-25T16:21:42.560Z",
+              "benchmarkIndex": 1129,
+              "loadAtStart": 1.11,
+              "cpuSlowdownMultiplier": 2,
+              "scores": {
+                "performance": 92,
+                "accessibility": 100,
+                "best-practices": 100,
+                "seo": 100
+              },
+              "metrics": {
+                "cls": 0,
+                "lcpMs": 1624,
+                "tbtMs": 323
+              }
+            },
+            {
+              "fetchTime": "2026-10-25T16:22:23.769Z",
+              "benchmarkIndex": 1116,
+              "loadAtStart": 2.32,
+              "cpuSlowdownMultiplier": 2,
+              "scores": {
+                "performance": 100,
+                "accessibility": 100,
+                "best-practices": 100,
+                "seo": 100
+              },
+              "metrics": {
+                "cls": 0,
+                "lcpMs": 1105,
+                "tbtMs": 50
+              }
+            },
+            {
+              "fetchTime": "2026-10-25T16:23:03.123Z",
+              "benchmarkIndex": 1047,
+              "loadAtStart": 2.41,
+              "cpuSlowdownMultiplier": 2,
+              "scores": {
+                "performance": 98,
+                "accessibility": 100,
+                "best-practices": 100,
+                "seo": 100
+              },
+              "metrics": {
+                "cls": 0,
+                "lcpMs": 1077,
+                "tbtMs": 151
+              }
+            },
+            {
+              "fetchTime": "2026-10-25T16:23:40.366Z",
+              "benchmarkIndex": 1179,
+              "loadAtStart": 2.46,
+              "cpuSlowdownMultiplier": 2,
+              "scores": {
+                "performance": 97,
+                "accessibility": 100,
+                "best-practices": 100,
+                "seo": 100
+              },
+              "metrics": {
+                "cls": 0,
+                "lcpMs": 1128,
+                "tbtMs": 199
+              }
+            },
+            {
+              "fetchTime": "2026-10-25T16:24:11.600Z",
+              "benchmarkIndex": 1121,
+              "loadAtStart": 2.22,
+              "cpuSlowdownMultiplier": 2,
+              "scores": {
+                "performance": 97,
+                "accessibility": 100,
+                "best-practices": 100,
+                "seo": 100
+              },
+              "metrics": {
+                "cls": 0,
+                "lcpMs": 1076,
+                "tbtMs": 189
+              }
+            }
+          ]
+        },
+        {
+          "name": "studi-kasus",
+          "medianRun": 1,
+          "scoresMedian": {
+            "performance": 91,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "metricsMedian": {
+            "cls": 0,
+            "lcpMs": 1191,
+            "tbtMs": 368
+          },
+          "range": {
+            "performance": {
+              "min": 88,
+              "max": 100
+            },
+            "accessibility": {
+              "min": 100,
+              "max": 100
+            },
+            "best-practices": {
+              "min": 100,
+              "max": 100
+            },
+            "seo": {
+              "min": 100,
+              "max": 100
+            },
+            "cls": {
+              "min": 0,
+              "max": 0
+            },
+            "lcpMs": {
+              "min": 1139,
+              "max": 1266
+            },
+            "tbtMs": {
+              "min": 32,
+              "max": 473
+            }
+          },
+          "tidakDihitung": [
+            860
+          ],
+          "runs": [
+            {
+              "fetchTime": "2026-10-25T16:25:01.254Z",
+              "benchmarkIndex": 1088,
+              "loadAtStart": 2.14,
+              "cpuSlowdownMultiplier": 2,
+              "scores": {
+                "performance": 91,
+                "accessibility": 100,
+                "best-practices": 100,
+                "seo": 100
+              },
+              "metrics": {
+                "cls": 0,
+                "lcpMs": 1191,
+                "tbtMs": 368
+              }
+            },
+            {
+              "fetchTime": "2026-10-25T16:25:28.979Z",
+              "benchmarkIndex": 1447,
+              "loadAtStart": 2.27,
+              "cpuSlowdownMultiplier": 2,
+              "scores": {
+                "performance": 98,
+                "accessibility": 100,
+                "best-practices": 100,
+                "seo": 100
+              },
+              "metrics": {
+                "cls": 0,
+                "lcpMs": 1158,
+                "tbtMs": 152
+              }
+            },
+            {
+              "fetchTime": "2026-10-25T16:25:55.401Z",
+              "benchmarkIndex": 1185,
+              "loadAtStart": 2.46,
+              "cpuSlowdownMultiplier": 2,
+              "scores": {
+                "performance": 88,
+                "accessibility": 100,
+                "best-practices": 100,
+                "seo": 100
+              },
+              "metrics": {
+                "cls": 0,
+                "lcpMs": 1266,
+                "tbtMs": 473
+              }
+            },
+            {
+              "fetchTime": "2026-10-25T16:26:35.143Z",
+              "benchmarkIndex": 1002,
+              "loadAtStart": 2.43,
+              "cpuSlowdownMultiplier": 2,
+              "scores": {
+                "performance": 98,
+                "accessibility": 100,
+                "best-practices": 100,
+                "seo": 100
+              },
+              "metrics": {
+                "cls": 0,
+                "lcpMs": 1256,
+                "tbtMs": 167
+              }
+            },
+            {
+              "fetchTime": "2026-10-25T16:27:22.488Z",
+              "benchmarkIndex": 1124,
+              "loadAtStart": 2.35,
+              "cpuSlowdownMultiplier": 2,
+              "scores": {
+                "performance": 100,
+                "accessibility": 100,
+                "best-practices": 100,
+                "seo": 100
+              },
+              "metrics": {
+                "cls": 0,
+                "lcpMs": 1139,
+                "tbtMs": 32
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "percobaan": 2,
+      "waktu": "2026-10-26 00.00-00.07 WIB",
+      "hasil": "TIDAK SELESAI",
+      "keterangan": "Setelah perbaikan tumpukan font dideploy (00.00). Putaran studi kasus #5 gagal memuat (NO_FCP); Lighthouse CLI menyimpan laporan lalu keluar dengan kode galat, dan skrip berhenti sebelum menulis summary.json. Skrip diperbaiki: galat CLI kini dicatat sebagai putaran tidak dihitung. Data yang sempat tercatat: run median beranda 100/100/100/100 (TBT 44 ms); studi kasus putaran 1-4 performa 100, 100, 96, 98 (TBT 4, 85, 222, 158 ms).",
+      "halaman": []
+    },
+    {
+      "percobaan": 3,
+      "waktu": "2026-10-26 00.08-00.13 WIB",
+      "hasil": "LULUS",
+      "keterangan": "Run median beranda 99/100/100/100 dan studi kasus 100/100/100/100, CLS 0. Semua 10 putaran terhitung bernilai performa 98-100; tidak ada percobaan yang tidak dihitung.",
+      "halaman": [
+        {
+          "name": "beranda",
+          "medianRun": 1,
+          "scoresMedian": {
+            "performance": 99,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "metricsMedian": {
+            "cls": 0,
+            "lcpMs": 1063,
+            "tbtMs": 97
+          },
+          "range": {
+            "performance": {
+              "min": 99,
+              "max": 100
+            },
+            "accessibility": {
+              "min": 100,
+              "max": 100
+            },
+            "best-practices": {
+              "min": 100,
+              "max": 100
+            },
+            "seo": {
+              "min": 100,
+              "max": 100
+            },
+            "cls": {
+              "min": 0,
+              "max": 0
+            },
+            "lcpMs": {
+              "min": 1005,
+              "max": 1149
+            },
+            "tbtMs": {
+              "min": 0,
+              "max": 97
+            }
+          },
+          "tidakDihitung": [],
+          "runs": [
+            {
+              "fetchTime": "2026-10-25T17:08:57.912Z",
+              "benchmarkIndex": 1423,
+              "loadAtStart": 1.14,
+              "cpuSlowdownMultiplier": 2,
+              "scores": {
+                "performance": 99,
+                "accessibility": 100,
+                "best-practices": 100,
+                "seo": 100
+              },
+              "metrics": {
+                "cls": 0,
+                "lcpMs": 1063,
+                "tbtMs": 97
+              }
+            },
+            {
+              "fetchTime": "2026-10-25T17:09:24.785Z",
+              "benchmarkIndex": 1268,
+              "loadAtStart": 1.5,
+              "cpuSlowdownMultiplier": 2,
+              "scores": {
+                "performance": 100,
+                "accessibility": 100,
+                "best-practices": 100,
+                "seo": 100
+              },
+              "metrics": {
+                "cls": 0,
+                "lcpMs": 1005,
+                "tbtMs": 0
+              }
+            },
+            {
+              "fetchTime": "2026-10-25T17:09:51.231Z",
+              "benchmarkIndex": 1279,
+              "loadAtStart": 1.88,
+              "cpuSlowdownMultiplier": 2,
+              "scores": {
+                "performance": 99,
+                "accessibility": 100,
+                "best-practices": 100,
+                "seo": 100
+              },
+              "metrics": {
+                "cls": 0,
+                "lcpMs": 1149,
+                "tbtMs": 93
+              }
+            },
+            {
+              "fetchTime": "2026-10-25T17:10:16.968Z",
+              "benchmarkIndex": 1307,
+              "loadAtStart": 1.76,
+              "cpuSlowdownMultiplier": 2,
+              "scores": {
+                "performance": 100,
+                "accessibility": 100,
+                "best-practices": 100,
+                "seo": 100
+              },
+              "metrics": {
+                "cls": 0,
+                "lcpMs": 1050,
+                "tbtMs": 4
+              }
+            },
+            {
+              "fetchTime": "2026-10-25T17:10:48.859Z",
+              "benchmarkIndex": 1196,
+              "loadAtStart": 2.41,
+              "cpuSlowdownMultiplier": 2,
+              "scores": {
+                "performance": 100,
+                "accessibility": 100,
+                "best-practices": 100,
+                "seo": 100
+              },
+              "metrics": {
+                "cls": 0,
+                "lcpMs": 1094,
+                "tbtMs": 35
+              }
+            }
+          ]
+        },
+        {
+          "name": "studi-kasus",
+          "medianRun": 3,
+          "scoresMedian": {
+            "performance": 100,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "metricsMedian": {
+            "cls": 0,
+            "lcpMs": 1166,
+            "tbtMs": 1
+          },
+          "range": {
+            "performance": {
+              "min": 98,
+              "max": 100
+            },
+            "accessibility": {
+              "min": 100,
+              "max": 100
+            },
+            "best-practices": {
+              "min": 100,
+              "max": 100
+            },
+            "seo": {
+              "min": 100,
+              "max": 100
+            },
+            "cls": {
+              "min": 0,
+              "max": 0
+            },
+            "lcpMs": {
+              "min": 1084,
+              "max": 1166
+            },
+            "tbtMs": {
+              "min": 1,
+              "max": 159
+            }
+          },
+          "tidakDihitung": [],
+          "runs": [
+            {
+              "fetchTime": "2026-10-25T17:11:16.072Z",
+              "benchmarkIndex": 1235,
+              "loadAtStart": 2.24,
+              "cpuSlowdownMultiplier": 2,
+              "scores": {
+                "performance": 100,
+                "accessibility": 100,
+                "best-practices": 100,
+                "seo": 100
+              },
+              "metrics": {
+                "cls": 0,
+                "lcpMs": 1093,
+                "tbtMs": 13
+              }
+            },
+            {
+              "fetchTime": "2026-10-25T17:11:52.681Z",
+              "benchmarkIndex": 1106,
+              "loadAtStart": 2.37,
+              "cpuSlowdownMultiplier": 2,
+              "scores": {
+                "performance": 100,
+                "accessibility": 100,
+                "best-practices": 100,
+                "seo": 100
+              },
+              "metrics": {
+                "cls": 0,
+                "lcpMs": 1144,
+                "tbtMs": 5
+              }
+            },
+            {
+              "fetchTime": "2026-10-25T17:12:19.844Z",
+              "benchmarkIndex": 1154,
+              "loadAtStart": 1.96,
+              "cpuSlowdownMultiplier": 2,
+              "scores": {
+                "performance": 100,
+                "accessibility": 100,
+                "best-practices": 100,
+                "seo": 100
+              },
+              "metrics": {
+                "cls": 0,
+                "lcpMs": 1166,
+                "tbtMs": 1
+              }
+            },
+            {
+              "fetchTime": "2026-10-25T17:12:43.417Z",
+              "benchmarkIndex": 1332,
+              "loadAtStart": 2.06,
+              "cpuSlowdownMultiplier": 2,
+              "scores": {
+                "performance": 100,
+                "accessibility": 100,
+                "best-practices": 100,
+                "seo": 100
+              },
+              "metrics": {
+                "cls": 0,
+                "lcpMs": 1084,
+                "tbtMs": 79
+              }
+            },
+            {
+              "fetchTime": "2026-10-25T17:13:07.163Z",
+              "benchmarkIndex": 1472,
+              "loadAtStart": 2.39,
+              "cpuSlowdownMultiplier": 2,
+              "scores": {
+                "performance": 98,
+                "accessibility": 100,
+                "best-practices": 100,
+                "seo": 100
+              },
+              "metrics": {
+                "cls": 0,
+                "lcpMs": 1146,
+                "tbtMs": 159
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }

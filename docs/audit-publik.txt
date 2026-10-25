@@ -1,5 +1,5 @@
 # Audit repo publik
-Tanggal: 2026-10-25T15:38:23.183Z
+Tanggal: 2026-10-25T17:26:08.033Z
 Denylist: 3 pola dari ~/.config/git/denylist-publik
 
 ## 0. Kontrol positif OCR
@@ -182,9 +182,9 @@ Ringkas: 81 diperiksa, 0 temuan.
 
 ## 4. OCR screenshot di laporan Lighthouse terlacak
 bersih  docs/lighthouse/beranda.report.html #0  (0 karakter OCR)
-bersih  docs/lighthouse/beranda.report.html #1  (467 karakter OCR)
-bersih  docs/lighthouse/beranda.report.html #2  (494 karakter OCR)
-bersih  docs/lighthouse/beranda.report.html #3  (555 karakter OCR)
+bersih  docs/lighthouse/beranda.report.html #1  (429 karakter OCR)
+bersih  docs/lighthouse/beranda.report.html #2  (551 karakter OCR)
+bersih  docs/lighthouse/beranda.report.html #3  (557 karakter OCR)
 bersih  docs/lighthouse/beranda.report.html #4  (556 karakter OCR)
 bersih  docs/lighthouse/beranda.report.html #5  (556 karakter OCR)
 bersih  docs/lighthouse/beranda.report.html #6  (556 karakter OCR)

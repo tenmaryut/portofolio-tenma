@@ -2,13 +2,157 @@
   {
     "name": "beranda",
     "url": "https://tenma.tail482cb9.ts.net/",
-    "fetchTime": "2026-10-25T15:37:09.359Z",
     "lighthouseVersion": "13.5.0",
     "formFactor": "mobile",
-    "benchmarkIndex": 1313,
-    "cpuSlowdownMultiplier": 2,
     "counted": true,
-    "skippedBenchmarks": [],
+    "runsCounted": 5,
+    "medianRun": 1,
+    "fetchTime": "2026-10-25T17:08:57.912Z",
+    "benchmarkIndex": 1423,
+    "loadAtStart": 1.14,
+    "cpuSlowdownMultiplier": 2,
+    "scores": {
+      "performance": 99,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "cls": 0,
+      "lcpMs": 1063,
+      "tbtMs": 97
+    },
+    "range": {
+      "performance": {
+        "min": 99,
+        "max": 100
+      },
+      "accessibility": {
+        "min": 100,
+        "max": 100
+      },
+      "best-practices": {
+        "min": 100,
+        "max": 100
+      },
+      "seo": {
+        "min": 100,
+        "max": 100
+      },
+      "cls": {
+        "min": 0,
+        "max": 0
+      },
+      "lcpMs": {
+        "min": 1005,
+        "max": 1149
+      },
+      "tbtMs": {
+        "min": 0,
+        "max": 97
+      }
+    },
+    "notCounted": [],
+    "runs": [
+      {
+        "fetchTime": "2026-10-25T17:08:57.912Z",
+        "benchmarkIndex": 1423,
+        "loadAtStart": 1.14,
+        "cpuSlowdownMultiplier": 2,
+        "scores": {
+          "performance": 99,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "cls": 0,
+          "lcpMs": 1063,
+          "tbtMs": 97
+        }
+      },
+      {
+        "fetchTime": "2026-10-25T17:09:24.785Z",
+        "benchmarkIndex": 1268,
+        "loadAtStart": 1.5,
+        "cpuSlowdownMultiplier": 2,
+        "scores": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "cls": 0,
+          "lcpMs": 1005,
+          "tbtMs": 0
+        }
+      },
+      {
+        "fetchTime": "2026-10-25T17:09:51.231Z",
+        "benchmarkIndex": 1279,
+        "loadAtStart": 1.88,
+        "cpuSlowdownMultiplier": 2,
+        "scores": {
+          "performance": 99,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "cls": 0,
+          "lcpMs": 1149,
+          "tbtMs": 93
+        }
+      },
+      {
+        "fetchTime": "2026-10-25T17:10:16.968Z",
+        "benchmarkIndex": 1307,
+        "loadAtStart": 1.76,
+        "cpuSlowdownMultiplier": 2,
+        "scores": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "cls": 0,
+          "lcpMs": 1050,
+          "tbtMs": 4
+        }
+      },
+      {
+        "fetchTime": "2026-10-25T17:10:48.859Z",
+        "benchmarkIndex": 1196,
+        "loadAtStart": 2.41,
+        "cpuSlowdownMultiplier": 2,
+        "scores": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "cls": 0,
+          "lcpMs": 1094,
+          "tbtMs": 35
+        }
+      }
+    ]
+  },
+  {
+    "name": "studi-kasus",
+    "url": "https://tenma.tail482cb9.ts.net/proyek/takarlaba/",
+    "lighthouseVersion": "13.5.0",
+    "formFactor": "mobile",
+    "counted": true,
+    "runsCounted": 5,
+    "medianRun": 3,
+    "fetchTime": "2026-10-25T17:12:19.844Z",
+    "benchmarkIndex": 1154,
+    "loadAtStart": 1.96,
+    "cpuSlowdownMultiplier": 2,
     "scores": {
       "performance": 100,
       "accessibility": 100,
@@ -17,30 +161,126 @@
     },
     "metrics": {
       "cls": 0,
-      "lcpMs": 1058,
-      "tbtMs": 56
-    }
-  },
-  {
-    "name": "studi-kasus",
-    "url": "https://tenma.tail482cb9.ts.net/proyek/takarlaba/",
-    "fetchTime": "2026-10-25T15:37:32.223Z",
-    "lighthouseVersion": "13.5.0",
-    "formFactor": "mobile",
-    "benchmarkIndex": 1095,
-    "cpuSlowdownMultiplier": 2,
-    "counted": true,
-    "skippedBenchmarks": [],
-    "scores": {
-      "performance": 98,
-      "accessibility": 100,
-      "best-practices": 100,
-      "seo": 100
+      "lcpMs": 1166,
+      "tbtMs": 1
     },
-    "metrics": {
-      "cls": 0,
-      "lcpMs": 1159,
-      "tbtMs": 164
-    }
+    "range": {
+      "performance": {
+        "min": 98,
+        "max": 100
+      },
+      "accessibility": {
+        "min": 100,
+        "max": 100
+      },
+      "best-practices": {
+        "min": 100,
+        "max": 100
+      },
+      "seo": {
+        "min": 100,
+        "max": 100
+      },
+      "cls": {
+        "min": 0,
+        "max": 0
+      },
+      "lcpMs": {
+        "min": 1084,
+        "max": 1166
+      },
+      "tbtMs": {
+        "min": 1,
+        "max": 159
+      }
+    },
+    "notCounted": [],
+    "runs": [
+      {
+        "fetchTime": "2026-10-25T17:11:16.072Z",
+        "benchmarkIndex": 1235,
+        "loadAtStart": 2.24,
+        "cpuSlowdownMultiplier": 2,
+        "scores": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "cls": 0,
+          "lcpMs": 1093,
+          "tbtMs": 13
+        }
+      },
+      {
+        "fetchTime": "2026-10-25T17:11:52.681Z",
+        "benchmarkIndex": 1106,
+        "loadAtStart": 2.37,
+        "cpuSlowdownMultiplier": 2,
+        "scores": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "cls": 0,
+          "lcpMs": 1144,
+          "tbtMs": 5
+        }
+      },
+      {
+        "fetchTime": "2026-10-25T17:12:19.844Z",
+        "benchmarkIndex": 1154,
+        "loadAtStart": 1.96,
+        "cpuSlowdownMultiplier": 2,
+        "scores": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "cls": 0,
+          "lcpMs": 1166,
+          "tbtMs": 1
+        }
+      },
+      {
+        "fetchTime": "2026-10-25T17:12:43.417Z",
+        "benchmarkIndex": 1332,
+        "loadAtStart": 2.06,
+        "cpuSlowdownMultiplier": 2,
+        "scores": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "cls": 0,
+          "lcpMs": 1084,
+          "tbtMs": 79
+        }
+      },
+      {
+        "fetchTime": "2026-10-25T17:13:07.163Z",
+        "benchmarkIndex": 1472,
+        "loadAtStart": 2.39,
+        "cpuSlowdownMultiplier": 2,
+        "scores": {
+          "performance": 98,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "cls": 0,
+          "lcpMs": 1146,
+          "tbtMs": 159
+        }
+      }
+    ]
   }
 ]
