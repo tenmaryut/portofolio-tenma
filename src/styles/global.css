@@ -126,10 +126,9 @@
     text-wrap: balance;
   }
 
-  p,
-  li {
-    text-wrap: pretty;
-  }
+  /* Paragraf dan butir daftar sengaja tanpa text-wrap: pretty. Di Chrome, aturan itu membuat layout pertama
+     studi kasus dan beranda kira-kira dua kali lebih lama (diukur 25 Okt 2026 dengan CPU 4x: 210 → 104 ms),
+     dan lonjakannya cukup untuk menjatuhkan skor performa Lighthouse di bawah 95. */
 
   a {
     text-underline-offset: 0.2em;
