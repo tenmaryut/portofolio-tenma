@@ -1,6 +1,6 @@
 # portofolio-tenma
 
-Situs portofolio pribadi Tenma (programmer web sampingan, mahasiswa Ilmu Hukum UT) yang menautkan dua proyek demo. Brief dan progress: `/root/tenma-ws/portofolio/brief-portofolio-tenma.md` dan `progress/portofolio-tenma.md`.
+Situs portofolio pribadi Tenma (programmer web dan spreadsheet) yang menampilkan dua produk live, TakarLaba dan PasalBaru, serta dua proyek demo. Brief dan progress: `/root/tenma-ws/portofolio/brief-portofolio-tenma.md` dan `progress/portofolio-tenma.md`.
 
 ## Stack dan perintah
 - Astro 7 (output statis) + Tailwind CSS 4 + TypeScript 6 (sengaja v6: `@astrojs/check` belum mendukung TS 7).
