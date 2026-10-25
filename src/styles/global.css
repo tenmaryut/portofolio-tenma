@@ -123,12 +123,15 @@
     font-weight: 600;
     line-height: 1.12;
     letter-spacing: -0.012em;
-    text-wrap: balance;
   }
 
-  /* Paragraf dan butir daftar sengaja tanpa text-wrap: pretty. Di Chrome, aturan itu membuat layout pertama
-     studi kasus dan beranda kira-kira dua kali lebih lama (diukur 25 Okt 2026 dengan CPU 4x: 210 → 104 ms),
-     dan lonjakannya cukup untuk menjatuhkan skor performa Lighthouse di bawah 95. */
+  /* text-wrap mahal di Chrome. Pada 25 Okt 2026 (CPU 4x), pretty di semua p dan li menggandakan layout pertama
+     studi kasus (210 → 104 ms tanpa pretty), dan balance di semua h2/h3 menambah layout serta recalc style
+     beranda (120 → 92 ms dan 179 → 20 ms tanpa balance). Lonjakan itu cukup untuk menjatuhkan skor performa
+     Lighthouse di bawah 95. Karena itu balance hanya dipakai di h1, satu judul per halaman. */
+  h1 {
+    text-wrap: balance;
+  }
 
   a {
     text-underline-offset: 0.2em;
@@ -171,15 +174,6 @@
     .container-page {
       padding-inline: 2rem;
     }
-  }
-
-  /* Bagian di bawah layar pertama: layout dan paint ditunda sampai mendekati layar, jadi
-     pekerjaan main thread saat halaman dimuat berkurang di ponsel lambat. Ukuran
-     perkiraan diingat browser (auto) supaya scroll tidak meloncat. */
-  .tunda-render {
-    content-visibility: auto;
-    /* Hanya tinggi: lebar tetap mengikuti kolomnya, jadi item grid tidak melebar. */
-    contain-intrinsic-height: auto 900px;
   }
 
   /* Label pasal: "§ 01 · Proyek". */

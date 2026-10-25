@@ -40,11 +40,6 @@ async function capture(path, width, scheme) {
   const page = await context.newPage();
   await page.goto(base + path, { waitUntil: 'networkidle' });
   await page.evaluate(() => document.fonts.ready);
-  // Bagian bertanda tunda-render (content-visibility: auto) baru digambar saat mendekati layar, jadi di
-  // screenshot halaman penuh bagian bawah tampil kosong. Lewat CSSOM (tidak diblokir CSP) semuanya dipaksa tampil.
-  await page.evaluate(() => {
-    for (const element of document.querySelectorAll('.tunda-render')) element.style.contentVisibility = 'visible';
-  });
   const { lang, name } = describe(path);
   const file = join(lang, `${name}-${width}${scheme === 'dark' ? '-gelap' : ''}.jpg`);
   mkdirSync(join(outDir, lang), { recursive: true });
