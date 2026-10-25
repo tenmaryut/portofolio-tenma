@@ -77,6 +77,7 @@ Keputusan agen utama 25 Okt 2026: `npm run lighthouse` mengkalibrasi pengali CPU
 - Aturannya: `benchmarkIndex` ≥ 1.500 memakai 4x, 1.000–1.499 memakai 2x. Putaran di bawah 1.000 tidak dihitung dan diulang (paling banyak `MAX_ATTEMPTS`, bawaan 4), dan tidak pernah turun ke 1x.
 - Halaman dikumpulkan sekali (`-G`, tanpa throttling CPU karena mode simulasi). Laporan diaudit (`-A`) dengan pengali yang sesuai benchmark putaran itu sendiri.
 - Syarat lulus tidak berubah: setiap kategori ≥ 95 dan CLS ≤ 0,1 di setiap halaman. `benchmarkIndex` dan pengali tiap putaran tercatat di `docs/lighthouse/summary.json` dan di laporannya.
+- Sesuai ketentuan yang sama ("jalankan saat load rendah"), skrip menunggu load rata-rata 1 menit di bawah 2,5 sebelum tiap pengumpulan, paling lama 5 menit (`LOAD_MAX`, `LOAD_WAIT`). Kalau load tetap tinggi, percobaan itu tidak dihitung. Load saat mulai dicatat di `summary.json`.
 - `CPU_MULTIPLIER=<angka>` memaksa satu pengali, misalnya untuk pembanding.
 
 Server ini dipakai bersama banyak agen, jadi test memakai paling banyak 2 Chrome di preview lokal dan 1 Chrome untuk situs live (`workers` di `playwright.config.ts`). Di server, jalankan test dan Lighthouse hanya kalau `free -h` menunjukkan *available* minimal 3 GB, hindari pukul 08.30–10.00 WIB (jadwal render video harian), dan bungkus perintahnya, misalnya `systemd-run --scope -p MemoryMax=3G -p CPUWeight=50 --quiet nice -n 10 npm run test:live`.

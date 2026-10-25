@@ -10,7 +10,7 @@
 
 ## Gambar
 - Favicon, ikon Apple, gambar Open Graph, monogram, dan pola "legal pad" dibuat sendiri (SVG/CSS, dan gambar OG dirender saat build dengan satori + sharp).
-- Screenshot di `src/assets/projects/` adalah tangkapan layar dua situs demo milik Tenma sendiri (alamat `HUKUM_URL` dan `TOKO_URL` di domain.env), diambil otomatis dengan Playwright. Kredit aset di dalam situs-situs itu tercatat di CREDITS.md proyek masing-masing.
+- Screenshot di `src/assets/projects/` adalah tangkapan layar produk live milik Tenma sendiri (TakarLaba di takarlaba.com dan PasalBaru di pasalbaru.id) serta dua situs demo milik Tenma (alamat `HUKUM_URL` dan `TOKO_URL` di domain.env), diambil otomatis dengan Playwright. Kredit aset di dalam situs-situs itu tercatat di repo proyek masing-masing.
 - Cuplikan video di `public/video/` adalah rekaman animasi kedua situs demo, dibuat dengan Playwright oleh proyek masing-masing (`docs/animasi/` di repo mereka); posternya frame terakhir rekaman itu.
 - Screenshot di `docs/screenshots/` dan rekaman di `docs/animasi/` adalah tangkapan layar situs ini.
 

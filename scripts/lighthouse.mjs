@@ -14,9 +14,12 @@
 // memengaruhi tahap ini, karena halaman dimuat tanpa throttling CPU. BenchmarkIndex dibaca dari artefak,
 // pengali yang tercatat di artefak disamakan, lalu laporan diaudit (-A) dengan pengali itu.
 // CPU_MULTIPLIER=<angka> memaksa satu pengali, MAX_ATTEMPTS mengatur jumlah percobaan per halaman.
+// Ketentuan "jalankan saat load rendah" (keputusan yang sama): sebelum tiap pengumpulan, skrip menunggu load
+// rata-rata 1 menit di bawah LOAD_MAX (bawaan 2,5) paling lama LOAD_WAIT detik (bawaan 300). Kalau load tetap
+// tinggi, percobaan itu tidak dihitung. Load saat mulai dicatat di summary.json.
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
-import { tmpdir } from 'node:os';
+import { loadavg, tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { PORTOFOLIO_URL as SITE } from '../src/config/domain.ts';
 
@@ -36,6 +39,19 @@ mkdirSync(outDir, { recursive: true });
 const results = [];
 const forcedMultiplier = process.env.CPU_MULTIPLIER ? Number(process.env.CPU_MULTIPLIER) : null;
 const maxAttempts = Number(process.env.MAX_ATTEMPTS ?? 4);
+const loadMax = Number(process.env.LOAD_MAX ?? 2.5);
+const loadWaitMs = Number(process.env.LOAD_WAIT ?? 300) * 1000;
+
+/** Tunggu sampai load rata-rata 1 menit di bawah loadMax; kembalikan load saat itu, atau null kalau batas waktu habis. */
+function waitForLowLoad() {
+  const end = Date.now() + loadWaitMs;
+  for (;;) {
+    const load = loadavg()[0];
+    if (load < loadMax) return Number(load.toFixed(2));
+    if (Date.now() >= end) return null;
+    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 5000);
+  }
+}
 
 /** Pengali CPU untuk benchmarkIndex host, atau null kalau putaran tidak dihitung. */
 function multiplierFor(benchmark) {
@@ -69,7 +85,13 @@ for (const { name, url } of targets) {
   let counted = null;
   const skipped = [];
   for (let attempt = 1; attempt <= maxAttempts && !counted; attempt++) {
-    console.log(`Mengukur ${url} (percobaan ${attempt}) …`);
+    const loadAtStart = waitForLowLoad();
+    if (loadAtStart === null) {
+      console.log(`Load tetap di atas ${loadMax} selama ${loadWaitMs / 1000} detik: percobaan ${attempt} tidak dihitung.`);
+      skipped.push(`load ${loadavg()[0].toFixed(2)}`);
+      continue;
+    }
+    console.log(`Mengukur ${url} (percobaan ${attempt}, load ${loadAtStart}) …`);
     const artifactsDir = mkdtempSync(join(tmpdir(), 'lh-artefak-'));
     try {
       runLighthouse(url, outputPath, [`-G=${artifactsDir}`, '--throttling.cpuSlowdownMultiplier=4'], false);
@@ -86,7 +108,7 @@ for (const { name, url } of targets) {
       writeFileSync(artifactsPath, JSON.stringify(artifacts));
       console.log(`benchmarkIndex ${benchmark}: diaudit dengan pengali CPU ${multiplier}x.`);
       const report = runLighthouse(url, outputPath, [`-A=${artifactsDir}`, `--throttling.cpuSlowdownMultiplier=${multiplier}`], true);
-      counted = { report, benchmark, multiplier, attempt };
+      counted = { report, benchmark, multiplier, attempt, loadAtStart };
     } finally {
       rmSync(artifactsDir, { recursive: true, force: true });
     }
@@ -109,6 +131,7 @@ for (const { name, url } of targets) {
     lighthouseVersion: report.lighthouseVersion,
     formFactor: report.configSettings.formFactor,
     benchmarkIndex: counted.benchmark,
+    loadAtStart: counted.loadAtStart,
     cpuSlowdownMultiplier: report.configSettings.throttling.cpuSlowdownMultiplier,
     counted: true,
     skippedBenchmarks: skipped,
@@ -126,7 +149,7 @@ try {
 } catch {
   console.warn('samarkan-staging tidak tersedia: periksa laporan sebelum di-commit ke repo publik.');
 }
-console.table(Object.fromEntries(results.map((r) => [r.name, { ...r.scores, ...r.metrics, bench: r.benchmarkIndex, cpu: r.cpuSlowdownMultiplier, formFactor: r.formFactor }])));
+console.table(Object.fromEntries(results.map((r) => [r.name, { ...r.scores, ...r.metrics, bench: r.benchmarkIndex, cpu: r.cpuSlowdownMultiplier, load: r.loadAtStart, formFactor: r.formFactor }])));
 
 const failing = results.filter((r) => !r.counted || Object.values(r.scores).some((score) => score < minScore) || r.metrics.cls > maxCls);
 if (failing.length > 0) {
