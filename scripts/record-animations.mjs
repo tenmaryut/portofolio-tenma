@@ -95,13 +95,14 @@ await record(
   async (page) => {
     await page.goto(`${base}/proyek/`);
     await page.waitForTimeout(900);
+    // Dua kartu pertama, apa pun proyeknya (sejak 25 Okt 2026: TakarLaba lalu PasalBaru).
     await page.locator('.project-card').first().getByRole('heading').getByRole('link').click();
-    await page.waitForURL(/\/proyek\/company-profile-hukum\/$/);
+    await page.waitForURL(/\/proyek\/[a-z-]+\/$/);
     await page.waitForTimeout(1500);
     await page.goBack();
     await page.waitForTimeout(1300);
     await page.locator('.project-card').nth(1).getByRole('heading').getByRole('link').click();
-    await page.waitForURL(/\/proyek\/toko-online-umkm\/$/);
+    await page.waitForURL(/\/proyek\/[a-z-]+\/$/);
     await page.waitForTimeout(1500);
   },
 );

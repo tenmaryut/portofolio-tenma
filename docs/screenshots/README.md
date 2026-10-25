@@ -1,6 +1,6 @@
 # Screenshot halaman
 
-Diambil otomatis dengan Playwright (Chromium, reduced motion agar animasi langsung di keadaan akhir) dari situs live (`PORTOFOLIO_URL` di domain.env) pada 2026-10-19, halaman penuh, JPEG kualitas 70.
+Diambil otomatis dengan Playwright (Chromium, reduced motion agar animasi langsung di keadaan akhir) dari situs live (`PORTOFOLIO_URL` di domain.env) pada 2026-10-25, halaman penuh, JPEG kualitas 70.
 Buat ulang dengan `npm run screenshots`. Skrip gagal kalau ada halaman yang memunculkan scroll horizontal.
 
 | Halaman | Lebar | Mode | File |
@@ -23,6 +23,12 @@ Buat ulang dengan `npm run screenshots`. Skrip gagal kalau ada halaman yang memu
 | `/en/projects/company-profile-hukum/` | 360 px | terang | [en/projects-company-profile-hukum-360.jpg](en/projects-company-profile-hukum-360.jpg) |
 | `/en/projects/company-profile-hukum/` | 768 px | terang | [en/projects-company-profile-hukum-768.jpg](en/projects-company-profile-hukum-768.jpg) |
 | `/en/projects/company-profile-hukum/` | 1440 px | terang | [en/projects-company-profile-hukum-1440.jpg](en/projects-company-profile-hukum-1440.jpg) |
+| `/en/projects/pasalbaru/` | 360 px | terang | [en/projects-pasalbaru-360.jpg](en/projects-pasalbaru-360.jpg) |
+| `/en/projects/pasalbaru/` | 768 px | terang | [en/projects-pasalbaru-768.jpg](en/projects-pasalbaru-768.jpg) |
+| `/en/projects/pasalbaru/` | 1440 px | terang | [en/projects-pasalbaru-1440.jpg](en/projects-pasalbaru-1440.jpg) |
+| `/en/projects/takarlaba/` | 360 px | terang | [en/projects-takarlaba-360.jpg](en/projects-takarlaba-360.jpg) |
+| `/en/projects/takarlaba/` | 768 px | terang | [en/projects-takarlaba-768.jpg](en/projects-takarlaba-768.jpg) |
+| `/en/projects/takarlaba/` | 1440 px | terang | [en/projects-takarlaba-1440.jpg](en/projects-takarlaba-1440.jpg) |
 | `/en/projects/toko-online-umkm/` | 360 px | terang | [en/projects-toko-online-umkm-360.jpg](en/projects-toko-online-umkm-360.jpg) |
 | `/en/projects/toko-online-umkm/` | 768 px | terang | [en/projects-toko-online-umkm-768.jpg](en/projects-toko-online-umkm-768.jpg) |
 | `/en/projects/toko-online-umkm/` | 1440 px | terang | [en/projects-toko-online-umkm-1440.jpg](en/projects-toko-online-umkm-1440.jpg) |
@@ -41,6 +47,12 @@ Buat ulang dengan `npm run screenshots`. Skrip gagal kalau ada halaman yang memu
 | `/proyek/company-profile-hukum/` | 360 px | terang | [id/proyek-company-profile-hukum-360.jpg](id/proyek-company-profile-hukum-360.jpg) |
 | `/proyek/company-profile-hukum/` | 768 px | terang | [id/proyek-company-profile-hukum-768.jpg](id/proyek-company-profile-hukum-768.jpg) |
 | `/proyek/company-profile-hukum/` | 1440 px | terang | [id/proyek-company-profile-hukum-1440.jpg](id/proyek-company-profile-hukum-1440.jpg) |
+| `/proyek/pasalbaru/` | 360 px | terang | [id/proyek-pasalbaru-360.jpg](id/proyek-pasalbaru-360.jpg) |
+| `/proyek/pasalbaru/` | 768 px | terang | [id/proyek-pasalbaru-768.jpg](id/proyek-pasalbaru-768.jpg) |
+| `/proyek/pasalbaru/` | 1440 px | terang | [id/proyek-pasalbaru-1440.jpg](id/proyek-pasalbaru-1440.jpg) |
+| `/proyek/takarlaba/` | 360 px | terang | [id/proyek-takarlaba-360.jpg](id/proyek-takarlaba-360.jpg) |
+| `/proyek/takarlaba/` | 768 px | terang | [id/proyek-takarlaba-768.jpg](id/proyek-takarlaba-768.jpg) |
+| `/proyek/takarlaba/` | 1440 px | terang | [id/proyek-takarlaba-1440.jpg](id/proyek-takarlaba-1440.jpg) |
 | `/proyek/toko-online-umkm/` | 360 px | terang | [id/proyek-toko-online-umkm-360.jpg](id/proyek-toko-online-umkm-360.jpg) |
 | `/proyek/toko-online-umkm/` | 768 px | terang | [id/proyek-toko-online-umkm-768.jpg](id/proyek-toko-online-umkm-768.jpg) |
 | `/proyek/toko-online-umkm/` | 1440 px | terang | [id/proyek-toko-online-umkm-1440.jpg](id/proyek-toko-online-umkm-1440.jpg) |
