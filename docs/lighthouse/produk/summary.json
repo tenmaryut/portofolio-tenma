@@ -1,0 +1,74 @@
+[
+  {
+    "name": "takarlaba-beranda",
+    "url": "https://takarlaba.com/",
+    "fetchTime": "2026-10-25T03:19:48.758Z",
+    "lighthouseVersion": "13.5.0",
+    "formFactor": "mobile",
+    "scores": {
+      "performance": 98,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "cls": 0,
+      "lcpMs": 1501,
+      "tbtMs": 156
+    }
+  },
+  {
+    "name": "takarlaba-tarif",
+    "url": "https://takarlaba.com/tarif/shopee",
+    "fetchTime": "2026-10-25T03:20:06.975Z",
+    "lighthouseVersion": "13.5.0",
+    "formFactor": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "cls": 0,
+      "lcpMs": 1593,
+      "tbtMs": 64
+    }
+  },
+  {
+    "name": "pasalbaru-beranda",
+    "url": "https://pasalbaru.id/",
+    "fetchTime": "2026-10-25T03:20:24.589Z",
+    "lighthouseVersion": "13.5.0",
+    "formFactor": "mobile",
+    "scores": {
+      "performance": 99,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "cls": 0,
+      "lcpMs": 1725,
+      "tbtMs": 43
+    }
+  },
+  {
+    "name": "pasalbaru-pasal",
+    "url": "https://pasalbaru.id/pasal/pencurian/",
+    "fetchTime": "2026-10-25T03:20:41.721Z",
+    "lighthouseVersion": "13.5.0",
+    "formFactor": "mobile",
+    "scores": {
+      "performance": 99,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "cls": 0,
+      "lcpMs": 1664,
+      "tbtMs": 0
+    }
+  }
+]

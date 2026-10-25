@@ -1,7 +1,10 @@
-import { HUKUM_URL, TOKO_URL } from '../config/domain';
+import { HUKUM_URL, PASALBARU_URL, TAKARLABA_URL, TOKO_URL } from '../config/domain';
 import { projectSlugs, type Locale, type ProjectSlug } from '../i18n/routes';
 
 type Localized<T> = Record<Locale, T>;
+
+/** `product`: produk milik Tenma yang dipakai orang sungguhan. `demo`: situs untuk bisnis fiktif. */
+export type ProjectKind = 'product' | 'demo';
 
 export interface LighthouseRun {
   page: Localized<string>;
@@ -16,14 +19,18 @@ export interface TestSuite {
   name: Localized<string>;
   tool: string;
   count: number;
+  /** Tanggal laporan suite ini (YYYY-MM-DD) kalau berbeda antar-suite; bawaannya `testsReportedOn`. */
+  reportedOn?: string;
 }
 
 export interface ProjectResults {
-  /** Tanggal pengukuran Lighthouse (YYYY-MM-DD), dijalankan dari situs ini (lihat docs/lighthouse/proyek-demo/). */
+  /** Tanggal pengukuran Lighthouse (YYYY-MM-DD), dijalankan dari server ini (lihat docs/lighthouse/proyek-demo/ dan docs/lighthouse/produk/). */
   measuredOn: string;
   lighthouseVersion: string;
+  /** Jumlah putaran pengukuran kalau skor yang ditampilkan adalah nilai tengahnya (median). */
+  medianOf?: number;
   lighthouse: LighthouseRun[];
-  /** Tanggal laporan test proyek (progress akhir proyek demo), semuanya lulus. */
+  /** Tanggal laporan test proyek (progress proyek itu), semuanya lulus. Untuk beberapa tanggal: yang terbaru. */
   testsReportedOn: string;
   tests: TestSuite[];
 }
@@ -35,13 +42,15 @@ export interface Challenge {
 
 export interface Project {
   slug: ProjectSlug;
-  demoUrl: string;
-  /** Repo kode sumber publik di GitHub; `null` kalau belum dipublikasikan. */
+  kind: ProjectKind;
+  /** Alamat situs yang online: domain produk atau alamat demo. */
+  liveUrl: string;
+  /** Repo kode sumber publik di GitHub; `null` kalau belum atau tidak dipublikasikan (repo produk privat). */
   sourceUrl: string | null;
-  /** Jenis proyek, mis. "Company profile kantor hukum + CMS". */
+  /** Nama proyek, mis. "Company profile kantor hukum + CMS" atau "TakarLaba: …". */
   name: Localized<string>;
-  /** Nama bisnis fiktif yang dipakai di demo. */
-  demoBrand: string;
+  /** Nama produk, atau nama bisnis fiktif yang dipakai di demo. */
+  brand: string;
   summary: Localized<string>;
   role: Localized<string>;
   stack: string[];
@@ -57,10 +66,299 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    slug: 'takarlaba',
+    kind: 'product',
+    liveUrl: `${TAKARLABA_URL}/`,
+    sourceUrl: null,
+    brand: 'TakarLaba',
+    name: {
+      id: 'TakarLaba: hitung untung bersih di marketplace',
+      en: 'TakarLaba: marketplace profit calculator',
+    },
+    summary: {
+      id: 'Aplikasi web gratis yang merinci potongan Shopee, TikTok Shop & Tokopedia, dan Lazada, lalu menghitung untung bersih, harga impas, dan batas biaya iklan per pesanan.',
+      en: 'A free web app that itemizes Shopee, TikTok Shop & Tokopedia, and Lazada fees, then works out net profit, the break-even price, and the ad spend limit per order.',
+    },
+    role: {
+      id: 'Perencanaan produk, riset tarif, pengembangan, pengujian, dan peluncuran',
+      en: 'Product planning, fee research, development, testing, and launch',
+    },
+    stack: ['Node.js 24', 'TypeScript', 'Hono', 'SQLite', 'Zod', 'esbuild', 'PWA'],
+    problem: {
+      id: [
+        'Penjual di Shopee, TikTok Shop & Tokopedia, dan Lazada dikenai banyak potongan: biaya administrasi, biaya proses pesanan, program gratis ongkir, komisi dinamis, sampai biaya layanan logistik. Susunannya berbeda di tiap platform, dan sebagian potongan punya batas maksimum per produk.',
+        'Tarifnya juga sering berubah. Sepanjang 2026, beberapa platform menaikkan biaya serentak pada Mei, batas komisi dinamis berubah pada September, dan biaya Gratis Ongkir XTRA Shopee naik mulai 1 Desember. Harga jual yang dulu aman bisa diam-diam kehilangan marginnya.',
+      ],
+      en: [
+        'Sellers on Shopee, TikTok Shop & Tokopedia, and Lazada pay a stack of deductions: admin fees, order processing fees, free shipping programs, dynamic commissions, and logistics service fees. Each platform structures them differently, and some fees are capped per product.',
+        'The rates also change often. During 2026, several platforms raised fees together in May, the dynamic commission cap changed in September, and Shopee’s Gratis Ongkir XTRA (free shipping) fee goes up on December 1. A price that used to be safe can quietly lose its margin.',
+      ],
+    },
+    solution: {
+      id: [
+        'TakarLaba menyimpan tarif resmi per kategori dan subkategori, masing-masing dengan tautan sumber dan tanggal terakhir dicek. Penjual cukup mengisi harga jual, modal, dan kategori. Setiap potongan lalu tampil terperinci, bersama untung bersih, margin, harga impas, dan batas biaya iklan (ROAS impas).',
+        'Mesin hitungnya adalah satu modul TypeScript yang dipakai bersama oleh browser dan server. Angkanya berubah saat isian diketik, dan formulirnya tetap bekerja tanpa JavaScript. Kalkulator bisa dipakai gratis tanpa daftar, sedangkan akun gratis menyimpan 3 produk yang dihitung ulang dengan tarif terbaru setiap kali dibuka.',
+      ],
+      en: [
+        'TakarLaba stores the official rates per category and subcategory, each with a link to its source and the date it was last checked. Sellers enter a selling price, a product cost, and a category. Every deduction then appears line by line, next to net profit, margin, the break-even price, and the ad spend limit (break-even ROAS).',
+        'The fee engine is a single TypeScript module shared by the browser and the server. Numbers update as you type, and the form still works without JavaScript. The calculator is free without signing up, and a free account saves 3 products that are recalculated with the latest rates every time they are opened.',
+      ],
+    },
+    features: {
+      id: [
+        'Kalkulator untuk Shopee (termasuk Mall), TikTok Shop & Tokopedia, dan Lazada, dengan rumus di balik setiap potongan',
+        'Harga impas dan batas biaya iklan per pesanan (ROAS impas)',
+        'Pilihan untuk memakai tarif Shopee yang berlaku mulai 1 Desember 2026',
+        'Tabel tarif tiap platform dengan tautan ke halaman resminya',
+        'Hasil hitungan bisa dibagikan lewat tautan atau WhatsApp',
+        'Akun gratis lewat email atau Google, dengan 3 produk tersimpan, ekspor data, dan penghapusan akun mandiri',
+        'Bisa dipasang di HP sebagai aplikasi (PWA), dan kalkulatornya tetap jalan tanpa internet',
+        'Fitur Pro sudah dibangun (produk tanpa batas, harga untuk target margin, simulasi kampanye, dan perhitungan massal sampai 500 baris dari CSV), tetapi pembayarannya belum dibuka',
+      ],
+      en: [
+        'Calculators for Shopee (including Mall), TikTok Shop & Tokopedia, and Lazada, with the formula behind every deduction',
+        'Break-even price and the ad spend limit per order (break-even ROAS)',
+        'A switch to apply the Shopee rates that take effect on December 1, 2026',
+        'Rate tables for each platform, linked to the official pages',
+        'Calculations can be shared by link or WhatsApp',
+        'Free accounts with email or Google sign-in: 3 saved products, data export, and self-service account deletion',
+        'Installable on a phone as an app (PWA), and the calculator keeps working offline',
+        'Pro features are built (unlimited products, target-margin pricing, campaign simulation, and bulk calculations of up to 500 rows from CSV), but payments are not open yet',
+      ],
+    },
+    challenges: {
+      id: [
+        {
+          title: 'Tarif yang berganti menurut tanggal',
+          body: 'Setiap tarif menyimpan tanggal mulai berlakunya, dan mesin hitung memilih tarif menurut tanggal WIB. Perubahan yang sudah diumumkan, misalnya biaya program Shopee per 1 Desember 2026, bisa disimulasikan sebelum berlaku. Produk yang disimpan selalu dihitung ulang dengan tarif terbaru.',
+        },
+        {
+          title: 'Harga impas yang mengikuti batas potongan',
+          body: 'Sebagian potongan punya batas maksimum per produk, sehingga harga impas tidak bisa dihitung dari satu rumus. TakarLaba mencarinya dengan pencarian biner yang menjalankan mesin hitung lengkap di setiap langkah.',
+        },
+        {
+          title: 'Satu mesin hitung, dicek dengan contoh resmi',
+          body: 'Mesin hitung yang sama dipakai oleh server, browser, dan alur pembuatan konten media sosial. Test unitnya mencocokkan hasil dengan contoh perhitungan resmi dari platform, dan pembuatan konten berhenti jika ada angka di naskah video yang berbeda dari hasil mesin hitung.',
+        },
+        {
+          title: 'Aman, dengan data sesedikit mungkin',
+          body: 'TakarLaba memakai CSP ketat tanpa script inline, token sesi yang di-hash, perlindungan CSRF double-submit, serta pembatasan laju untuk login dan pendaftaran. Pengunjung tanpa akun tidak mendapat cookie, dan analitiknya hanya menyimpan jumlah harian tanpa alamat IP.',
+        },
+      ],
+      en: [
+        {
+          title: 'Rates that change by date',
+          body: 'Every rate stores the date it takes effect, and the engine picks rates by the date in Jakarta time. Announced changes, such as Shopee’s program fees from December 1, 2026, can be simulated before they apply. Saved products are always recalculated with the current rates.',
+        },
+        {
+          title: 'A break-even price that respects fee caps',
+          body: 'Some fees are capped per product, so the break-even price cannot be found with a single formula. TakarLaba finds it with a binary search that runs the full fee engine at every step.',
+        },
+        {
+          title: 'One engine, checked against official examples',
+          body: 'The same engine powers the server, the browser, and the social media content pipeline. Its unit tests compare results with the platforms’ own worked examples, and content production stops if a number in a video script does not match the engine.',
+        },
+        {
+          title: 'Secure, with as little data as possible',
+          body: 'TakarLaba uses a strict CSP with no inline scripts, hashed session tokens, double-submit CSRF protection, and rate limits on sign-in and sign-up. Visitors without an account get no cookies, and the analytics keep daily totals only, with no IP addresses.',
+        },
+      ],
+    },
+    results: {
+      measuredOn: '2026-10-25',
+      lighthouseVersion: '13.5.0',
+      medianOf: 3,
+      lighthouse: [
+        {
+          page: { id: 'Beranda dan kalkulator', en: 'Home page and calculator' },
+          url: `${TAKARLABA_URL}/`,
+          performance: 98,
+          accessibility: 100,
+          bestPractices: 100,
+          seo: 100,
+        },
+        {
+          page: { id: 'Tabel tarif Shopee', en: 'Shopee rate table' },
+          url: `${TAKARLABA_URL}/tarif/shopee`,
+          performance: 100,
+          accessibility: 100,
+          bestPractices: 100,
+          seo: 100,
+        },
+      ],
+      testsReportedOn: '2026-10-22',
+      tests: [
+        {
+          name: {
+            id: 'Test unit: mesin hitung tarif (dicocokkan dengan contoh resmi platform), server dan keamanan, akun, serta pemeriksa angka di naskah konten',
+            en: 'Unit tests: the fee engine (checked against the platforms’ official examples), server and security, accounts, and the number checks for content scripts',
+          },
+          tool: 'Vitest',
+          count: 174,
+          reportedOn: '2026-10-22',
+        },
+        {
+          name: {
+            id: 'Test end-to-end: menghitung dan membagikan tautan, formulir tanpa JavaScript, halaman tarif dan PWA, serta pendaftaran akun sampai penghapusannya, di Pixel 7 dan Chrome desktop',
+            en: 'End-to-end tests: calculating and sharing links, the form without JavaScript, rate pages and the PWA, and an account from sign-up to deletion, on a Pixel 7 and desktop Chrome',
+          },
+          tool: 'Playwright',
+          count: 10,
+          reportedOn: '2026-10-18',
+        },
+      ],
+    },
+    videoCaption: null,
+  },
+  {
+    slug: 'pasalbaru',
+    kind: 'product',
+    liveUrl: `${PASALBARU_URL}/`,
+    sourceUrl: null,
+    brand: 'PasalBaru',
+    name: {
+      id: 'PasalBaru: konverter pasal KUHP lama ke baru',
+      en: 'PasalBaru: old-to-new Criminal Code converter',
+    },
+    summary: {
+      id: 'Situs dan aplikasi Android yang menunjukkan padanan pasal KUHP lama di KUHP baru (UU 1/2023), lengkap dengan teks resmi, ancaman pidana, dan penyesuaian UU 1/2026.',
+      en: 'A website and an Android app that show where an old Criminal Code article sits in the new Code (Law 1/2023), with the official text, penalties, and Law 1/2026 changes.',
+    },
+    role: {
+      id: 'Perencanaan produk, verifikasi data, pengembangan, pengujian, dan peluncuran',
+      en: 'Product planning, data verification, development, testing, and launch',
+    },
+    stack: ['Astro 7', 'TypeScript', 'Python', 'Tesseract OCR', 'satori', 'openpyxl', 'PWA', 'Android TWA'],
+    problem: {
+      id: [
+        'Sejak 2 Januari 2026, KUHP Nasional (Undang-Undang Nomor 1 Tahun 2023) menggantikan KUHP peninggalan Belanda, dan sebagian pasalnya disesuaikan lagi oleh Undang-Undang Nomor 1 Tahun 2026 tentang Penyesuaian Pidana. Nomor pasal yang dihafal bertahun-tahun, seperti pencurian atau penipuan, kini berpindah.',
+        'Mahasiswa hukum, advokat, paralegal, wartawan, dan masyarakat umum butuh cara cepat untuk tahu pasal lama itu sekarang menjadi pasal berapa, dengan teks resmi yang bisa dipercaya.',
+      ],
+      en: [
+        'Since January 2, 2026, Indonesia’s National Criminal Code (Law No. 1 of 2023) has replaced the Dutch-era Code, and some of its articles were adjusted again by Law No. 1 of 2026 on criminal law adjustments. Article numbers that people memorized for years, such as theft or fraud, have moved.',
+        'Law students, lawyers, paralegals, journalists, and the general public need a quick way to find which article an old one has become, with official text they can trust.',
+      ],
+    },
+    solution: {
+      id: [
+        'PasalBaru memetakan 139 pasal KUHP lama yang sering dipakai ke padanannya di KUHP baru. Setiap halaman padanan menampilkan teks lama dan baru berdampingan, unsur dan perbedaannya, ancaman pidana beserta kategori dendanya dalam rupiah, dan perubahan dari UU 1/2026.',
+        'Teks KUHP baru berasal dari salinan resmi yang berupa hasil pindai. Teks itu dibaca dua kali lalu kedua hasilnya dibandingkan, dan setiap pasal yang dikutip dicocokkan kata per kata dengan gambar halamannya. Padanan yang masih bisa diperdebatkan diberi label "Masih ditinjau".',
+      ],
+      en: [
+        'PasalBaru maps 139 frequently used old articles to their counterparts in the new Code. Each mapping page shows the old and new text side by side, their elements and differences, the penalty with its fine category in rupiah, and any changes made by Law 1/2026.',
+        'The new Code’s text comes from official copies that are scanned images. The text is read twice and the two readings are compared. Every quoted article is then checked word by word against the image of its page. Mappings that are still open to debate are labeled "Masih ditinjau" (under review).',
+      ],
+    },
+    features: {
+      id: [
+        'Pencarian nomor pasal lama, nomor pasal baru, atau kata kunci, yang diproses di perangkat pengguna',
+        '139 halaman padanan dengan teks resmi berdampingan, ancaman pidana, dan kategori denda',
+        'Halaman penyesuaian UU 1/2026, dengan label pada pasal yang ikut diubah',
+        'Kartu bergambar untuk dibagikan dari setiap padanan, plus tautan WhatsApp',
+        'Bisa dipasang di HP sebagai PWA, halaman yang pernah dibuka tetap terbaca tanpa internet, dan APK Android tersedia untuk diunduh langsung',
+        'Produk berbayar: Tabel Konkordansi KUHP (PDF A4 dan Excel berfilter) serta Tabel Konkordansi KUHAP dengan 362 padanan UU 8/1981 ke UU 20/2025',
+        'Tanpa akun dan tanpa cookie; laporan kesalahan dari pengguna disimpan paling lama 180 hari',
+      ],
+      en: [
+        'Search by old article number, new article number, or keyword, processed on the user’s device',
+        '139 mapping pages with official text side by side, penalties, and fine categories',
+        'A page for the Law 1/2026 adjustments, with labels on the articles it changed',
+        'An image card to share for every mapping, plus a WhatsApp link',
+        'Installable on a phone as a PWA, with pages already visited readable offline, and an Android APK available as a direct download',
+        'Paid products: a KUHP concordance table (A4 PDF and filterable Excel) and a KUHAP (Criminal Procedure Code) concordance table with 362 mappings from Law 8/1981 to Law 20/2025',
+        'No accounts and no cookies; error reports from users are kept for at most 180 days',
+      ],
+    },
+    challenges: {
+      id: [
+        {
+          title: 'Teks resmi dari hasil pindai',
+          body: 'Salinan resmi UU 1/2023 dan UU 1/2026 berupa gambar hasil pindai. Teksnya dibaca dua kali, oleh Tesseract dan dari lapisan teks PDF. Kata yang terbaca sama pada kedua pembacaan diterima, sedangkan yang berbeda dicek ke kamus atau ditandai meragukan. Teks yang belum diperiksa secara manual diberi label "hasil OCR" di situs.',
+        },
+        {
+          title: 'Validator sebelum setiap rilis',
+          body: 'Setiap padanan melewati validator otomatis. Nomor pasal harus ada, kutipan harus sama persis dengan teks terstruktur, pasal yang dikutip harus sudah terverifikasi, dan kategori denda serta lama pidana dicek ulang terhadap kutipannya. Produk berbayar hanya memakai padanan berkeyakinan tinggi.',
+        },
+        {
+          title: 'Cepat, dan tetap terbaca saat sinyal hilang',
+          body: 'Situsnya statis (Astro) dengan CSP ketat tanpa script inline. Service worker mengambil halaman dari jaringan lebih dulu dan memakai cache sebagai cadangan. Data terbaru langsung sampai, dan halaman yang pernah dibuka tetap bisa dibaca tanpa internet.',
+        },
+        {
+          title: 'Kartu bergambar yang dibuat otomatis',
+          body: 'Gambar kartu untuk setiap padanan dibuat saat build dengan satori dan resvg dari data yang sama dengan halamannya. Begitu data padanan diperbarui, kartunya ikut berubah tanpa disunting satu per satu.',
+        },
+      ],
+      en: [
+        {
+          title: 'Official text from scanned copies',
+          body: 'The official copies of Law 1/2023 and Law 1/2026 are scanned images. Their text is read twice, by Tesseract and from the PDF’s text layer. Words that both readings agree on are accepted, while differences are checked against a word list or flagged as uncertain. Text not yet checked by hand is labeled "hasil OCR" (OCR output) on the site.',
+        },
+        {
+          title: 'A validator before every release',
+          body: 'Every mapping goes through an automated validator. Article numbers must exist, quotes must match the structured text exactly, cited articles must already be verified, and fine categories and prison terms are cross-checked against the quote. Paid products use high-confidence mappings only.',
+        },
+        {
+          title: 'Fast, and readable when the signal drops',
+          body: 'The site is static (Astro) and runs under a strict CSP with no inline scripts. Its service worker fetches pages from the network first and falls back to the cache. New data arrives right away, and pages already visited stay readable offline.',
+        },
+        {
+          title: 'Share cards generated automatically',
+          body: 'The card image for every mapping is generated at build time with satori and resvg from the same data as its page. When a mapping is updated, its card changes too, with no manual editing.',
+        },
+      ],
+    },
+    results: {
+      measuredOn: '2026-10-25',
+      lighthouseVersion: '13.5.0',
+      medianOf: 3,
+      lighthouse: [
+        {
+          page: { id: 'Beranda', en: 'Home page' },
+          url: `${PASALBARU_URL}/`,
+          performance: 99,
+          accessibility: 100,
+          bestPractices: 100,
+          seo: 100,
+        },
+        {
+          page: { id: 'Halaman padanan: pencurian', en: 'Mapping page: theft' },
+          url: `${PASALBARU_URL}/pasal/pencurian/`,
+          performance: 99,
+          accessibility: 100,
+          bestPractices: 100,
+          seo: 100,
+        },
+      ],
+      testsReportedOn: '2026-10-25',
+      tests: [
+        {
+          name: {
+            id: 'Test end-to-end di situs live: pencarian, halaman pasal, kartu untuk dibagikan, PWA dan mode offline, header keamanan, serta aksesibilitas dan kontras warna dengan axe, di Pixel 7 dan Chrome desktop',
+            en: 'End-to-end tests on the live site: search, article pages, share cards, the PWA and offline mode, security headers, and accessibility and color contrast with axe, on a Pixel 7 and desktop Chrome',
+          },
+          tool: 'Playwright',
+          count: 142,
+          reportedOn: '2026-10-25',
+        },
+        {
+          name: {
+            id: 'Test akurasi data Tabel Konkordansi KUHAP: validator padanan dan kutipan',
+            en: 'Data accuracy tests for the KUHAP concordance table: mapping and quote validator',
+          },
+          tool: 'pytest',
+          count: 26,
+          reportedOn: '2026-10-12',
+        },
+      ],
+    },
+    videoCaption: null,
+  },
+  {
     slug: 'company-profile-hukum',
-    demoUrl: `${HUKUM_URL}/`,
+    kind: 'demo',
+    liveUrl: `${HUKUM_URL}/`,
     sourceUrl: 'https://github.com/tenmaryut/company-profile-hukum',
-    demoBrand: 'Kantor Hukum Nalar Saksama',
+    brand: 'Kantor Hukum Nalar Saksama',
     name: {
       id: 'Company profile kantor hukum + CMS',
       en: 'Law firm company profile + CMS',
@@ -200,9 +498,10 @@ export const projects: Project[] = [
   },
   {
     slug: 'toko-online-umkm',
-    demoUrl: `${TOKO_URL}/`,
+    kind: 'demo',
+    liveUrl: `${TOKO_URL}/`,
     sourceUrl: 'https://github.com/tenmaryut/toko-online-umkm',
-    demoBrand: 'Lumbung Kabut',
+    brand: 'Lumbung Kabut',
     name: {
       id: 'Toko online UMKM',
       en: 'Online store for a small business',

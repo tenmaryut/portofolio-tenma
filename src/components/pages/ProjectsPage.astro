@@ -19,25 +19,39 @@ const meta = pageMeta.projects[locale];
 const copy = {
   id: {
     label: 'Proyek',
-    title: 'Proyek demo dan studi kasus',
+    title: 'Produk live dan proyek demo',
     intro: [
-      'Dua proyek di bawah ini saya bangun untuk menunjukkan cara saya bekerja: dari kebutuhan, desain, pengembangan, dan pengujian, sampai situsnya online dan bisa dicoba.',
-      'Keduanya demo dengan bisnis fiktif. Nama, produk, dan data di dalamnya bukan milik usaha nyata, dan belum ada proyek klien yang ditampilkan di sini.',
+      'Empat proyek di bawah ini saya bangun mulai dari kebutuhan, desain, pengembangan, dan pengujian, sampai online dan bisa dicoba.',
+      'TakarLaba dan PasalBaru adalah produk saya sendiri. Dua lainnya berupa demo untuk bisnis fiktif. Nama, produk, dan data di dalamnya bukan milik usaha nyata.',
     ],
-    ctaTitle: 'Butuh situs serupa?',
+    groups: {
+      product: { title: 'Produk live', intro: 'Produk milik saya sendiri, online di domainnya masing-masing dan bisa dipakai siapa saja.' },
+      demo: { title: 'Proyek demo', intro: 'Situs lengkap untuk bisnis fiktif, dengan kode sumber publik di GitHub.' },
+    },
+    ctaTitle: 'Butuh situs atau aplikasi web serupa?',
     ctaBody: 'Setiap proyek dimulai dengan konsultasi dan penawaran tertulis.',
   },
   en: {
     label: 'Projects',
-    title: 'Demo projects and case studies',
+    title: 'Live products and demo projects',
     intro: [
-      'I built the two projects below to show how I work: from requirements, design, development, and testing, all the way to a live site you can try.',
-      'Both are demos for fictional businesses. The names, products, and data in them do not belong to any real business, and no client work is shown here yet.',
+      'I built the four projects below from requirements, design, development, and testing all the way to a live site you can try.',
+      'TakarLaba and PasalBaru are my own products. The other two are demos for fictional businesses, so the names, products, and data in them do not belong to any real business.',
     ],
-    ctaTitle: 'Need a similar site?',
+    groups: {
+      product: { title: 'Live products', intro: 'My own products, live on their own domains and open to anyone.' },
+      demo: { title: 'Demo projects', intro: 'Complete sites for fictional businesses, with public source code on GitHub.' },
+    },
+    ctaTitle: 'Need a similar site or web app?',
     ctaBody: 'Every project starts with a consultation and a written proposal.',
   },
 }[locale];
+
+const groups = (['product', 'demo'] as const).map((kind) => ({
+  kind,
+  ...copy.groups[kind],
+  projects: projects.filter((project) => project.kind === kind),
+}));
 ---
 
 <BaseLayout
@@ -56,13 +70,23 @@ const copy = {
       {copy.intro.map((paragraph) => <p>{paragraph}</p>)}
     </div>
 
-    <div class="mt-12 grid gap-6 md:grid-cols-2">
-      {projects.map((project, index) => (
-        <div class="reveal">
-          <ProjectCard project={project} locale={locale} headingLevel="h2" loading={index === 0 ? 'eager' : 'lazy'} />
-        </div>
-      ))}
-    </div>
+    {
+      groups.map((group, groupIndex) => (
+        <section class="mt-12" aria-labelledby={`grup-${group.kind}`}>
+          <h2 id={`grup-${group.kind}`} class="text-3xl">
+            {group.title}
+          </h2>
+          <p class="mt-2 max-w-2xl text-muted">{group.intro}</p>
+          <div class="mt-6 grid gap-6 md:grid-cols-2">
+            {group.projects.map((project, index) => (
+              <div class="reveal">
+                <ProjectCard project={project} locale={locale} loading={groupIndex === 0 && index === 0 ? 'eager' : 'lazy'} />
+              </div>
+            ))}
+          </div>
+        </section>
+      ))
+    }
 
     <div class="reveal mt-16 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-line bg-surface p-6">
       <div>

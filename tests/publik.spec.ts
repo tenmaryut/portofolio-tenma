@@ -2,9 +2,9 @@ import { existsSync, readFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
-import { HUKUM_URL, TOKO_URL } from '../src/config/domain';
+import { HUKUM_URL, PASALBARU_URL, TAKARLABA_URL, TOKO_URL } from '../src/config/domain';
 import { projects } from '../src/data/projects';
-import { caseStudyPaths } from '../src/i18n/routes';
+import { allPagePairs, caseStudyPaths } from '../src/i18n/routes';
 import { notFoundPages } from './helpers';
 
 // Kesiapan repo publik: alamat staging (memuat IP server) tidak boleh tampil sebagai teks terlihat.
@@ -70,7 +70,7 @@ test('pemeriksa benar-benar menangkap alamat staging (kontrol positif)', async (
 test('tidak ada IP server atau alamat staging sebagai teks terlihat di halaman mana pun', async ({ page, request }) => {
   const sitemap = await (await request.get('/sitemap-0.xml')).text();
   const paths = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => new URL(match[1]!).pathname);
-  expect(paths.length).toBe(14);
+  expect(paths.length).toBe(allPagePairs().length * 2);
 
   const problems: string[] = [];
   for (const path of [...paths, notFoundPages.id, notFoundPages.en]) {
@@ -80,32 +80,47 @@ test('tidak ada IP server atau alamat staging sebagai teks terlihat di halaman m
   expect(problems).toEqual([]);
 });
 
-test('kartu proyek dan studi kasus menautkan repo GitHub publik situs demo', async ({ page }) => {
-  const expected = {
+test('kartu dan studi kasus demo menautkan repo GitHub publik, produk tidak menautkan repo privat', async ({ page }) => {
+  const expected: Partial<Record<(typeof projects)[number]['slug'], string>> = {
     'company-profile-hukum': 'https://github.com/tenmaryut/company-profile-hukum',
     'toko-online-umkm': 'https://github.com/tenmaryut/toko-online-umkm',
   };
+  const demos = projects.filter((project) => project.kind === 'demo');
+  const products = projects.filter((project) => project.kind === 'product');
+  expect(demos.map((project) => project.slug).sort()).toEqual(Object.keys(expected).sort());
+  expect(products.every((project) => project.sourceUrl === null)).toBe(true);
   for (const locale of ['id', 'en'] as const) {
     await page.goto(locale === 'id' ? '/proyek/' : '/en/projects/');
     const cardLinks = page.locator('.project-card [data-source-link]');
-    await expect(cardLinks).toHaveCount(projects.length);
-    for (const project of projects) {
+    await expect(cardLinks).toHaveCount(demos.length);
+    for (const project of demos) {
       await expect(page.locator(`.project-card [data-source-link][href="${expected[project.slug]}"]`)).toHaveCount(1);
       await page.goto(caseStudyPaths(project.slug)[locale]);
-      await expect(page.locator('dl [data-source-link]')).toHaveAttribute('href', expected[project.slug]);
+      await expect(page.locator('dl [data-source-link]')).toHaveAttribute('href', expected[project.slug]!);
       await page.goto(locale === 'id' ? '/proyek/' : '/en/projects/');
     }
+    for (const project of products) {
+      await page.goto(caseStudyPaths(project.slug)[locale]);
+      await expect(page.locator('[data-source-link]')).toHaveCount(0);
+    }
   }
-  // Repo portofolio ini sendiri belum publik, jadi belum boleh ditautkan.
+  // Repo portofolio ini sendiri belum ditautkan dari halaman.
   await page.goto('/');
   await expect(page.locator('a[href*="github.com/tenmaryut/portofolio-tenma"]')).toHaveCount(0);
 });
 
-test('tautan demo tetap menuju HUKUM_URL dan TOKO_URL dengan label deskriptif', async ({ page }) => {
+test('tautan situs live menuju alamat yang benar dengan label deskriptif', async ({ page }) => {
+  const liveOrigin = {
+    takarlaba: TAKARLABA_URL,
+    pasalbaru: PASALBARU_URL,
+    'company-profile-hukum': HUKUM_URL,
+    'toko-online-umkm': TOKO_URL,
+  } satisfies Record<(typeof projects)[number]['slug'], string>;
   for (const project of projects) {
     await page.goto(caseStudyPaths(project.slug).id);
     // Teks tambahan untuk pembaca layar ada di span sr-only, jadi Chromium bisa menyisipkan spasi sebelum titik dua.
-    const link = page.getByRole('link', { name: new RegExp(`^Lihat demo langsung\\s*:\\s*${project.demoBrand}`) });
-    await expect(link).toHaveAttribute('href', `${project.slug === 'company-profile-hukum' ? HUKUM_URL : TOKO_URL}/`);
+    const label = project.kind === 'product' ? `Buka ${new URL(project.liveUrl).host}` : 'Lihat demo langsung';
+    const link = page.getByRole('link', { name: new RegExp(`^${label.replace(/\./g, '\\.')}\\s*:\\s*${project.brand}`) });
+    await expect(link).toHaveAttribute('href', `${liveOrigin[project.slug]}/`);
   }
 });

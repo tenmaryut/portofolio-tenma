@@ -1,6 +1,6 @@
 # portofolio-tenma
 
-Situs portofolio pribadi Tenma, programmer web yang baru memulai kerja sampingan membuat website serta templat dan dashboard Excel/Google Sheets untuk usaha kecil. Situs ini juga menautkan dua proyek demo: company profile kantor hukum dan toko online UMKM.
+Situs portofolio pribadi Tenma, programmer web yang membuat website serta templat dan dashboard Excel/Google Sheets untuk usaha kecil. Daftar proyeknya dibuka dengan dua produk live milik Tenma, TakarLaba (kalkulator untung bersih penjual marketplace) dan PasalBaru (konverter pasal KUHP lama ke KUHP baru), lalu dua proyek demo: company profile kantor hukum dan toko online UMKM.
 
 - Live: alamat `PORTOFOLIO_URL` di `/root/tenma-ws/portofolio/domain.env` (Indonesia di `/`, English di `/en/`)
 - Stack: Astro 7 (statis) + Tailwind CSS 4 + TypeScript, dilayani Caddy
@@ -32,12 +32,12 @@ Setelah mengisi, build dan deploy ulang (lihat di bawah).
 | `src/config/profile.ts` | Data profil (nama, foto, email, WhatsApp, kota, GitHub) |
 | `src/i18n/routes.ts` | Peta rute ID/EN; dipakai pengalih bahasa, hreflang, sitemap, dan test |
 | `src/i18n/ui.ts` | Teks antarmuka bersama (navigasi, tombol, footer) |
-| `src/data/projects.ts` | Isi studi kasus dan hasil uji proyek demo |
+| `src/data/projects.ts` | Isi studi kasus dan hasil uji, untuk produk live (`kind: 'product'`) dan proyek demo (`kind: 'demo'`) |
 | `src/data/services.ts` | Daftar layanan |
 | `src/data/pages.ts` | Judul, deskripsi, dan teks gambar Open Graph tiap halaman |
 | `src/components/pages/` | Isi halaman (dipakai rute ID dan EN) |
 | `src/pages/` | Rute: `/`, `/proyek/`, `/layanan/`, `/tentang/`, `/kontak/`, dan padanannya di `/en/` |
-| `src/assets/projects/` | Screenshot asli situs demo (`npm run capture:projects`) |
+| `src/assets/projects/` | Screenshot asli produk live dan situs demo (`npm run capture:projects`) |
 | `tests/` | Test Playwright |
 | `scripts/` | Deploy, Lighthouse, screenshot |
 | `deploy/portofolio-tenma.caddy` | Konfigurasi Caddy situs ini |
@@ -59,9 +59,9 @@ Variasi:
 ```bash
 npm run test:live                                       # uji situs live dari PORTOFOLIO_URL, termasuk tautan eksternal
 CHECK_EXTERNAL=1 npm test                               # preview lokal + tautan eksternal (butuh internet)
-npm run lighthouse                                      # Lighthouse mobile beranda + studi kasus, gagal kalau skor < 95
+npm run lighthouse                                      # Lighthouse mobile beranda + studi kasus TakarLaba, gagal kalau skor < 95
 npm run screenshots                                     # screenshot semua halaman ke docs/screenshots/
-npm run capture:projects                                # screenshot asli situs hukum & toko untuk kartu proyek
+npm run capture:projects                                # screenshot asli produk & situs demo untuk kartu proyek (bisa per slug)
 npm run record:animations                               # rekaman WebM animasi utama ke docs/animasi/
 npm run import:videos                                   # salin cuplikan WebM situs demo (docs/animasi/ mereka) ke public/video/
 npm run check:domain                                    # pastikan tidak ada alamat staging/IP di luar docs/
@@ -75,7 +75,7 @@ Server ini dipakai bersama banyak agen, jadi test memakai paling banyak 2 Chrome
 
 Repo ini disiapkan untuk dipublikasikan. Alamat staging memuat IP server, jadi:
 
-- Halaman tidak pernah menampilkan alamat situs demo sebagai teks; tautannya memakai label seperti "Lihat demo langsung" dan bilah browser di screenshot memakai nama demo (`tests/publik.spec.ts` memeriksa teks terlihat semua halaman dengan parser HTML).
+- Halaman tidak pernah menampilkan alamat situs demo sebagai teks; tautannya memakai label seperti "Lihat demo langsung" dan bilah browser di screenshot memakai nama demo (`tests/publik.spec.ts` memeriksa teks terlihat semua halaman dengan parser HTML). Domain produk live (takarlaba.com, pasalbaru.id) boleh tampil sebagai teks karena berdiri sendiri dan tidak memuat IP.
 - Laporan Lighthouse disamarkan otomatis dengan `samarkan-staging` oleh `npm run lighthouse`; README screenshot dan rekaman tidak menuliskan URL.
 - `npm run audit:publik` memeriksa pola di `~/.config/git/denylist-publik` lewat `git grep`, lalu OCR (tesseract) semua gambar terlacak, satu frame per detik dari setiap video, screenshot di dalam laporan Lighthouse, dan gambar OG hasil build, dengan kontrol positif. Hasil terakhir: `docs/audit-publik.txt`.
 - Hook pre-commit dan pre-push menolak commit atau push yang memuat pola itu; jangan dilewati.

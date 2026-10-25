@@ -60,6 +60,14 @@
   view-transition-name: site-header;
 }
 
+.vt-shot-takarlaba {
+  view-transition-name: shot-takarlaba;
+}
+
+.vt-shot-pasalbaru {
+  view-transition-name: shot-pasalbaru;
+}
+
 .vt-shot-company-profile-hukum {
   view-transition-name: shot-company-profile-hukum;
 }

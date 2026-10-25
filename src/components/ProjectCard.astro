@@ -16,6 +16,8 @@ const { project, locale, headingLevel = 'h3', loading = 'lazy' } = Astro.props;
 const t = useTranslations(locale);
 const Heading = headingLevel;
 const caseStudy = caseStudyPaths(project.slug)[locale];
+const isProduct = project.kind === 'product';
+const liveLabel = isProduct ? t.cta.visit(new URL(project.liveUrl).host) : t.cta.demo;
 ---
 
 <article class="project-card group relative flex h-full flex-col gap-5 rounded-xl border border-line bg-surface p-4 sm:p-5">
@@ -26,7 +28,9 @@ const caseStudy = caseStudyPaths(project.slug)[locale];
       loading={loading}
       sizes="(min-width: 1152px) 520px, (min-width: 768px) calc(50vw - 4rem), calc(100vw - 4rem)"
     />
-    <span class="stamp absolute -top-2 right-3 bg-surface">{t.project.demoBadge}</span>
+    <span class:list={['stamp absolute -top-2 right-3 bg-surface', isProduct && 'stamp-live']}>
+      {isProduct ? t.project.productBadge : t.project.demoBadge}
+    </span>
   </div>
 
   <div class="flex flex-1 flex-col gap-3">
@@ -46,8 +50,8 @@ const caseStudy = caseStudyPaths(project.slug)[locale];
         {t.cta.caseStudy}<span class="sr-only">: {project.name[locale]}</span>
         <Icon name="arrow-right" size={18} />
       </a>
-      <a href={project.demoUrl} class="link-arrow min-h-11" rel="noopener">
-        {t.cta.demo}<span class="sr-only">: {project.name[locale]} {t.external}</span>
+      <a href={project.liveUrl} class="link-arrow min-h-11" rel="noopener" data-live-link>
+        {liveLabel}<span class="sr-only">: {project.name[locale]} {t.external}</span>
         <Icon name="external" size={18} />
       </a>
       {

@@ -10,7 +10,8 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { PORTOFOLIO_URL as SITE } from '../src/config/domain.ts';
 
-const defaults = [`beranda=${SITE}/`, `studi-kasus=${SITE}/proyek/company-profile-hukum/`];
+// Studi kasus yang diukur: proyek pertama di daftar (sejak 25 Okt 2026 produk TakarLaba).
+const defaults = [`beranda=${SITE}/`, `studi-kasus=${SITE}/proyek/takarlaba/`];
 const targets = (process.argv.length > 2 ? process.argv.slice(2) : defaults).map((arg) => {
   const index = arg.indexOf('=');
   return { name: arg.slice(0, index), url: arg.slice(index + 1) };

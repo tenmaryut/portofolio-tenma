@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 import { projects } from '../src/data/projects';
+import { videos } from '../src/data/videos';
 import { caseStudyPaths, routes } from '../src/i18n/routes';
 import { allPages, notFoundPages } from './helpers';
 
@@ -9,7 +10,9 @@ import { allPages, notFoundPages } from './helpers';
 
 const animatedSelector = '.rise, .rise-move, .rise-card, .reveal';
 const firstProject = projects[0]!;
-const clipPath = caseStudyPaths(firstProject.slug).id;
+// Cuplikan animasi hanya ada di studi kasus demo; produk tidak punya rekaman.
+const clipProject = projects.find((project) => videos[project.slug] && project.videoCaption)!;
+const clipPath = caseStudyPaths(clipProject.slug).id;
 
 /** Catat apakah navigasi lintas dokumen memakai View Transition (event pagereveal). */
 async function trackViewTransitions(page: Page) {
@@ -34,7 +37,7 @@ async function viewTransitionUsed(page: Page) {
 
 async function openFirstCaseStudyFromProjects(page: Page) {
   await page.goto(routes.projects.id);
-  await page.getByRole('heading', { level: 2, name: firstProject.name.id }).getByRole('link').click();
+  await page.getByRole('heading', { level: 3, name: firstProject.name.id }).getByRole('link').click();
   await page.waitForURL((url) => url.pathname === caseStudyPaths(firstProject.slug).id);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(firstProject.name.id);
 }

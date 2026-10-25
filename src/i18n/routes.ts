@@ -21,8 +21,8 @@ export const routes = {
 
 export type RouteKey = keyof typeof routes;
 
-/** Slug studi kasus. Data lengkapnya ada di src/data/projects.ts. */
-export const projectSlugs = ['company-profile-hukum', 'toko-online-umkm'] as const;
+/** Slug studi kasus, urut seperti tampil di daftar proyek. Data lengkapnya ada di src/data/projects.ts. */
+export const projectSlugs = ['takarlaba', 'pasalbaru', 'company-profile-hukum', 'toko-online-umkm'] as const;
 export type ProjectSlug = (typeof projectSlugs)[number];
 
 export type Alternates = Record<Locale, string>;

@@ -1,0 +1,221 @@
+{
+  "catatan": "Tiga putaran Lighthouse mobile terhadap situs live, 25 Okt 2026. Skor di studi kasus memakai nilai tengah (median) tiap halaman. Laporan HTML/JSON di folder ini berasal dari putaran 3, yang sama dengan median.",
+  "putaran": [
+    {
+      "putaran": 1,
+      "name": "takarlaba-beranda",
+      "url": "https://takarlaba.com/",
+      "fetchTime": "2026-10-25T03:17:31.089Z",
+      "scores": {
+        "performance": 84,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1711,
+        "tbtMs": 625
+      },
+      "benchmarkIndex": 1293
+    },
+    {
+      "putaran": 1,
+      "name": "takarlaba-tarif",
+      "url": "https://takarlaba.com/tarif/shopee",
+      "fetchTime": "2026-10-25T03:17:48.728Z",
+      "scores": {
+        "performance": 98,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1680,
+        "tbtMs": 148
+      },
+      "benchmarkIndex": 1210
+    },
+    {
+      "putaran": 1,
+      "name": "pasalbaru-beranda",
+      "url": "https://pasalbaru.id/",
+      "fetchTime": "2026-10-25T03:18:06.917Z",
+      "scores": {
+        "performance": 99,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1676,
+        "tbtMs": 98
+      },
+      "benchmarkIndex": 1192
+    },
+    {
+      "putaran": 1,
+      "name": "pasalbaru-pasal",
+      "url": "https://pasalbaru.id/pasal/pencurian/",
+      "fetchTime": "2026-10-25T03:18:23.418Z",
+      "scores": {
+        "performance": 99,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1681,
+        "tbtMs": 0
+      },
+      "benchmarkIndex": 1432
+    },
+    {
+      "putaran": 2,
+      "name": "takarlaba-beranda",
+      "url": "https://takarlaba.com/",
+      "fetchTime": "2026-10-25T03:18:39.610Z",
+      "scores": {
+        "performance": 99,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1562,
+        "tbtMs": 101
+      },
+      "benchmarkIndex": 1392
+    },
+    {
+      "putaran": 2,
+      "name": "takarlaba-tarif",
+      "url": "https://takarlaba.com/tarif/shopee",
+      "fetchTime": "2026-10-25T03:18:56.400Z",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1540,
+        "tbtMs": 0
+      },
+      "benchmarkIndex": 1214
+    },
+    {
+      "putaran": 2,
+      "name": "pasalbaru-beranda",
+      "url": "https://pasalbaru.id/",
+      "fetchTime": "2026-10-25T03:19:13.719Z",
+      "scores": {
+        "performance": 99,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1607,
+        "tbtMs": 0
+      },
+      "benchmarkIndex": 1398
+    },
+    {
+      "putaran": 2,
+      "name": "pasalbaru-pasal",
+      "url": "https://pasalbaru.id/pasal/pencurian/",
+      "fetchTime": "2026-10-25T03:19:31.724Z",
+      "scores": {
+        "performance": 99,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1692,
+        "tbtMs": 0
+      },
+      "benchmarkIndex": 1438
+    },
+    {
+      "putaran": 3,
+      "name": "takarlaba-beranda",
+      "url": "https://takarlaba.com/",
+      "fetchTime": "2026-10-25T03:19:48.758Z",
+      "scores": {
+        "performance": 98,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1501,
+        "tbtMs": 156
+      },
+      "benchmarkIndex": 1516
+    },
+    {
+      "putaran": 3,
+      "name": "takarlaba-tarif",
+      "url": "https://takarlaba.com/tarif/shopee",
+      "fetchTime": "2026-10-25T03:20:06.975Z",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1593,
+        "tbtMs": 64
+      },
+      "benchmarkIndex": 1024
+    },
+    {
+      "putaran": 3,
+      "name": "pasalbaru-beranda",
+      "url": "https://pasalbaru.id/",
+      "fetchTime": "2026-10-25T03:20:24.589Z",
+      "scores": {
+        "performance": 99,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1725,
+        "tbtMs": 43
+      },
+      "benchmarkIndex": 1012
+    },
+    {
+      "putaran": 3,
+      "name": "pasalbaru-pasal",
+      "url": "https://pasalbaru.id/pasal/pencurian/",
+      "fetchTime": "2026-10-25T03:20:41.721Z",
+      "scores": {
+        "performance": 99,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "cls": 0,
+        "lcpMs": 1664,
+        "tbtMs": 0
+      },
+      "benchmarkIndex": 1521
+    }
+  ]
+}

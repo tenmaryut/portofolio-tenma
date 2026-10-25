@@ -23,17 +23,17 @@ const copy = {
   id: {
     eyebrow: 'Programmer web · Excel & Google Sheets',
     title: { before: 'Website yang ', mark: 'cepat', middle: ' dan spreadsheet yang ', ink: 'rapi', after: ' untuk usaha kecil.' },
-    lead: 'Saya Tenma, programmer web yang baru memulai kerja sampingan. Saya membuat company profile, landing page, toko online, dan sistem informasi sederhana, serta templat dan dashboard Excel/Google Sheets untuk usaha kecil. Pengerjaannya dibantu asisten AI, lalu saya uji dan periksa sendiri sebelum diserahkan.',
-    honest: 'Saat ini portofolio saya berisi proyek demo, belum proyek klien.',
+    lead: 'Saya Tenma. Saya membuat company profile, landing page, toko online, dan sistem informasi sederhana, serta templat dan dashboard Excel/Google Sheets untuk usaha kecil. Dua produk buatan saya sudah online di domainnya masing-masing. TakarLaba menghitung untung bersih penjual marketplace, dan PasalBaru mencarikan padanan pasal KUHP lama di KUHP baru.',
+    honest: 'Setiap proyek di sini bisa dibuka langsung, lengkap dengan jumlah test dan skor Lighthouse-nya.',
     valueLabel: 'Cara kerja',
     valueTitle: 'Yang bisa Anda pegang',
     valueIntro:
-      'Website dan spreadsheet usaha bukan cuma soal tampilan. Hasilnya harus teruji, kesepakatannya harus jelas, dan data pelanggan harus terjaga.',
+      'Website atau spreadsheet usaha perlu tiga hal: hasil yang teruji, kesepakatan yang jelas, dan data pelanggan yang terjaga.',
     values: [
       {
         icon: 'check',
-        title: 'Diuji sebelum diserahkan',
-        body: 'Setiap situs diuji otomatis untuk tampilan di ponsel sampai desktop, tautan, dan kecepatan. Setiap rumus spreadsheet diperiksa dengan data kosong dan data ekstrem. Laporan ujinya ikut diserahkan.',
+        title: 'Dikerjakan dengan AI, diverifikasi dengan test',
+        body: 'Saya menulis kode bersama Claude Code, asisten coding AI. Hasilnya baru diserahkan setelah lulus test otomatis: Playwright untuk alur di browser, Vitest atau PHPUnit untuk logika, axe untuk aksesibilitas, dan Lighthouse untuk kecepatan. Rumus spreadsheet diperiksa dengan data kosong dan data ekstrem, dan laporan ujinya ikut diserahkan.',
       },
       {
         icon: 'agreement',
@@ -47,9 +47,9 @@ const copy = {
       },
     ] satisfies { icon: IconName; title: string; body: string }[],
     projectsLabel: 'Proyek',
-    projectsTitle: 'Proyek demo',
+    projectsTitle: 'Produk live dan proyek demo',
     projectsIntro:
-      'Dua proyek demo untuk bisnis fiktif, dibangun sampai online, dilengkapi test otomatis, dan diukur dengan Lighthouse.',
+      'TakarLaba dan PasalBaru adalah produk saya sendiri yang bisa dipakai siapa saja. Dua proyek demo untuk bisnis fiktif menunjukkan company profile dan toko online. Keempatnya diuji otomatis dan diukur dengan Lighthouse.',
     servicesLabel: 'Layanan',
     servicesTitle: 'Yang bisa saya bantu',
     ctaLabel: 'Kontak',
@@ -60,17 +60,17 @@ const copy = {
   en: {
     eyebrow: 'Web developer · Excel & Google Sheets',
     title: { before: '', mark: 'Fast websites', middle: ' and ', ink: 'tidy spreadsheets', after: ' for small businesses.' },
-    lead: 'I’m Tenma, a web developer who has just started taking on side work. I build company profiles, landing pages, online stores, and simple information systems, plus Excel and Google Sheets templates and dashboards for small businesses. I work with an AI coding assistant, then test and review everything myself before handover.',
-    honest: 'For now, my portfolio contains demo projects, not client work.',
+    lead: 'I’m Tenma. I build company profiles, landing pages, online stores, and simple information systems, plus Excel and Google Sheets templates and dashboards for small businesses. Two products I built are live on their own domains. TakarLaba works out net profit for marketplace sellers, and PasalBaru finds where an old Criminal Code article sits in Indonesia’s new Code.',
+    honest: 'You can open every project here yourself, along with its test counts and Lighthouse scores.',
     valueLabel: 'How I work',
     valueTitle: 'What you can count on',
     valueIntro:
-      'A business website or spreadsheet is more than how it looks. It has to work, the deal has to be clear, and customer data has to stay safe.',
+      'A business website or spreadsheet needs three things: tested work, a clear agreement, and customer data that stays safe.',
     values: [
       {
         icon: 'check',
-        title: 'Tested before handover',
-        body: 'Every site is tested automatically for layouts from phone to desktop, links, and speed. Every spreadsheet formula is checked against blank and extreme data. You get the test report.',
+        title: 'Built with AI, verified by tests',
+        body: 'I write code with Claude Code, an AI coding assistant. Work is handed over only after it passes automated tests: Playwright for browser flows, Vitest or PHPUnit for logic, axe for accessibility, and Lighthouse for speed. Spreadsheet formulas are checked against blank and extreme data, and you get the test report.',
       },
       {
         icon: 'agreement',
@@ -84,9 +84,9 @@ const copy = {
       },
     ] satisfies { icon: IconName; title: string; body: string }[],
     projectsLabel: 'Projects',
-    projectsTitle: 'Demo projects',
+    projectsTitle: 'Live products and demo projects',
     projectsIntro:
-      'Two demo projects for fictional businesses, built all the way to production, covered by automated tests, and measured with Lighthouse.',
+      'TakarLaba and PasalBaru are my own products, open to anyone. Two demo projects for fictional businesses show a company profile and an online store. All four are covered by automated tests and measured with Lighthouse.',
     servicesLabel: 'Services',
     servicesTitle: 'How I can help',
     ctaLabel: 'Contact',

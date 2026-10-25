@@ -22,12 +22,12 @@ const copy = {
     title: 'Kerja rapi untuk usaha kecil',
     photoAlt: `Foto ${profile.fullName ?? profile.displayName}`,
     background: [
-      'Saya Tenma, programmer yang baru memulai kerja sampingan membuat website serta templat dan dashboard Excel/Google Sheets untuk usaha kecil.',
+      'Saya Tenma. Saya membuat website serta templat dan dashboard Excel/Google Sheets untuk usaha kecil. Saya juga menjalankan dua produk web buatan sendiri, TakarLaba dan PasalBaru.',
       'Saya terbiasa bekerja runtut: kebutuhan dicatat dengan jelas, data pengguna diperlakukan hati-hati, dan setiap kesepakatan dituangkan secara tertulis sebelum pekerjaan dimulai.',
-      'Saya masih di awal perjalanan sebagai programmer. Karena itu, saya memilih menunjukkan bukti yang bisa dicek sendiri: situs demo yang benar-benar online, test otomatis, dan skor Lighthouse yang dicantumkan di setiap studi kasus.',
+      'Klaim di situs ini bisa Anda cek sendiri. Kedua produk saya online di domainnya masing-masing, situs demonya bisa dicoba, dan setiap studi kasus mencantumkan jumlah test serta skor Lighthouse.',
     ],
     aiNote:
-      'Proyek di situs ini saya kerjakan dengan bantuan asisten AI untuk coding (Claude Code). Kualitasnya tidak saya klaim begitu saja, tetapi dibuktikan lewat test otomatis dan pengukuran yang hasilnya bisa Anda lihat.',
+      'Saya menulis kode bersama Claude Code, asisten coding AI, supaya pengerjaannya lebih cepat. Pekerjaan baru dianggap selesai setelah lulus test otomatis: Playwright untuk alur di browser, Vitest atau PHPUnit untuk logika, axe untuk aksesibilitas, dan Lighthouse untuk kecepatan. Hasil ujinya ikut diserahkan.',
     workflowLabel: 'Alur kerja',
     workflowTitle: 'Dari konsultasi sampai serah terima',
     workflowIntro: 'Setiap proyek mengikuti alur yang sama, supaya Anda selalu tahu apa yang sedang dikerjakan dan apa yang sudah disepakati.',
@@ -46,7 +46,7 @@ const copy = {
       },
       {
         title: 'Pengembangan',
-        body: 'Website dibangun bertahap, dan progresnya bisa Anda lihat di alamat uji coba.',
+        body: 'Website dibangun bertahap bersama Claude Code, dan progresnya bisa Anda lihat di alamat uji coba.',
       },
       {
         title: 'Pengujian',
@@ -63,11 +63,11 @@ const copy = {
     ],
     stackLabel: 'Stack',
     stackTitle: 'Teknologi yang saya pakai',
-    stackIntro: 'Daftar ini hanya berisi teknologi yang sudah dipakai di proyek demo di situs ini.',
+    stackIntro: 'Daftar ini hanya memuat teknologi yang sudah dipakai di produk dan proyek demo pada situs ini.',
     stackGroups: [
-      { name: 'Antarmuka', items: ['HTML & CSS', 'TypeScript', 'Astro', 'React', 'Next.js', 'Tailwind CSS'] },
-      { name: 'Backend & data', items: ['PHP', 'Laravel', 'Filament', 'Node.js', 'SQLite', 'Drizzle ORM', 'Zod'] },
-      { name: 'Pengujian & kualitas', items: ['Playwright', 'Vitest', 'PHPUnit', 'axe-core', 'Lighthouse'] },
+      { name: 'Antarmuka', items: ['HTML & CSS', 'TypeScript', 'Astro', 'React', 'Next.js', 'Tailwind CSS', 'PWA'] },
+      { name: 'Backend & data', items: ['PHP', 'Laravel', 'Filament', 'Node.js', 'Hono', 'Python', 'SQLite', 'Drizzle ORM', 'Zod'] },
+      { name: 'Pengujian & kualitas', items: ['Playwright', 'Vitest', 'PHPUnit', 'pytest', 'axe-core', 'Lighthouse'] },
       { name: 'Server & alat', items: ['Linux (Ubuntu)', 'Caddy', 'systemd', 'Git'] },
     ],
   },
@@ -76,12 +76,12 @@ const copy = {
     title: 'Careful work for small businesses',
     photoAlt: `Photo of ${profile.fullName ?? profile.displayName}`,
     background: [
-      'I’m Tenma, a developer who has just started side work building websites, plus Excel and Google Sheets templates and dashboards, for small businesses.',
+      'I’m Tenma. I build websites, plus Excel and Google Sheets templates and dashboards, for small businesses. I also run two web products of my own, TakarLaba and PasalBaru.',
       'I like to work in order: requirements are written down clearly, user data is handled with care, and every agreement is put in writing before work starts.',
-      'I am still early in my journey as a developer. That is why I prefer to show evidence you can check yourself: demo sites that are actually online, automated tests, and Lighthouse scores listed in every case study.',
+      'You can check the claims on this site yourself. Both of my products are live on their own domains, the demo sites are open to try, and every case study lists its test counts and Lighthouse scores.',
     ],
     aiNote:
-      'I build the projects on this site with the help of an AI coding assistant (Claude Code). I don’t ask you to take their quality on faith; it is backed by automated tests and measurements whose results you can see.',
+      'I write code with Claude Code, an AI coding assistant, so the work moves quickly. Work counts as done only after it passes automated tests: Playwright for browser flows, Vitest or PHPUnit for logic, axe for accessibility, and Lighthouse for speed. The test results are handed over with the work.',
     workflowLabel: 'Workflow',
     workflowTitle: 'From consultation to handover',
     workflowIntro: 'Every project follows the same steps, so you always know what is being worked on and what has been agreed.',
@@ -100,7 +100,7 @@ const copy = {
       },
       {
         title: 'Development',
-        body: 'The website is built in stages, and you can follow the progress on a staging address.',
+        body: 'The website is built in stages with Claude Code, and you can follow the progress on a staging address.',
       },
       {
         title: 'Testing',
@@ -117,11 +117,11 @@ const copy = {
     ],
     stackLabel: 'Stack',
     stackTitle: 'The tools I use',
-    stackIntro: 'This list only includes technologies already used in the demo projects on this site.',
+    stackIntro: 'This list includes only technologies already used in the products and demo projects on this site.',
     stackGroups: [
-      { name: 'Front end', items: ['HTML & CSS', 'TypeScript', 'Astro', 'React', 'Next.js', 'Tailwind CSS'] },
-      { name: 'Back end & data', items: ['PHP', 'Laravel', 'Filament', 'Node.js', 'SQLite', 'Drizzle ORM', 'Zod'] },
-      { name: 'Testing & quality', items: ['Playwright', 'Vitest', 'PHPUnit', 'axe-core', 'Lighthouse'] },
+      { name: 'Front end', items: ['HTML & CSS', 'TypeScript', 'Astro', 'React', 'Next.js', 'Tailwind CSS', 'PWA'] },
+      { name: 'Back end & data', items: ['PHP', 'Laravel', 'Filament', 'Node.js', 'Hono', 'Python', 'SQLite', 'Drizzle ORM', 'Zod'] },
+      { name: 'Testing & quality', items: ['Playwright', 'Vitest', 'PHPUnit', 'pytest', 'axe-core', 'Lighthouse'] },
       { name: 'Servers & tooling', items: ['Linux (Ubuntu)', 'Caddy', 'systemd', 'Git'] },
     ],
   },
@@ -145,10 +145,6 @@ const copy = {
         <div class="prose-page mt-6 text-lg text-muted">
           {copy.background.map((paragraph) => <p>{paragraph}</p>)}
         </div>
-        <p class="mt-6 max-w-[68ch] rounded-lg border border-line bg-surface p-4 text-[0.9375rem] text-muted">
-          <Icon name="code" size={18} class="mr-2 inline-block align-[-0.2em] text-accent" />
-          {copy.aiNote}
-        </p>
       </div>
       <div class="order-first md:order-none">
         {
@@ -180,6 +176,10 @@ const copy = {
         <SectionLabel number="4.1">{copy.workflowLabel}</SectionLabel>
         <h2 id="alur-kerja" class="mt-3 text-3xl sm:text-4xl">{copy.workflowTitle}</h2>
         <p class="mt-4 max-w-2xl text-muted">{copy.workflowIntro}</p>
+        <p class="mt-6 max-w-[68ch] rounded-lg border border-line bg-surface p-4 text-[0.9375rem] text-muted">
+          <Icon name="code" size={18} class="mr-2 inline-block align-[-0.2em] text-accent" />
+          {copy.aiNote}
+        </p>
       </div>
       <ol class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {

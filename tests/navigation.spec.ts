@@ -39,11 +39,11 @@ for (const locale of locales) {
   test(`kartu proyek → studi kasus → proyek berikutnya (${locale})`, async ({ page }) => {
     const [first, second] = projects;
     await page.goto(routes.projects[locale]);
-    await page.getByRole('heading', { level: 2, name: first!.name[locale] }).getByRole('link').click();
+    await page.getByRole('heading', { level: 3, name: first!.name[locale] }).getByRole('link').click();
     await page.waitForURL((url) => url.pathname === caseStudyPaths(first!.slug)[locale]);
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(first!.name[locale]);
 
-    await page.getByRole('link', { name: new RegExp(second!.name[locale].replace(/[+]/g, '\\+')) }).last().click();
+    await page.getByRole('link', { name: new RegExp(second!.name[locale].replace(/[.*+?^${}()|[\]\\]/g, '\\$&')) }).last().click();
     await page.waitForURL((url) => url.pathname === caseStudyPaths(second!.slug)[locale]);
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(second!.name[locale]);
 

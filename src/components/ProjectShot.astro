@@ -20,6 +20,8 @@ const t = useTranslations(locale);
 const shot = projectShots(project.slug)[variant];
 const alt = variant === 'desktop' ? t.project.screenshotAlt(project.name[locale]) : t.project.screenshotMobileAlt(project.name[locale]);
 const widths = variant === 'desktop' ? [480, 720, 960, 1280] : [240, 360, 480];
+// Bilah alamat tiruan: domain untuk produk, nama bisnis fiktif untuk demo.
+const addressLabel = project.kind === 'product' ? new URL(project.liveUrl).host : project.brand;
 ---
 
 <div
@@ -34,7 +36,7 @@ const widths = variant === 'desktop' ? [480, 720, 960, 1280] : [240, 360, 480];
         <span class="size-2.5 rounded-full bg-accent/70" />
         <span class="size-2.5 rounded-full bg-muted/50" />
         <span class="size-2.5 rounded-full bg-muted/30" />
-        <span class="ml-2 truncate rounded bg-surface px-2 font-mono text-[0.6875rem] text-muted">{project.demoBrand}</span>
+        <span class="ml-2 truncate rounded bg-surface px-2 font-mono text-[0.6875rem] text-muted">{addressLabel}</span>
       </div>
     )
   }

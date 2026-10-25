@@ -13,13 +13,13 @@ interface PageInfo {
 }
 
 const jobTitle: Record<Locale, string> = {
-  id: 'Programmer web dan spreadsheet (sampingan)',
-  en: 'Web and spreadsheet developer (side work)',
+  id: 'Programmer web dan spreadsheet',
+  en: 'Web and spreadsheet developer',
 };
 
 const personDescription: Record<Locale, string> = {
-  id: 'Programmer web yang baru memulai kerja sampingan membuat website serta templat dan dashboard Excel/Google Sheets untuk usaha kecil.',
-  en: 'A web developer who has just started side work building websites and Excel and Google Sheets templates and dashboards for small businesses.',
+  id: 'Programmer web yang membuat website serta templat dan dashboard Excel/Google Sheets untuk usaha kecil, sekaligus pembuat TakarLaba dan PasalBaru.',
+  en: 'A web developer who builds websites for small businesses, along with Excel and Google Sheets templates and dashboards. Maker of TakarLaba and PasalBaru.',
 };
 
 /** Data terstruktur schema.org: Person, WebSite, dan halaman yang sedang dibuka. */

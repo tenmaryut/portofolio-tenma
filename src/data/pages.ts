@@ -18,14 +18,14 @@ export const pageMeta: Record<PageKey, Record<Locale, PageMeta>> = {
     id: {
       title: 'Tenma · Website dan spreadsheet untuk usaha kecil',
       description:
-        'Tenma, programmer web yang baru memulai kerja sampingan: company profile, landing page, toko online, serta templat dan dashboard Excel/Google Sheets untuk usaha kecil.',
+        'Tenma membuat company profile, landing page, toko online, serta templat dan dashboard Excel/Google Sheets untuk usaha kecil. Produk live: TakarLaba dan PasalBaru.',
       ogEyebrow: '§ Portofolio',
       ogTitle: 'Website cepat dan spreadsheet rapi untuk usaha kecil',
     },
     en: {
       title: 'Tenma · Websites and spreadsheets for small businesses',
       description:
-        'Tenma is a web developer who has just started side work: company profiles, landing pages, online stores, and Excel and Google Sheets templates for small businesses.',
+        'Tenma builds company profiles, landing pages, online stores, and Excel/Google Sheets templates and dashboards for small businesses. Live products: TakarLaba, PasalBaru.',
       ogEyebrow: '§ Portfolio',
       ogTitle: 'Fast websites and tidy spreadsheets for small businesses',
     },
@@ -34,16 +34,16 @@ export const pageMeta: Record<PageKey, Record<Locale, PageMeta>> = {
     id: {
       title: 'Proyek · Tenma',
       description:
-        'Proyek demo Tenma: company profile kantor hukum dengan CMS dan toko online UMKM, lengkap dengan studi kasus, hasil test, dan skor Lighthouse.',
+        'Produk live Tenma, TakarLaba dan PasalBaru, serta dua proyek demo: company profile kantor hukum dan toko online UMKM, lengkap dengan studi kasus dan hasil uji.',
       ogEyebrow: '§ 02 · Proyek',
-      ogTitle: 'Proyek demo dan studi kasus',
+      ogTitle: 'Produk live dan proyek demo',
     },
     en: {
       title: 'Projects · Tenma',
       description:
-        'Tenma’s demo projects: a law firm company profile with a CMS and an online store for a small business, with case studies, test results, and Lighthouse scores.',
+        'Tenma’s live products, TakarLaba and PasalBaru, plus two demo projects: a law firm company profile and an online store. Each comes with a case study and test results.',
       ogEyebrow: '§ 02 · Projects',
-      ogTitle: 'Demo projects and case studies',
+      ogTitle: 'Live products and demo projects',
     },
   },
   services: {
@@ -66,14 +66,14 @@ export const pageMeta: Record<PageKey, Record<Locale, PageMeta>> = {
     id: {
       title: 'Tentang · Tenma',
       description:
-        'Siapa Tenma, alur kerja dari konsultasi sampai serah terima dengan perjanjian tertulis, dan stack yang dipakai.',
+        'Siapa Tenma, alur kerja dari konsultasi sampai serah terima, pengerjaan dengan Claude Code yang diverifikasi test otomatis, dan stack yang dipakai.',
       ogEyebrow: '§ 04 · Tentang',
       ogTitle: 'Kerja rapi untuk usaha kecil',
     },
     en: {
       title: 'About · Tenma',
       description:
-        'Who Tenma is, the workflow from consultation to handover with a written agreement, and the tech stack in use.',
+        'Who Tenma is, the workflow from consultation to handover, building with Claude Code backed by automated tests, and the tech stack in use.',
       ogEyebrow: '§ 04 · About',
       ogTitle: 'Careful work for small businesses',
     },
@@ -114,7 +114,7 @@ export interface OgEntry {
   locale: Locale;
   eyebrow: string;
   title: string;
-  /** Cap stempel di pojok gambar, mis. "DEMO" untuk studi kasus. */
+  /** Cap stempel di pojok gambar: "DEMO" untuk studi kasus demo, "LIVE" untuk produk. */
   stamp?: string;
 }
 
@@ -134,7 +134,7 @@ export function ogEntries(): OgEntry[] {
         locale,
         eyebrow: locale === 'id' ? '§ Studi kasus' : '§ Case study',
         title: project.name[locale],
-        stamp: 'DEMO',
+        stamp: project.kind === 'product' ? 'LIVE' : 'DEMO',
       });
     }
   }
@@ -145,8 +145,9 @@ export function ogEntries(): OgEntry[] {
  * Naikkan setiap kali tampilan gambar OG berubah. Facebook dan aplikasi chat menyimpan gambar pratinjau
  * berdasarkan URL-nya, dan Caddy mengizinkan cache 7 hari, jadi gambar baru di URL lama bisa tidak terambil.
  * Versi 2: huruf yang sebelumnya tampil sebagai kotak kosong (9 Okt 2026).
+ * Versi 3: teks posisi baru serta studi kasus TakarLaba dan PasalBaru (25 Okt 2026).
  */
-const ogVersion = 2;
+const ogVersion = 3;
 
 export function ogImagePath(locale: Locale, key: string): string {
   return `/og/${locale}/${key}.png?v=${ogVersion}`;

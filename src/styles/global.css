@@ -258,6 +258,12 @@
     transform: rotate(-6deg);
   }
 
+  /* Cap produk live bertinta gelap, supaya beda dari cap merah "Demo". */
+  .stamp-live {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+
   /* Latar bergaris seperti legal pad, dengan garis margin merah. */
   .legal-pad,
   .legal-margin {

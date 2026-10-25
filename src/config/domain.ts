@@ -36,3 +36,7 @@ function readOrigin(key: DomainKey): string {
 export const PORTOFOLIO_URL = readOrigin('PORTOFOLIO_URL');
 export const HUKUM_URL = readOrigin('HUKUM_URL');
 export const TOKO_URL = readOrigin('TOKO_URL');
+
+/** Produk live Tenma. Domainnya milik produk itu sendiri dan tidak berubah, jadi tidak diambil dari domain.env. */
+export const TAKARLABA_URL = 'https://takarlaba.com';
+export const PASALBARU_URL = 'https://pasalbaru.id';

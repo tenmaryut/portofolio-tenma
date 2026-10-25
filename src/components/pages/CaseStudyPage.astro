@@ -25,12 +25,16 @@ const next = nextProject(slug);
 const shots = projectShots(slug);
 const results = project.results;
 const totalTests = results?.tests.reduce((sum, suite) => sum + suite.count, 0) ?? 0;
+const datedSuites = results?.tests.some((suite) => suite.reportedOn) ?? false;
+const isProduct = project.kind === 'product';
+const host = new URL(project.liveUrl).host;
 
 const copy = {
   id: {
     breadcrumb: 'Remah roti',
     label: 'Studi kasus',
     fictional: 'Bisnis pada demo ini fiktif. Data di dalamnya bukan data asli.',
+    privateSource: 'Kode sumber produk ini privat. Buktinya bisa dilihat dari hasil uji di bawah dan situs yang sudah online.',
     brand: 'Nama demo',
     shotsCaption: (date: string | null) =>
       date ? `Tangkapan layar dari situs live, diambil ${date}.` : 'Tangkapan layar menyusul setelah situs live.',
@@ -41,23 +45,26 @@ const copy = {
     challenges: 'Tantangan teknis',
     results: 'Hasil uji',
     lighthouseTitle: 'Lighthouse (mobile)',
-    lighthouseNote: (date: string, version: string) =>
-      `Diukur pada ${date} dengan Lighthouse ${version} dalam mode mobile, langsung terhadap situs live. Skor bisa sedikit berubah antar-pengukuran.`,
+    lighthouseNote: (date: string, version: string, runs?: number) =>
+      `Diukur pada ${date} dengan Lighthouse ${version} dalam mode mobile, langsung terhadap situs live. ${runs ? `Skor di atas adalah nilai tengah dari ${runs} kali pengukuran.` : 'Skor bisa sedikit berubah antar-pengukuran.'}`,
     categories: ['Performa', 'Aksesibilitas', 'Praktik terbaik', 'SEO'],
     testsTitle: 'Test otomatis',
     testsTotal: (n: string, date: string) => `Total ${n} test, semuanya lulus menurut laporan pengujian proyek pada ${date}.`,
+    testsTotalDated: (n: string) => `Total ${n} test, semuanya lulus menurut laporan pengujian proyek pada tanggal yang tertera di tiap baris.`,
+    reportedOn: (date: string) => `laporan ${date}`,
     pending: 'Hasil uji dicantumkan setelah pengukuran pada situs live selesai.',
     liveDemo: 'Lihat demo langsung',
     measuredPath: 'Halaman yang diukur',
     next: 'Studi kasus berikutnya',
     back: 'Kembali ke semua proyek',
-    ctaTitle: 'Butuh situs seperti ini?',
+    ctaTitle: isProduct ? 'Butuh aplikasi web seperti ini?' : 'Butuh situs seperti ini?',
     ctaBody: 'Ceritakan kebutuhan Anda, lalu kita susun lingkup kerja dan perjanjian tertulisnya bersama.',
   },
   en: {
     breadcrumb: 'Breadcrumb',
     label: 'Case study',
     fictional: 'The business in this demo is fictional. The data in it is not real.',
+    privateSource: 'This product’s source code is private. The evidence is in the test results below and on the live site.',
     brand: 'Demo name',
     shotsCaption: (date: string | null) =>
       date ? `Screenshots of the live site, taken on ${date}.` : 'Screenshots will follow once the site is live.',
@@ -68,17 +75,19 @@ const copy = {
     challenges: 'Technical challenges',
     results: 'Test results',
     lighthouseTitle: 'Lighthouse (mobile)',
-    lighthouseNote: (date: string, version: string) =>
-      `Measured on ${date} with Lighthouse ${version} in mobile mode, directly against the live site. Scores can vary slightly between runs.`,
+    lighthouseNote: (date: string, version: string, runs?: number) =>
+      `Measured on ${date} with Lighthouse ${version} in mobile mode, directly against the live site. ${runs ? `Scores are the median of ${runs} runs.` : 'Scores can vary slightly between runs.'}`,
     categories: ['Performance', 'Accessibility', 'Best practices', 'SEO'],
     testsTitle: 'Automated tests',
     testsTotal: (n: string, date: string) => `${n} tests in total, all passing according to the project’s test report from ${date}.`,
+    testsTotalDated: (n: string) => `${n} tests in total, all passing according to the project’s test reports on the dates shown.`,
+    reportedOn: (date: string) => `report of ${date}`,
     pending: 'Test results will be listed once measurements on the live site are complete.',
     liveDemo: 'View the live demo',
     measuredPath: 'Measured page',
     next: 'Next case study',
     back: 'Back to all projects',
-    ctaTitle: 'Need a site like this?',
+    ctaTitle: isProduct ? 'Need a web app like this?' : 'Need a site like this?',
     ctaBody: 'Tell me what you need, and we will write up the scope and a written agreement together.',
   },
 }[locale];
@@ -116,7 +125,7 @@ const sections = [
         </nav>
         <div class="mt-6 flex flex-wrap items-center gap-4">
           <SectionLabel>{copy.label}</SectionLabel>
-          <span class="stamp">{t.project.demoBadge}</span>
+          <span class:list={['stamp', isProduct && 'stamp-live']}>{isProduct ? t.project.productBadge : t.project.demoBadge}</span>
         </div>
         <h1 class="mt-4 max-w-3xl text-4xl sm:text-5xl">{project.name[locale]}</h1>
         <p class="mt-5 max-w-[62ch] text-lg text-muted">{project.summary[locale]}</p>
@@ -126,10 +135,14 @@ const sections = [
             <dt class="label-pasal">{t.project.role}</dt>
             <dd class="mt-1">{project.role[locale]}</dd>
           </div>
-          <div>
-            <dt class="label-pasal">{copy.brand}</dt>
-            <dd class="mt-1">{project.demoBrand}</dd>
-          </div>
+          {
+            !isProduct && (
+              <div>
+                <dt class="label-pasal">{copy.brand}</dt>
+                <dd class="mt-1">{project.brand}</dd>
+              </div>
+            )
+          }
           <div class="sm:col-span-2">
             <dt class="label-pasal">{t.project.stack}</dt>
             <dd class="mt-2">
@@ -140,8 +153,8 @@ const sections = [
             <dt class="label-pasal">{t.project.status}</dt>
             <dd class="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1">
               <span>{t.project.live}:</span>
-              <a href={project.demoUrl} class="link-arrow min-h-11 break-all" rel="noopener">
-                {copy.liveDemo}<span class="sr-only">: {project.demoBrand} {t.external}</span>
+              <a href={project.liveUrl} class="link-arrow min-h-11 break-all" rel="noopener" data-live-link>
+                {isProduct ? t.cta.visit(host) : copy.liveDemo}<span class="sr-only">: {project.brand} {t.external}</span>
                 <Icon name="external" size={18} />
               </a>
             </dd>
@@ -162,7 +175,7 @@ const sections = [
             )
           }
         </dl>
-        <p class="mt-4 font-mono text-xs text-muted">{copy.fictional}</p>
+        <p class="mt-4 font-mono text-xs text-muted">{isProduct ? copy.privateSource : copy.fictional}</p>
       </div>
     </header>
 
@@ -256,32 +269,34 @@ const sections = [
           {
             results ? (
               <div class="mt-6 grid gap-8">
-                <div>
-                  <h3 class="flex items-center gap-2 font-sans text-lg font-semibold tracking-normal">
-                    <Icon name="gauge" size={20} class="text-accent" />
-                    {copy.lighthouseTitle}
-                  </h3>
-                  <div class="mt-4 grid gap-4 md:grid-cols-2">
-                    {results.lighthouse.map((run) => (
-                      <div class="reveal rounded-lg border border-line bg-surface p-4">
-                        <p class="font-semibold">{run.page[locale]}</p>
-                        <p class="font-mono text-xs break-all text-muted">
-                          <span class="sr-only">{copy.measuredPath}: </span>
-                          {new URL(run.url).pathname}
-                        </p>
-                        <div class="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
-                          <ScoreRing score={run.performance} label={copy.categories[0]!} />
-                          <ScoreRing score={run.accessibility} label={copy.categories[1]!} />
-                          <ScoreRing score={run.bestPractices} label={copy.categories[2]!} />
-                          <ScoreRing score={run.seo} label={copy.categories[3]!} />
+                {results.lighthouse.length > 0 && (
+                  <div>
+                    <h3 class="flex items-center gap-2 font-sans text-lg font-semibold tracking-normal">
+                      <Icon name="gauge" size={20} class="text-accent" />
+                      {copy.lighthouseTitle}
+                    </h3>
+                    <div class="mt-4 grid gap-4 md:grid-cols-2">
+                      {results.lighthouse.map((run) => (
+                        <div class="reveal rounded-lg border border-line bg-surface p-4">
+                          <p class="font-semibold">{run.page[locale]}</p>
+                          <p class="font-mono text-xs break-all text-muted">
+                            <span class="sr-only">{copy.measuredPath}: </span>
+                            {new URL(run.url).pathname}
+                          </p>
+                          <div class="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                            <ScoreRing score={run.performance} label={copy.categories[0]!} />
+                            <ScoreRing score={run.accessibility} label={copy.categories[1]!} />
+                            <ScoreRing score={run.bestPractices} label={copy.categories[2]!} />
+                            <ScoreRing score={run.seo} label={copy.categories[3]!} />
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
+                    <p class="mt-3 text-sm text-muted">
+                      {copy.lighthouseNote(formatDate(results.measuredOn, locale), results.lighthouseVersion, results.medianOf)}
+                    </p>
                   </div>
-                  <p class="mt-3 text-sm text-muted">
-                    {copy.lighthouseNote(formatDate(results.measuredOn, locale), results.lighthouseVersion)}
-                  </p>
-                </div>
+                )}
                 <div>
                   <h3 class="flex items-center gap-2 font-sans text-lg font-semibold tracking-normal">
                     <Icon name="flask" size={20} class="text-accent" />
@@ -289,15 +304,22 @@ const sections = [
                   </h3>
                   <ul class="reveal mt-4 divide-y divide-line rounded-lg border border-line bg-surface">
                     {results.tests.map((suite) => (
-                      <li class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-4 py-3">
-                        <span>
+                      <li class="flex items-baseline justify-between gap-x-4 px-4 py-3">
+                        <span class="min-w-0">
                           {suite.name[locale]} <span class="chip ml-1">{suite.tool}</span>
+                          {suite.reportedOn && (
+                            <span class="block font-mono text-xs text-muted">{copy.reportedOn(formatDate(suite.reportedOn, locale))}</span>
+                          )}
                         </span>
-                        <span class="font-mono font-semibold">{formatNumber(suite.count, locale)}</span>
+                        <span class="shrink-0 font-mono font-semibold">{formatNumber(suite.count, locale)}</span>
                       </li>
                     ))}
                   </ul>
-                  <p class="mt-3 text-sm text-muted">{copy.testsTotal(formatNumber(totalTests, locale), formatDate(results.testsReportedOn, locale))}</p>
+                  <p class="mt-3 text-sm text-muted">
+                    {datedSuites
+                      ? copy.testsTotalDated(formatNumber(totalTests, locale))
+                      : copy.testsTotal(formatNumber(totalTests, locale), formatDate(results.testsReportedOn, locale))}
+                  </p>
                 </div>
               </div>
             ) : (
