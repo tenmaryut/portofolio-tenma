@@ -81,8 +81,8 @@ export const projects: Project[] = [
       en: 'TakarLaba: marketplace profit calculator',
     },
     summary: {
-      id: 'Aplikasi web gratis yang merinci potongan Shopee, TikTok Shop & Tokopedia, dan Lazada, lalu menghitung untung bersih, harga impas, dan batas biaya iklan per pesanan.',
-      en: 'A free web app that itemizes Shopee, TikTok Shop & Tokopedia, and Lazada fees, then works out net profit, the break-even price, and the ad spend limit per order.',
+      id: 'Aplikasi web dengan kalkulator gratis yang merinci potongan Shopee, TikTok Shop & Tokopedia, dan Lazada, lalu menghitung untung bersih, harga impas, dan batas iklan.',
+      en: 'A web app with a free calculator that itemizes Shopee, TikTok Shop & Tokopedia, and Lazada fees, then works out net profit, the break-even price, and the ad spend limit.',
     },
     role: {
       id: 'Perencanaan produk, riset tarif, pengembangan, pengujian, dan peluncuran',
@@ -118,7 +118,7 @@ export const projects: Project[] = [
         'Hasil hitungan bisa dibagikan lewat tautan atau WhatsApp',
         'Akun gratis lewat email atau Google, dengan 3 produk tersimpan, ekspor data, dan penghapusan akun mandiri',
         'Bisa dipasang di HP sebagai aplikasi (PWA), dan kalkulatornya tetap jalan tanpa internet',
-        'Fitur Pro sudah dibangun (produk tanpa batas, harga untuk target margin, simulasi kampanye, dan perhitungan massal sampai 500 baris dari CSV), tetapi pembayarannya belum dibuka',
+        'Paket Pro berbayar yang dibuka 25 Oktober 2026: produk tanpa batas, harga untuk target margin, simulasi kampanye, dan perhitungan massal sampai 500 baris dari CSV',
       ],
       en: [
         'Calculators for Shopee (including Mall), TikTok Shop & Tokopedia, and Lazada, with the formula behind every deduction',
@@ -128,7 +128,7 @@ export const projects: Project[] = [
         'Calculations can be shared by link or WhatsApp',
         'Free accounts with email or Google sign-in: 3 saved products, data export, and self-service account deletion',
         'Installable on a phone as an app (PWA), and the calculator keeps working offline',
-        'Pro features are built (unlimited products, target-margin pricing, campaign simulation, and bulk calculations of up to 500 rows from CSV), but payments are not open yet',
+        'A paid Pro plan, open since October 25, 2026: unlimited products, target-margin pricing, campaign simulation, and bulk calculations of up to 500 rows from CSV',
       ],
     },
     challenges: {
